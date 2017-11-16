@@ -1,0 +1,56 @@
+* uvm 实战
+
+** 第7章 uvm中的寄存器模型
+*** 寄存器模型简介
+**** 带寄存器模型配置总线的DUT
+- 寄存器影响行为
+- virtual sequence, virtual sequencer
+  In virtual sequence:
+  #+BEGIN_SRC verilog
+  `uvm_declare_p_sequencer(my_sequencer)
+  #+END_SRC
+  等效于在sequence中添加了成员my_sequencer。
+
+
+**** 需要寄存器模型才能做的事情
+- 前门访问 :: 模拟cpu的总线访问行为，消耗仿真时间。
+- 后门访问 :: 直接读取寄存器的访问，不消耗仿真时间。
+- 其他任务 :: mirro, update, 批量完成寄存器模型与dut中寄存器的交互。
+
+**** 寄存器模型中的基本概念
+- uvm_reg_field :: 最小单元
+- uvm_reg :: 比field高，依然是小单元
+- uvm_reg_block :: 大单位，可以包含uvm_reg，也可以属于其他的uvm_reg_block
+- uvm_reg_map :: 寄存器模型的地址，转换为可以访问的物理地址，uvm_reg_block中至少含有一个。
+
+**** 简单的寄存器模型
+***** 只有一个寄存器的寄存器模型
+***** 讲寄存器集成到验证平台中
+***** 在验证平台中适应寄存器模型
+**** 后门访问和前门访问
+***** uvm中前门访问的实现
+***** 后门访问操作的定义
+***** 使用interface进行后门访问操作
+***** uvm中后门访问的实现：dpi+vpi
+***** uvm中后门访问操作借口
+**** 复杂的寄存器模型
+***** 层次化的寄存器模型
+***** reg_file的作用
+***** 多个域的寄存器
+***** 多个地址的寄存器
+***** 加入存储器
+**** 寄存器模型对dut的模拟
+***** 期望值与镜像值
+***** 常用操作及其对期望值和镜像值的影响
+**** 寄存器模型中一些内建的sequence
+***** 检查后门访问中的hdl路径的sequence
+***** 检查默认值的sequence
+***** 检查读写功能的sequence
+**** 寄存器模型的高级用法
+***** 使用reg_predictor
+***** 使用UVM_PREDICT_DIRECT功能和mirror操作
+***** 寄存器模型的随机化与update
+***** 拓展位宽
+**** 寄存器模型的其他常用函数
+***** get_root_blocks
+***** get_reg_by_offset
