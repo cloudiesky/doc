@@ -1,0 +1,466 @@
+* EFC                                                               :EFC:UVM:
+** SPEC
+*** 时钟与复位
+**** 模块时钟
+1. ClkSrc时钟(5-80M)，系统最高频率时钟；Flash读时序、功能逻辑控制
+2. hclk总线时钟，为ClkSrc分频加扰后generate时钟，模块工作主时钟
+3. hclken：hclk的使能信号,用于ClkSrc与hclk域之间的信号交互；
+4. 2M计数脉冲：该脉冲作为数据使用，用ClkSrc时钟2拍同步后采上升沿；用于几十微秒的计数
+5. 100K计数脉冲：该脉冲作为数据使用，用ClkSrc时钟2拍同步后采上升沿；用于毫秒级计数
+
+**** 模块复位
+1. RstnGlb：系统global域复位；复位模块内绝大多数逻辑
+2. RstnChip：系统Chip域复位，复位后重新进行Trim Bist读及MapRam构建
+
+**** Questions & Notes                                               :Q:N:
+1. ClkSrc frequency can change.
+2. hclk clock scramble to scramble the power consumtions for security purpose.
+   Verification point? Simulate clock scramble.
+   What is the scramble requirement?
+3. 2M/100K pulse precisition requirement.
+4. RstnGlb: Register W1C.
+5. hclken: Controlled by what? when it will be deactive?
+6. RstnChip: what is trim bist? what is MapRam? register needs to reset?
+
+**** verification point                        :RST:CLK:VerificationPoint:
+1. ClockSrc change.
+2. hclk scramble.
+3. hclken enable/disable.
+4. 2M/100k pluse, need jitter.(different time, boundary test.)
+5. RstnGlb, What register be reset. Perform reset and check out register values.
+6. RstnChip, check trim bist reading and MapRam re-constructtion
+
+
+*** 总线接口
+**** 总线类型
+- AHB Lite
+
+**** 大下端选择
+- 小端
+**** 从接口数
+- 3条
+- Flash main 区使用一条slave接口
+- Flash nvr 区使用一条slave接口，与main区的hready，hresp输出一致
+- Sfr使用一条slave接口
+**** HSIZE
+- SFR仅支持32bit操作
+- PageBuffer支持8 16 32bit写操作，不可读
+-  读操作均返回32bit
+**** 总线模式
+- 除了总线直接写Page buffer外，其余对flash的OPR类操作时支持总线hready的release/ hold模式：
+- release :: 操作时hready释放，不能写EFC_SFR，此时读flash会hold总线至操作完成后返回读数据
+- hold :: 操作时hready拉低，CPU不能进行其余任何动作至以上操作完成
+
+**** Questions & notes                                               :Q:N:
+1. why can not write EFC_SFR, in release mode?
+2. Release and Hold is for flash operation controling the hready.
+3. why main array and nvr array use different interface?
+
+**** verification point                            :AHB:VerificationPoint:
+1. normal AHB operation, read/write/(read after write). Conjunction read/write.
+2. Release/Hold model
+3. Operation on SFR and PageBuffer. SFR and PageBuffer cross boundary.
+4. Interruption registers.
+
+*** 上电流程
+**** flash Initial
+ 芯片第一次上电需进行所有区域的擦除(除去存放flash trim的page)，触发条件为：读pattern错误，(读KEY的错误会导致Pattern出错),操作同suicide
+**** Trim Bist Read（Key/IP Trimming Values）(Pattern/OTP Mask)
+1. 外部SMC向EFC发起读操作
+2. EFC提供给SMC私有接口，接收读地址及读标志，并返回数据及Done标志即可
+3. 上电过程的所有读操作均采取Double Read的方式进行
+
+**** Questions and Notes                                             :Q:N:
+1. Initial will always happen when power up? Or just in case of error in reading pattern?
+2. SMC work sequence? What address?
+
+**** VerificationPoint                                 :VerificationPoint:
+1. Initial be interrupt.
+2. Random SMC read sequence
+3. Error injection for double read .
+
+*** flash操作
+**** Flash Config
+上电时从flash固定地址Recall读出配置数据，后按照固定时序配置写入flash固定地址中
+用于进行Flash相关Trim信息的配置，具体地址根据flash datasheet 给出。
+**** Recall
+在Flash IP 及analog IP trim前，使用recall可保证flash可靠地读出trim
+**** Read
+1. Normal Read
+2. Margin0 Read (Program Verify Read)
+3. Margin1 Read (Erase Verify Read)
+4. 2、3两者为用户模式下编程及擦除后的校验读，用于确认FLASH数据正确program或erase。不需调整电压，仅控制数字信号及时序
+**** Program
+1. Single Program (支持Pre-program以提高cycling)
+2. Page Program 由Single Program组成，每次起高压后最多只能进行一个ROW的连续编程；
+3. UMC 支持Pre-Program，SMIC支持Fast Program
+**** Erase
+1. Page Erase (支持Retry Erase)
+2. Mase Erase，支持对Main+redundancy区的整体擦除；支持Nvr区的整体擦除。且擦除后不必EV
+
+**** Flash低功耗状态
+1. POR (PORb==0)
+2. DPD Deep Power Down (DPD==1)
+3. Standby (CEb==1)
+4. ALP Auto Low Power模式，Ceb可不拉高，但功耗较低。减小下次起ae的setup时间。(EFC设计上固定将AE用下降沿打出，因此不会用到该模式，以求更低的功耗)
+5. EFC仅控制Ceb信号，并在非操作期间将其拉高，但输出EfcPmuEmfBusy信号通知当前flash正在操作，不可关闭
+
+**** 地址映射
+1. flash main区page 地址不连续，EFC需将总线连续的地址重映射到Flash的实际地址上
+2. flash nvr区page 地址不连续，EFC重映射地址
+   映射关系如下，重映射加扰后的地址。
+   - main区
+     总线0-160k  映射至 Flash 0-160k，
+     总线160k-320k 映射至 Flash 256k-416k，
+   - nvr区
+     总线0-511Byte 映射至 Nvr page2，
+     总线512-1023Byte 映射至Nvr page3，
+     总线1024-1535Byge 映射至Nvr Page4，
+     总线1536-2047Byte 映射至Nvr Page5，
+     总线2048-2559Bygte 映射至Nvr Page1。
+
+**** Questions & Notes                                               :Q:N:
+1. Trim is that 8 16-bit register?
+2. Power up is a automatic move of EFC or controlled by other ?
+3. voltage control in different operation?
+4. low power detail? what mode?
+
+**** VerificationPoint                                 :VerificationPoint:
+1. power up.
+2. normal read/margin0 read/margin1 read
+3. program single/page. pre-program.
+4. erase page(retry erase)/ mase erase.
+5. check lowpower. efc busy signal.
+6. address remap. boundaries.
+
+
+*** 软件接口
+**** Opr类操作
+1. Row Program
+   软件启动Flash半个page编程(1 Row，需IP支持)，从page buffer对应区域编程至Flash中
+2. Single Program
+   软件编程64bit数据至Flash
+3. Page Program
+   软件启动Flash整个page编程
+4. Buffer Load
+   从Flash读一个page写入page buffer中
+5. Buffer Clear
+   将page buffer的内容清为全F
+6. Buffer Write
+   AHB写page buffer
+7. Page Erase
+   页面擦除
+8. PV Read Page
+   页面编程校验读
+9. PV Read Row
+    Row编程校验读
+10. EV Read Page
+    页面擦除校验读
+11. Info Mask
+    Flash Information区写封口 (设计权限控制，具体操作流程与其他不一致)
+12. Suicide
+    Flash自毁，擦除数据
+13. CRC calculate
+    flash CRC计算 暂未实现
+
+**** 擦写读时间配置
+Flash读写时序配置：需要按照一定流程才能完成寄存器的修改；
+
+**** 预编程使能可配
+UMC Flash IP支持pre-program以提高IP cycling。
+使能可配，关闭预编程可缩短编程时间 3106特有
+
+**** 自动PV，EV
+完成Page Program、Row Program或Page Erase后是由硬件自动进行PV EV Read校验，使能可配
+
+**** Erase Retry
+Erase Retry可配，由软件配置发起   3106特有
+
+
+**** Questions & Notes                                               :Q:N:
+1. Row Program support here?
+2. Erase Program time configration? what register?
+3. Software erase retry.
+
+**** VerificationPoint                                 :VerificationPoint:
+1. 13 Operations.
+   Row program, signal program, page program, buffer load, buffer write, page erase,
+   PV read page, EV read page, Info Mask, Suicide, CRC Calculate.
+2. pre-program
+3. auto Program/Erase verify
+4. Erase retry.
+
+*** 性能提升
+**** 位宽扩展
+ Flash IP位宽扩展为64bit，增大位宽每次可读出2条32bit指令，CPU取高32bit指令时，可直接返回数据而不必访问flash
+
+**** Prefetch Buffer
+使能可配，64bit位宽，深度为2的乒乓缓存结构，使能后当CPU取指时，返回数据同时如果总线空闲，则自动预取下一64bit地址的数据，待命中后直接返回，减小访问Flash的实验。
+
+**** Smart Program
+当待编程数据为全64bit全f时，自动跳过，并不真正编程该单元，提高速度
+
+**** Questions & Notes                                               :Q:N:
+1. INSTRUCTION & DATA mapping definition?
+2. just for INSTRUCTION.
+3. Smart Program? Is it Erase only?
+
+
+**** VerificationPoint                                 :VerificationPoint:
+1. prefectch cross boundary.
+2. Smart program inject in all situation. Page/Sector/Block write  'F'.  And cross boundary.
+
+*** 可靠性
+**** 软件操作码
+编程/擦除，自毁等OPR类操作前，加软件保护序列
+
+**** Address Check
+保证用户操作地址与预先配置的寄存器值一致，仅检查Page地址，不区分Nvr与Main区
+
+**** 电压报警
+1. Double Read：Flash读操作过程中如果发生电压报警或GAP，操作暂停，在报警或GAP结束后启动Double Read，Double Read结束后读操作会返回；
+2. 产生状态位：高压操作期间发生电压报警，会产生中断位通知软件
+
+**** Double Read
+1. 2次一致,最多读8次
+2. Flash在读操作(所有对flash的normal read)过程中，如果发生电压报警或GAP时，暂停操作，待报警或GAP消除后，会启动一次Double Read
+3. 上电期间读key、trim、pattern、flash config等操作时，固定采用double read方式
+
+**** CRC校验
+提供硬件计算CRC功能，可以计算、比对软件设定长度区域的CRC结果
+
+**** Questions & Notes                                               :Q:N:
+1. What are protection sequence?
+2. what does ADDRESS CHECK mean?
+3. what is GAP?
+4. whart are key, trim, pattern, flash configration? what else?
+
+**** VerificationPoint                                 :VerificationPoint:
+1. OPR with wrong sequence.
+2. Address Check(TBD).
+3. Voltage alarm.(8 time double read wrong)(interrupt)
+4. Double read. (Key, trim, pattern, flash config) .
+*** 安全性
+**** Flash高压操作使能
+1. 该使能开关由NVR控制，软件可更改，硬件提供接口
+2. 使能后，Flash可以进行擦写等高压操作
+3. 关闭后，Flash仅可读，仅能通过硬件提供的接口改写Nvr区并解锁，占用OTP Mask bit[15]
+
+**** Nvr区权限控制
+封口关闭后，不能修改Nvr区的数据；Nvr区关键信息访问控制，NZ3106暂定为由MMU控制
+
+**** Glue Logic 列表划分
+Efc重要寄存器均加入Glue Logic，其中关键信息采用单bit备份，其它信息采用异或压缩备份
+
+**** ReturnRead
+写回读校验，Nvr配置使能，当完成Flash Single写以及PageBuffer Single写后，进行回读校验，Flash与PageBuffer写回读使用同一个信号控制，读出数据与写入数据不一致则报警
+
+**** MultiRead
+可以通过Nvr配置MultiRead次数，0为不使能该功能，此功能使能时，非上电期间读操作（AHB读， 预取)按照Nvr区配置次数重复对同一地址进行读取，如果发现两次不一致，则停止MultiRead读取，产生异常信息，同时会报错误
+
+**** RedunRead
+Nvr配置RedunRead范围，0为不使能该功能，此功能使能时，非上电期间读操作（AHB读， 预取)按照Nvr区配置范围对目标周围地址进行读取，RedundRead由于没有参考数据，只会根据ECC结果产生对应中断，注意当MultiRead及RedunRead同时使能时，先进行MultiRead
+
+**** 总线数据加密
+总线数据加密，模块内部对hwdata解密、并对hrdata加密
+
+**** 地址加扰与数据加解密
+1. Page Buffer地址加扰，数据加解密
+2. Flash的Nvr与main区地址加扰，数据加解密，ECC校验
+3. Flash Config操作时数据，地址不加密不加扰
+
+**** 数据ECC校验
+Flash采用64数据+8bit ECC校验
+
+**** 安全报警信号默认产生Glb复位
+1. GlueLogic报警
+2. MultiRead错误
+3. 写回读错误
+4. 数据ECC校验，不可纠正错误
+5. Flash擦写期间发生电压报警或GAP
+6.总线解密错误报警
+
+**** Questions & Notes                                               :Q:N:
+1. flash high voltage enable. When disable, what OTP Mask Bit [15] mean ?
+2. Nvr block control. MMU interface ???
+3. Glue logic? by tools?
+4. ReturnRead, MultiRead, RedunRead
+5. ECC model? 
+6. what is GLB error?
+
+**** VerificationPoint                                 :VerificationPoint:
+1. flash high voltage enable. Register control, Program/Erase when enable/disable.
+2. GlueLogic, ReturnRead, MultiRead, RedunRead.
+3. Ecc need to force error
+4. GLB reset for each alarm/error.
+
+*** 中断状态
+**** 操作完成标志
+OPR操作除写page buffer外，其余操作正常完成后,此位会置1
+
+**** EraseVerify错误
+1. Page Erase操作自动检验错误；
+2. Erase Verify Read操作检验错误；
+3. Info Mask操作中擦除校验错误
+
+**** Program Verify错误
+1. Page Program操作自动检验错误；
+2. Info Mask编程校验错误；
+3. Program Verify Read操作检验错误； 
+
+**** 擦/写操作流程错误(保护序列错)
+1. 不按顺序配置3次保护序列
+2. 三次配置操作类型不一致
+3. 配置操作类型无效
+4. 若为InfoMask操作，操作类型与寄存器不匹配
+
+**** 擦/写地址校验错误(地址检查错)
+写入寄存器的地址与最后一步操作地址不匹配
+
+**** Double Read Err
+Flash读操作，如果发生电压报警或GAP并且Double Read的16次读操作无连续2次一致，则产生此错误
+
+**** 高压期间电压报警
+编程或擦除期间，如果发生电压报警或GAP，则会产生此异常信息
+
+**** Info区封口权限错误
+尝试恢复永久封口值或用户读写NVR区权限错误
+
+**** ECC可纠正错误
+读Flash期间发生1bit，可纠正错误
+
+**** ECC不可纠正错误
+读Flash期间发生大于1bit，不可纠正错误
+
+**** CRC错误
+软件发起CRC操作时CRC错误
+
+**** 写回读校验错误
+软件通过OPR操作Single写一个64bit数据到flash；
+或者通过Buffer Write操作写数据到Page Buffer后会进行写回读校验，
+如果回读结果与写入数据不同，则产生此报警
+
+**** MultiRead校验错误
+Ahb正常读flash操作如果在对同一地址多次读操作结果不一致时，则会产生此异常信息
+
+**** Glue Error
+原信号与备份信号不匹配
+**** Questions & Notes                                               :Q:N:
+1. operation done flag. (interrupt ?), how to reset?
+2. 16 times? coherent result?
+3. info block ?
+
+**** VerificationPoint                                 :VerificationPoint:
+1. operation done flag(check).
+2. EraseVerify check(page erase error/erase verify read/info mask error)
+3. program verify error(like list 2nd)
+4. wrong sequence for program/erase. 
+   3 times wrong sequence.3 times wrong operation type. invalid operation type. 
+   wrong operation type with register, when InfoMask.
+5. wrong address
+6. double read err
+7. high voltage
+8. Info block permission
+9. ecc fixable error
+10. ecc unfixable error
+11. crc error
+12. write-read-back. flash and page buffer
+13. multiple read
+14. glue error.
+** EFlash datasheet
+*** features
+**** memory organization
+- main memory block
+  - bit :: 40k*72 bits
+  - sector :: 640 Sectors, 2 pages, 32 words, 72 bits per sector
+  - block :: 8 sectors
+  - sector :: A[15:6], 0h~13Fh, 200h~33Fh
+  - block :: A[15:9], 0h~27h, 40h~67h
+- NVR :: 5 sectors, 2*32*72 bits
+  | sector | A[15:6]      |
+  |--------+--------------|
+  | 1st    | 0X_XXXX_X000 |
+  | 2nd    | 0X_XXXX_X001 |
+  | 3rd    | 0X_XXXX_X010 |
+  | 4th    | 1X_XXXX_X000 |
+  | 5th    | 1X_XXXX_X001 |
+- Reddundancy :: 4 sectors.
+
+**** Read/Program/Erase
+- read :: 35ns
+- program ::  20us
+- sector erase :: 4ms
+- block erase :: 6ms
+- chip erase :: 10ms
+
+*** IO
+- A[15:0] :: input, address input ports
+  - A15 select array block. 2 array blocks
+  - A14~A5 select X addr (640 WLs per array block)
+  - A4-A0 select Y addr.
+- AE :: input, address latch enable
+- DIN[71:0] :: Data input ports
+- DOUT[71:0] :: Ddata output ports
+- RECALL :: RECALL=1 to enable recall read before setting CFG REGs.
+- NVR :: NVR=1 to select NVR Sector
+- CEb :: chip enable
+- WEb :: write enable to control program/erase HV operation.
+- PROG :: To indicate Program Operation
+- PROG2 :: To enable YMUX during program
+- ERACE :: To indicate Erase operation
+- CHIP :: To indicate chip selection of erase oeration
+- CONFEN :: To write configuration data to register
+- DPD :: DPD=1 to enter Deep Power Down mode
+- PORb ::  input signal from outside to reset the eFlash IP
+- ARRDN :: To enable redundancy sectors
+- TMEN :: TMEN=1 to enable test modes for eFlash IP. Otherwise be 0
+- VREAD0 :: Program verify; verify 0 control
+- VREAD1 :: Erase verify; Verify read 1 control
+- PRERPG :: PREPG=1 indicate PROG2 pulse as Pre-Program
+- BLOK :: To indicate block selection of erase operation
+** Qusestions
+*** clock and reset
+**** clock
+1. clksrc
+   Fixed?
+   Need to test different frequence?
+   Need scramble ?
+2. hclk
+   Need scramble?
+3. hclken
+   Error injection? stop hclk in the middle of simulation.
+4. 2M counter pulse
+   clock domain? hclken disable?
+5. 100K counter pulse
+**** reset
+1. RstnGlb:
+2. RstnChip: trim bist and MapRam ?
+*** bus
+*** pow up
+*** flash operation
+- what is trim
+*** eFlash IP
+- clock :: frequence? source?
+           no clock, asychronize IP.
+- configration register :: for what? do what at powering up?
+     For IP configration,
+     Read from Flash(16 bit addr),
+     and write back to Flash(3bit addr).
+- redundant sector :: need to be configure ?
+     Eft will make it done.
+- Recall Read :: for what?(recall the result of test memory to configure?)
+                 set flash to initial status.
+- simulation with power :: is it needed?
+     do it later.
+- NVR :: what difference?
+         Same as Main array.
+         But independant from main array.
+         Contain SoC configurations.
+
+** Notes
+*** eFlash IP
+**** Only the words in the same page can be consecutively programed in one WEb cycle.
+**** Need to test boundary of page/sector/block/array of program/erase/read.
+
+
+
