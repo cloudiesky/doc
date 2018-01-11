@@ -1,0 +1,162 @@
+* dpi
+** dpi intro
+
+sv中的C语言接口。
+direct program interface。
+svdpi.h。
+C语言的编译工具gcc，故C语言应当为标准C，支持标准C++。
+
+** example1： import function
+
+从C语言导入函数。
+
+
+*** sv侧
+
+**** 声明
+
+#+BEGIN_SRC verilog
+import "DPI-C" function void displaylogicvec(logic [7:0] i);
+#+END_SRC
+
+**** 调用
+
+#+BEGIN_SRC verilog
+initial displaylogicvec(l);
+#+END_SRC
+
+*** C侧
+
+#+BEGIN_SRC c
+#include <stdio.h>
+#include "svdpi.h"
+void displaylogicvec(svLogicVec32 *l) {
+  printf("data = %d, control = %d", l->d, l->c);
+}
+#+END_SRC
+
+*** 可以直接导入C的标准函数
+#+BEGIN_SRC verilog
+import "DPI" function chandle malloc(int size);
+import "DPI" funciton void free(chandle ptr);
+#+END_SRC
+
+
+** example: export method.
+
+*** steps:
+1. export the sv function in sv-layer
+   #+BEGIN_SRC verilog
+   export "DPI" funcion export_fun;
+   #+END_SRC
+2. define the sv function in sv-layer
+   #+BEGIN_SRC verilog
+   function void export_fun(input int foo,string str, logic [7:0] logic_arr, bit [63:0] bit_vec);
+   int i,j,k;
+   begin
+      $display("%s",str).
+      //.....
+   end
+   endfunction
+   #+END_SRC
+3. export the sv function in c-layer
+   #+BEGIN_SRC c
+   extern void export_fun(int, char*, svLogicVec32*, svBitVec32*);
+   #+END_SRC
+4. invoke the sv function in c-layer.
+   #+BEGIN_SRC c
+   int add_int()
+   {
+      export_fun(i,str,logic_vec,bit_vec);
+   }
+   #+END_SRC
+
+** data type map.
+
+- 双状态数据类型与四状态数据类型
+  - 四状态 :: reg, logic, interger, time   
+           #+BEGIN_SRC c
+           void fib(svLogicVecVal data[20]){
+            data0.aval=1;
+            data0.bval=0;
+           }           
+           #+END_SRC
+           | 四状态值 | aval | bval |
+           |----------+------+------|
+           | 0        |    0 |    0 |
+           | 1        |    1 |    0 |
+           | z        |    0 |    1 |
+           | x        |    1 |    1 |
+  - 双状态 :: bit，int，byte， shortint， longint
+
+- 映射表
+| SV                  | CIN                     | COUT                       |
+|---------------------+-------------------------+----------------------------|
+| byte                | char                    | char*                      |
+| shortint            | short int               | short int*                 |
+| int                 | int                     | int                        |
+| longint             | long long int           | long int*                  |
+| shortreal           | float                   | float*                     |
+| real                | double                  | double*                    |
+| string              | const char*             | char*                      |
+| string[N]           | const char**            | char**                     |
+| bit                 | svBit/unsigned char     | svBit*/unsigned char       |
+| log,reg             | svLogic/unsigned char   | svLogic* or unsigned char* |
+| bit[N:0]            | const svBitVecVal*      | svBitVecVal*               |
+| reg[N:0],logic[N:0] | const svLogicVecVal*    | const svLogicVecVal*       |
+| open array[]        | const svOpenArrayHandle | svOpenArrayHandle          |
+| chandle             | const void*             | void*                      |
+** argument direstion
+- support :: input, output & inout.
+- not support :: ref.
+- suggession :: in C-layer, make the input a const.
+** open array
+
+To transporting arrays.
+#+BEGIN_SRC verilog
+import "DPI-C" function void mydisplay(inout int h[][]);
+program automatic test;
+    int  a[6:1][8:3];
+    initial begin
+       foreach(a[i][j]) a[i][j]=i+j;
+       mydisplay(a);
+    end
+end
+#+END_SRC
+
+#+BEGIN_SRC c
+void mydisplay(const svOpenArrayHandle h){
+    int i,j;
+    int lo1=svLow(h,1);
+    int hi1=svHigh(h,1);
+    int lo2=svLow(h,2);
+    int ho2=svHigh(h,2);
+
+    for(i=lo1;i<hi1;i++){
+       for (j=lo2;j<hi2;i++){
+           int *a = (int *)svGetArrElemPtr2(h,i,j);
+           *a = i * j;
+       }
+    }
+}
+#+END_SRC
+
+
+** time consuming task
+*** SV layer
+1. define time consuming task(tcm_func)
+   - wait at time point
+   - invoke a import function(no-time-consumtion) from c-layer
+2. export time consuming task(tcm_func)
+
+*** C layer
+
+3. define time consuming function(extern tcm_func)
+
+4. invoke imported time consuming function.(run_all_stage)
+
+*** SV layer
+5. import time consuming function from c layer(run_all_stage)
+
+*** ATTENTION
+Valuable transported to C-layer is static. Clock would switch between 1 &0.

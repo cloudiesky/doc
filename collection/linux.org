@@ -1,0 +1,125 @@
+* Install new fonts in linux without root privileges
+** If you do not have root access, it is possible to install new fonts.
+
+mkdir ~/.fonts
+
+Move your fonts to ~/.fonts.
+
+mkfontdir ~/.fonts
+xset fp+ ~/.fonts
+xset fp rehash
+
+The new font should now be available. Check if the new font has been added by running xlsfonts.
+
+xlsfonts
+
+Try out the new font
+
+xterm -fn "new_font"
+
+** For TrueType fonts, the installation process is a little different.
+
+mkdir ~/.fonts
+
+Move your fonts to ~/.ttfonts
+
+mv *.ttf ~/.fonts
+
+Create the fonts.dir and fonts.scale files.
+
+cd ~/.fonts
+mkfontscale
+mkfontdir
+fc-cache -fv ~/.fonts
+
+The new font should now be available. Check if the font has been added by running fc-list.
+
+fc-list
+
+Try out the new font.
+
+xterm -fn "xft:new_font"
+* cshell prompt
+#+BEGIN_SRC shell
+# Add these lines to your ~/.cshrc.mine file on the linux grace machines...
+# don't worry too much about what they mean.
+
+# Colors!
+set     red="%{\033[1;31m%}"
+set   green="%{\033[0;32m%}"
+set  yellow="%{\033[1;33m%}"
+set    blue="%{\033[1;34m%}"
+set magenta="%{\033[1;35m%}"
+set    cyan="%{\033[1;36m%}"
+set   white="%{\033[0;37m%}"
+set     end="%{\033[0m%}" # This is needed at the end... :(
+
+# Setting the actual prompt.  I made two separate versions for you to try, pick
+# whichever one you like better, and change the colors as you want.  Just don't
+# mess with the ${end} guy in either line...  Comment out or delete the prompt you don't use.
+
+set prompt="${green} \n%n${blue}@%m ${white}%~ ${green} \n> ${end} "
+#set prompt="[${green}%n${blue}@%m ${white}%~ ]${end} "
+
+# Clean up after ourselves...
+unset red green yellow blue magenta cyan yellow white end
+#+END_SRC
+
+| ANSI        | Color  | Codes	  |
+| Color	     | Code   | 	Sample |
+|-------------+--------+----------|
+| Black       | 0;30	 | PROMPT   |
+| Red         | 0;31	 | PROMPT   |
+| Green       | 0;32	 | PROMPT   |
+| Brown       | 0;33	 | PROMPT   |
+| Blue        | 0;34	 | PROMPT   |
+| Purple      | 0;35	 | PROMPT   |
+| Cyan        | 0;36	 | PROMPT   |
+| Light Gray  | 0;37	 | PROMPT   |
+| Dark Gray   | 1;30	 | PROMPT   |
+| Light Red   | 1;31	 | PROMPT   |
+| Light Green | 1;32	 | PROMPT   |
+| Yellow      | 1;33	 | PROMPT   |
+| Light Blue  | 1;34	 | PROMPT   |
+| Pink        | 1;35	 | PROMPT   |
+| Light Cyan  | 1;36	 | PROMPT   |
+| White       | 1;37	 | PROMPT   |
+
+| Text    | Background | Colors |
+| Color	 | Code    	 | Sample |
+|---------+------------+--------|
+| Red     | 0;41	     | PROMPT |
+| Green   | 0;42	     | PROMPT |
+| Brown   | 0;43	     | PROMPT |
+| Blue    | 0;44	     | PROMPT |
+| Purple  | 0;45	     | PROMPT |
+| Cyan    | 0;46	     | PROMPT |
+| Gray    | 0;47	     | PROMPT |
+
+ 	Attributes	 
+Attribute	        Code	Sample
+Normal Display	    0	  PROMPT
+*Bold               1	  PROMPT
+Italics             3	  PROMPT
+Underline           4	  PROMPT
+*Blink on           5	  ?
+*Black Outline      6	  PROMPT
+Reverse Video on    7	  PROMPT
+*Non display        8	  This is suppose to make text invisible on a colored background
+*Strike through     9	  PROMPT
+*Bold off           22	Read Below
+*Italics off        23	Read Below
+*Underline off      24	Read Below
+*Blink off          25	Read Below
+*Inverse off        27	Read Below
+*Strike through off	29	Read Below
+
+* cshell to bashell
+#+BEGIN_SRC shell
+if ($SHELL == /bin/csh) then
+   setenv SHELL /bin/bash
+   exec $SHELL
+else
+   exec $SHELL
+endif
+#+END_SRC

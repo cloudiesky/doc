@@ -1,0 +1,148 @@
+* synopsys uvm workshop
+** uvm
+1. tricks and tips
+   - typedef class
+     compile without ordering; co-define class(class a has class b object,
+     class b has class a object too).
+
+     The best way is define class in package. And then introduce the package
+     to top of the testbench.
+
+   - singleton classes
+     not alow to instant a object
+
+   - singleton object
+     Only one object, can not be modify.
+
+   - assertion
+     Should be configure to on and off.
+
+     Long clock assertion (100 cycles) slow  down the simulation.
+     In long term assertion try logic(always @) to implement instead.
+
+   - constrain
+     Large constain code or constrain class.
+
+   - transaction
+     uvm_sequence_item is extend from uvm_transaction. Use uvm_sequence_item to
+     implement transaction instead of uvm_transaction.
+
+   - topology
+     uvm_root::get().print_topology();
+
+   - clock agent
+     Complex clock model. Expecially in post-simulation.
+     Archive clock jitter, phase jitter, frequency jitter.
+
+   - constrain should have different flags
+     indicate which is must obey, should obey etc.
+
+   - print redix
+     UVM_BIN, UVM_DEC, UVM_UNSIGNED, UVM_OCT, UVM_HEX, UVM_STRING,
+     UVM_TIME, UVM_REAL
+     #+BEGIN_SRC verilog
+     `uvm_field_int(field, UVM_ALL_ON| UVM_DEC)
+     #+END_SRC
+
+   - pack
+     pack, pack_bytes, pack_ints, pack_longint
+
+   - overide
+     - uvm_object :: no hierachy.
+       set_type_over_type_by_type.
+
+     - uvm_component ::  hierachy
+      set_inst_over_type_by_type.
+
+   - uvm resource
+     1. global configure.
+        #+BEGIN_SRC verilog
+        uvm_resource_db#(d_type)::set("scope","name",value.[accessor]);
+        #+END_SRC
+
+     2. methods
+
+        - get_by_name :: imports a resource by name
+        - set_default :: add a new item into the resources datebase.
+        - set :: create a new resource, write a /val/ to it, and set it into the database using name and scope as the lookup
+        - set_anonymous :: create a new resource, write a /val/ to it, and set into the database
+        - read_by_name :: locate a resource by /name/ and /scope/ and read its value
+        - read_by_type :: read a value by type
+        - write_by_name :: write a /val/ into the resoures database
+        - write_by_type :: write a /val/ into the resource database
+        - dump :: dump all the resources in the database pool.
+   - factory
+     component should instruct by /create/. it is better to instruct object by /create/ too.
+
+   - uvm_config_db with array members
+     #+BEGIN_SRC verilog
+     typedef bit bit_array_t[]; // dynamic array.
+     bit_array_t validport;
+     validport = new[16];
+     uvm_config_db#(bit_array_t)::set(this,"env.agt","valid_ports",validport);
+     #+END_SRC
+
+   - direct dut signal access
+     #+BEGIN_SRC verilog
+     function int uvm_dhle_deposit(string patth, uvm_hdl_data_t, value);
+     #+END_SRC
+     uvm_hdl_read, uvm_hdl_force, uvm_hdl_force_time, uvm_hdl_release_and_read,
+     uvm_hdl_release.
+
+   - tlm2.0
+     1. blocking
+        #+BEGIN_SRC verilog
+        uvm_tlm_b_intiator_socket#(packet) i_socket;
+        task initiate_tr();
+            uvm_tlm_time delay = new();
+            delay.set_abstime(1.5, 1e-9);
+            i_socket.b_transport(tx, delay);
+        endtask
+        #+END_SRC
+        #+BEGIN_SRC verilog
+        uvm_tlm_b_target_socket #(target, packet) t_socket;
+        virtual task b_transport(packet tx, uvm_tlm_time delay );
+         $display("realtime = %t", delay.get_realtime(1ns));
+        endtask
+        #+END_SRC
+        uvm_tlm_time
+
+     2. non-blocking
+
+   - uvm_callback
+     #+BEGIN_SRC verilog
+     uvm_callbacks #(driver, driver_callback) :: add(env.agt.drv, drv_err_cb);
+     uvm_callbacks #(driver, driver_callback) :: display();
+     #+END_SRC
+
+   - report control
+     #+BEGIN_SRC verilog
+     if (uvm_report_enabled(UVM_MEDIUM, UVMINFO, "TOPOLOGY")) begin
+         uvm_root::get().print_topology();
+     end
+     #+END_SRC
+
+   - set_drain_time
+** verdi
+- verdi feature
+  - dpi-c :: HWSW debug
+- commands
+  #+BEGIN_SRC tcl
+  ${UVM_HOME}/src/dpi/uvm_dpi.cc -CLAGS -DVCS \
+  ${UVM_HOME}/src/uvm_pkg.sv \
+  +${VCS_HOME}/etc/uvm-1.2/vcs ${VCS_HOME}/etc/uvm-1.2/vcs/uvm_custom_install_v\
+cs_recorder.sv
+  #+END_SRC
+** vcs
+- vcs command
+  - -debug_access=all+reverse :: debug and breakpoint support
+  - -kdb :: work with verdi
+  - /+define/+UVM_VERDI_RAL_AWARE :: uvm register model support
+  - ::
+- simv command
+  - +UVM_LOG_RECORD :: ??
+  - +UVM_RECORD ::
+  - +UVM_PAHSE_TRACE :: phase trace
+  - +UVM_OBJECTION_TRACE :: objection trace
+  - +UVM_VERDI_TRACE :: verdi trace
+  - -verdi :: intereactive simulation with verdi

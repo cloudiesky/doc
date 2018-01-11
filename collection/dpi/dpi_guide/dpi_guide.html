@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>dpi_guide</title>
+<!-- 2017-04-14 周五 14:21 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="U-WIN-EQF9PG1MUIR\LME_zhangzzhangz" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">dpi_guide</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. RTL side</a>
+<ul>
+<li><a href="#sec-1-1">1.1. example</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. C side</a>
+<ul>
+<li><a href="#sec-2-1">2.1. example</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. wraper</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> RTL side</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> example</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-verilog">program automatic ci_verify(input reg clk);
+   import "DPI-C" function void ci_rm_wrapper
+     (
+      input shortint   PBMod,
+      input shortint   FECMod,
+      input shortint   StepSize,
+      input shortint   Offset,
+      input shortint   Col_Rotate_Mod,
+      input shortint   Shift,
+      input bit [15:0] sv_ci_din[],
+      input bit [15:0] sv_ci_dou[],
+      input bit [15:0] sv_cdi_din[],
+      input bit [15:0] sv_cdi_dou[]
+      );
+
+   //.......
+
+   task task_ci_sim_item;
+      //...............
+      ci_rm_wrapper(
+                    ci_param_u.PBMod,
+                    ci_param_u.FECMod,
+                    ci_param_u.StepSize,
+                    ci_param_u.Offset,
+                    ci_param_u.Col_Rotate_Mod,
+                    ci_param_u.Shift,
+                    ci_seq_item_u.ci_din,
+                    ci_seq_item_u.ci_dou,
+                    ci_seq_item_u.cdi_din,
+                    ci_seq_item_u.cdi_dou
+                    );
+
+      //............
+
+   endtask
+
+   initial begin
+
+      //..........
+
+      task_ci_sim_item();
+
+      //...........
+
+   end
+endprogram
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> C side</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> example</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>head file
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-c">#ifndef _TOP_H_
+
+#define _TOP_H_ 
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#include &lt;string.h&gt;
+#include &lt;time.h&gt;
+
+
+typedef char                                    sWord16_c;      //16bits char  
+
+typedef short                                   sWord16;
+typedef unsigned short                  uWord16;
+
+typedef long                                    sWord32;
+typedef unsigned long                   uWord32;
+
+typedef float                                   Word32_f;       //16bits float IEEE754
+typedef double                                  Word64_f;       //64bits double IEEE754 
+
+typedef __int64                                 sWord40;    //40bits 有符号长整型
+typedef unsigned __int64                uWord40;        //40bits 无符号长整型
+
+typedef __int64                                 sWord64;    //64bits 有符号长整型
+typedef unsigned __int64                uWord64;        //64bits 无符号长整型
+
+
+#define  MAX16     32767
+#define  MIN16    -32768
+
+#define  UMAX16     65535
+
+#define  MAX32   (sWord32)0x7fffffff
+#define  MIN32   (sWord32)0x80000000
+
+#define  UMAX32     4294967295
+
+#define  MAX40   (sWord40)0x7fffffffff
+//#define  MIN40   (sWord40)0x8000000000
+#define  MIN40     (sWord40)((sWord64)0x8000000000000000&gt;&gt;24)
+
+#define  UMAX40     1099511627775
+
+#define  MAX64   (sWord64)0x7fffffffffffffff
+#define  MIN64   (sWord64)0x8000000000000000
+
+#define  UMAX64     18446744073709551615
+
+#define SHIFTL(data, len)  ((sWord40)(data)*(sWord40)pow(2,(len)))
+#define SHIFTR(data, len)  ((sWord40)(data)/(sWord40)pow(2,(len)))
+
+
+typedef struct 
+{
+        uWord16 PBMod;                       // PB块大小
+        uWord16 FECMod;                      // Turbo编码模式
+        uWord16 StepSize;                    // 信道交织跳转步长
+        uWord16 OffSet;                      // 信道交织起始偏置
+        uWord16 Col_Rotate_Mod;              // 信道交织列旋转的模式,0:1~8为一组循环;1:1~10为一组循环;2:1~12为一组循环;3:1~14为一组循环
+        uWord16 Shift;                       // 信道交织半字节移位方向  
+        uWord16 PBlen;                       // PB块长度
+
+} STRUCT_ChanelIntlvPara;
+
+
+
+
+// =============================== TX ==============================
+void LME3460_Channel_Interleaver(uWord16 *Input,uWord16 *Output, STRUCT_ChanelIntlvPara  ChanelIntlvPara);
+
+
+
+// ================================ RX =============================
+void LME3460_Channel_Deinterleaver(sWord16 *Input,sWord16 *Output, STRUCT_ChanelIntlvPara  ChanelIntlvPara); 
+
+
+
+
+
+#endif
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>main
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-c">#include "Sys_Top.h"
+
+void main()
+{
+
+        uWord16 i = 0;
+        uWord16 CI_Input[8320] = {0}, CI_Output[8320] = {0};
+        sWord16 CDI_Input[8320] = {0}, CDI_Output[8320] = {0};
+        STRUCT_ChanelIntlvPara ChanelIntlvPara;
+
+        ChanelIntlvPara.PBMod = 0;
+        ChanelIntlvPara.FECMod = 0;
+        ChanelIntlvPara.OffSet = 16;
+        ChanelIntlvPara.StepSize = 4;
+        ChanelIntlvPara.Shift = 0;
+        ChanelIntlvPara.Col_Rotate_Mod = 0;
+
+        for (i = 0; i &lt; 256; i++)
+        {
+                CI_Input[i] = i;
+        }
+
+        LME3460_Channel_Interleaver(CI_Input,CI_Output,ChanelIntlvPara);
+
+        for (i = 0; i &lt; 256; i++)
+        {
+                CDI_Input[i] = CI_Output[i];
+        }
+        LME3460_Channel_Deinterleaver(CDI_Input,CDI_Output,ChanelIntlvPara);
+
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>gcc command
+
+<div class="org-src-container">
+
+<pre class="src src-shell">gcc -Wall sys_Top.h LME3460_Channel_Interleaver.c LME3460_Channel_Deinterleaver -o chi_run.out
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-shell">gcc -c sys_Top.h LME3460_Channel_Interleaver.c LME3460_Channel_Deinterleaver -o chi.out
+</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> wraper</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<pre class="src src-c">#include "Sys_Top.h"
+#include "svdpi.h"
+
+void ci_rm_wrapper(
+                   const uWord16 PBMod,
+                   const uWord16 FECMod,
+                   //.......
+                   const svOpenArrayHandle sv_ci_din,
+                   svOpenArrayHandle sv_ci_dou,
+                   const svOpenArrayHandle sv_cdi_din,
+                   svOpenArrayHandle sv_cdi_dou,
+                   )
+{
+  STRUCT_ChanelIntlvPara ci_rm_param;
+  int i,j;
+  uWord16 c_ci_din[8320],c_ci_dou[8320];
+  uWord16 *a, *b;
+
+  ci_rm_param.PBMod = PBMod;
+  ci_rm_param.FECMod = FECMod;
+  //......
+
+  for(i=0; i&lt;8320; i++)
+    {
+      if(i &lt; dlen)
+        {
+          a = (uWord16 *) svGetArrElemPtr(sv_ci_din,i);
+          c_ci_din[i] = *a;
+        }
+      else
+        c_ci_din[i] = 0;
+    }
+
+  LME3460_Channel_Interleaver(c_ci_din,c_ci_dou, ci_rm_param);
+
+  for(i=0; i&lt;dlen; i++)
+    {
+      b = (uWord16 *) svGetArrElemPtr(sv_ci_dou,i);
+      * b = c_ci_dou[i];
+    }
+
+  //...
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>vcs
++vpi
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: U-WIN-EQF9PG1MUIR\LME_zhangz</p>
+<p class="date">Created: 2017-04-14 周五 14:21</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

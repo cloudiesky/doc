@@ -1,0 +1,89 @@
+* upf
+** vcs example 
+${VCS_HOME}/doc/example/NLP
+
+*** highcon-lowcon_block
+
+1. design blcok
+   set top , set low_domain
+   #+BEGIN_SRC tcl
+   set_design_top top_unit/TOP_U
+   set_design_attributes -elements { . } -attribute lower_domain_boundary TURE
+   set_design_attributes -elements { MID1 } -attribute lower_domain_boundary FALSE
+   #+END_SRC
+   
+2. power domains
+   3 power domain
+   #+BEGIN_SRC tcl
+   create_power_domain Island_Vdd
+   create_power_domain Island_V1 -elements {MID1/BOT1} -scope MID1/BOT1
+   create_power_domain Island_V2 -elements {u1} -scope u1
+   #+END_SRC
+
+3. supply ports
+   couple VDD VSS for each domain
+   #+BEGIN_SRC tcl
+   create_supply_port V1 -domain MID1/BOT1/Island_V1
+   create_supply_port V2 -domain u1/Island_V2
+   create_supply_port VDD -domain Island_Vdd
+   create_supply_port VSS -domain Island_Vdd
+   create_supply_port VSS -domain MID1/BOT1/Island_V1
+   create_supply_port VSS -domain u1/Island_V2
+   #+END_SRC
+
+4. supply nets
+   in MID1/BOT1/Island_V1 create 2 power_net V1 V1SW
+   #+BEGIN_SRC tcl
+   create_supply_net V1 -domain MID1/BOT1/Island_V1
+   create_supply_net V1SW -domain MID1/BOT1/Island_V1
+   create_supply_net VSS -domain MID1/BOT1/Island_V1
+   #....... 
+   #+END_SRC
+
+5. connetc supply net
+   V1SW doesnot connect to supply port.
+   #+BEGIN_SRC tcl
+   connect_supply_net MID1/BOT1/V1 -ports {MID1/BOT1/V1}
+   connect_supply_net MID1/BOT1/VSS -ports {MID1/BOT1/V1}
+   
+   #+END_SRC
+
+6. domain supply net
+   set V1SW as primary power net in its domain.
+   #+BEGIN_SRC tcl
+   set_domain_supply_net MID1/BOT1/Island_V1 -primary_power_net MID1/BOT1/V1SW -primary_ground_net VSS
+   set_domain_supply_net Island_Vdd -primary_power_net Vdd -primary_ground_net VSS
+   #+END_SRC
+
+7. power switch
+   create power switch, set input supply port, output supply port, control port, on state, off state
+   #+BEGIN_SRC tcl
+   create_power_switch V1_header_switch \
+       -domain MID1/BOT1/Island_V1 \
+       -input_supply_port {V1 MID1/BOT1/V1} \
+       -output_supply_port {V1SW MID1/BOT1/V1SW} \
+       -control_port {ctrl_sig psw_ctrl} \
+       -on_state {V1_ON V1 {!ctrl_sig}} \
+       -off_state {V1_OFF {ctrl_sig}}   
+   #+END_SRC
+
+8. isolation
+
+   - isolation setting :: top, domain, power_net(Attention: V1, not V1SW), ground_net, apply signals, clamp_value.
+   #+BEGIN_SRC tcl
+   set_isolation_top ISO_TOP \
+       -domain MID1/BOT1/Island_V1 \
+       -isolation_power_net MID1/BOT1/V1 \
+   
+   #+END_SRC
+
+   - isolation control :: domain, iso signal, iso sense, location
+        #+BEGIN_SRC tcl
+        set_isolation_control ISO_TOP \
+            -domain MID1/BOT1/Island_V1 \
+            -isolation_signal iso_ctrl \
+            -isolation_sense high \
+            -location self
+        #+END_SRC
+
+   

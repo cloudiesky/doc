@@ -1,0 +1,184 @@
+* verification platform                                      :platform:Study:
+** work test
+** referenc document
+*** verification directory structure
+- verification :: top
+  - ut :: module verification platform
+  - tool
+    - dul_dir.pl :: script, generate simulation directories
+    - file_head.pl :: script, generate file header.
+  - st :: system simulation head
+    - software :: store *.dua file
+      - code.dua :: default software
+    - rm :: reference model ??
+      - lib :: simulation lib file(Memory/IO/RNG/...)
+      - usb :: usb host model ??
+    - tb :: testbench
+      - top :: testbench top
+      - task :: system define, probe etc.
+    - tc :: test case
+      - cgu :: tc_cgu.sv
+      - iom :: tc_iom.sv
+      - ... :: .....
+    - sim :: simlulation directory(RTL simulation & post simulation)
+      - cgu :: cgu simulation directory
+        - outputs :: contain reference file. simulation output should be here. compare them.
+        - logs :: logfiles. monitoring procedure, collectiong debug infomation
+        - cover :: function coverage report debug/simv.cm
+        - wave ::  VCD, VPD, fsdb format waveforms.
+        - run :: running directory
+          - Makefile
+      - Makefile1 :: system simulation common makefile/VCS OPTIONS
+
+*** top level testbench structure
+- xx_tb_top :: top
+  - DUT :: design under test
+  - xx_config.sv :: a class define valuables in the env eg. test_case, tc_name
+  - xx_op_inst :: commond function for decoding the firmware. Debug mathod.
+    1. There several MCU operations defined by the testbench. write byte, write half-word, write word, read byte, read half-word, read_word, nop, error etc.
+    2. Testbench define several reg-addr, reg-value, and opperation sequeence. These regs is used for firmware to recognize, if there is a operation request, what is the request operation, what the operation values are.
+    3. Debug firmware loop until operation indecation reg change to constant value. Debug firmware excute the operation(R/W/NOP). Turn back to loop state.
+  - xx_api_macro :: system function macros. Such as register scan macros
+    - Q: why use macros, is task better? Espectially, commond parameter integer m.
+    - examples
+      #+BEGIN_SRC verilog
+      `ifndef API_MACRO_SV
+      `define API_MACRO_SV
+      integer m;
+      `define glu_chk_rht_afe(signal,width,clk,err_sr); \
+         fork \
+         begin \
+            for (m=0; m<width; m++) begin \
+               repeat (7) @(posedge clk); \
+            end \
+         end \
+         @(err_sr) `dis_err(`"err_sr glue logic judge right test error`"); \
+         @(err_sr) `dis_err($psprintf("err_sr %d",m)) \
+         join_any \
+         disable fork;
+      `endif // API_MACRO_SV
+      #+END_SRC
+    - Register scan define
+      - WrAndRd
+      - ReadDefaultValue
+      - ReadDefaultValueUse
+      - ROCompare :: read only check, frontdoor read, force frontdoor read, backdoor read.
+      - WOCompare :: write only
+      - W1C0Compare :: write '1' clear '0'
+      - RegScan :: write 'h5555_5555 ,'haaaa_aaaa.
+      - RegScanWO
+      - RegScanW1C0
+      - PAROTY_MON :: forever monitor sig, when posedge sig, gen FailFlag event(->FailFlag)
+  - xx_macrodef :: system macros, Such as module path (digital & anolog), memory path, debug registers.
+  - xx_probe :: make wire to system internal sigals, PC, reset, clock, memory data codec funcions.
+    - reset :: POR, reset chip, reset global
+    - Clk ::  all the clocks
+    - Iom :: IO mux signals
+    - PC probes :: core status signals, AHB bus
+    - Memory Probes :: communicate software with testbench memory probe.
+  - xx_encdec :: encode decode funcions, Xram flash
+  - xx_sysinit :: system initial funcions, ram_init flash_init.
+    - Monitor VCC poweron in UPF mode
+    - erase all RAMs and ROMs
+  - xx_sysmon :: system monitor functions & initial block. Clock glitch check, simulation pass/fail check.
+    - key signal check :: forever monitor POR, Reset, Iom, Sleep, DeepSleep.
+    - clock glitch :: timing check rules
+      example.
+      
+      #+BEGIN_SRC verilog
+      specify
+      $width(posedge clk, `Glitch_Width);
+      endspecify
+      #+END_SRC
+    - TbMonitor :: testbench monitor for judging test result
+      - check register and wait for PassFlag.
+    - simulation global control :: create new tb_cfg and display simution time.
+    - interrupt monitor :: monitor the core bus, check interrupt address.
+  - xx_dumpwav :: dumpwave control.
+  - sdf_annotate ::  sdf file relate.
+*** Makefile intro
+**** 2 level makefile
+Level 1 makefile is Makefile1 in the sim directroy. It is the commend makefile for the system. Level 2 makefile is in the run directory in the "run" directroie under each simulation directory.
+
+Level 1 contains command for compile & simulation & debug options.
+
+Level 2 contains the module define DUT=usb, and other defines.
+
+***** Level 1 Makefile
+- path definition :: path under verification
+- command line options :: fsdb, fpga, enc options
+- DUT_SRC ::  dut source code path
+- DUT_INC ::  dut include file search directory.
+- TB_SRC :: Testcase top file
+- TB_INC :: Testbench include directory
+- DUT_CMP_OPTIONS :: vcs compile options
+- DUT_SIM_OPTIONS :: vcs simulation options
+- DBG_CMP_OPTIONS :: define options ??
+- VER_CMO_OPTIONS :: verdi options
+- COV_SIM_OPTIONS :: coverage options
+- $(DUT) :: testcase name of $(DUT)
+- comp :: complile
+- run :: run
+- gui :: gui of VCS
+- deb,verdi :: debug tool of verdi
+- dve :: dve tools
+- urg :: coverage report
+- ana :: analysiz log
+- regress_compile ::
+- regress_run ::
+- help :: help info
+- tar :: pack
+- clean :: clean output
+- cpana :: copy log to ...
+
+***** Level 2 Makefile
+- DUT :: module to under test simulate.
+- CFG :: user macro define.
+**** How to use
+1. initial new environment. run tool/dut_dir.pl
+2. implement software with ukeil, and upload to server. software/uart/usb
+3. implement tc_uart.sv in tc/uart
+4. go to sim/uart/run, run: make uart tc=xx
+5. debug with verdi, run: make dev. or run make verdi
+6. analyze log: make rlog/clog tc=xx
+7. sumarize coverage: make regress
+8. generate coverage report : make urg
+   
+**** key parameters
+1. DUT=uart
+2. tc=01
+3. CFG+=define+USER
+4. pr=1  : post-simulation
+5. fsdb=1 : fsdb waveform log, default 1.
+6. enc=0, system addr, data encoding, default 0
+7. vcd=0, vcd waveform
+8. vpd=0, vpd waveform
+9. fpga=0, fpga simulation default0
+10. SDF=WCSDF, annote file case
+11. OSC=FS,SL. OSC fast/slow similaiton
+12. DUA=usb/code.dua. soft dua . default code.dua
+13. et: simulation end time. default 500ms
+14. num1: repeat times of TB env class. default REP_NUM1=2
+15. num2: repeat times inter TB env class, default REP_NUM2=2
+16. rand: random times. default rand=0. don't run in random cases.
+
+
+
+*** Testcase environment structure.
+- tc_uart.sv :: tc top. Introduce other files.
+- uart_def.sv :: register parameter definition & private macro definition(need to define 'UT_VERIF' in cli)
+- uart_probe.sv :: moniter interface assignment
+- uart_cfg.sv :: class. randomization configuration.
+- uart_cfg_cov.sv :: coverage configuration. coverpoint. function coverage define.
+- uart_mon.sv :: monitor
+- dut_intf.sv :: interface for driver & monitor
+- uart_api.sv :: simulation tasks.
+- uart_scb.sv :: scoreboard
+- uart_sva.sv :: assertions
+- tc_uart_reg_scan.sv :: register scan functions.
+      
+                      
+               
+                    
+              
+

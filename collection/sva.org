@@ -1,0 +1,34 @@
+* basic
+** sva position
+- Inside rtl
+- Doubt
+** sva form
+#+BEGIN_SRC verilog
+assert property(event1)
+$display("", ...);  // pass
+else
+$display("", ...);  // fail
+#+END_SRC
+#+BEGIN_SRC verilog
+sequence name;
+   ....;
+endsequence
+#+END_SRC
+#+BEGIN_SRC verilog
+property name(a,b,c,d);
+ ...
+endproperty
+#+END_SRC
+Sequence block can contain other sequence block(s).
+Sequence block like combination logics. 
+Property block like sequential logics which can contain time relations.
+** parameters
+property block and sequence block can contain parameters.
+property block can have local variable, that sequence block can't;
+** caution
+asstion should basic on time + event. otherwise it cost too much memory.
+** logic relations
+- && :: 
+* other tutorials
+https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/
+http://www.verificationguide.com/p/systemverilog-assertions-index.html
