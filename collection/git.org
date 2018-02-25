@@ -1,0 +1,228 @@
+* 新建代码库
+#+BEGIN_SRC shell
+git init
+git init [project-name]
+git clone [url]
+#+END_SRC
+
+
+* 配置
+#+BEGIN_SRC shell
+git config --list
+git config -e [--global]
+git config [--global] user.name "[name]"
+git config [--global] user.email "[email address]"
+#+END_SRC
+
+
+* 增加、删除文件
+#+BEGIN_SRC shell
+git add [file1] [file2] [...]
+git add dir
+git add .
+
+# Confirm before every add. For multiple changes in one file can be add in many times.
+git add -p
+
+git rm [file1] [file2] [...]
+
+# stop tracing file, but keep it in workplace
+git rm --cached [file]
+
+# rename and add to stage/index
+git mv [file-original] [file-renamed]
+#+END_SRC
+
+
+* 代码提交
+#+BEGIN_SRC shell
+git commit -m [message]
+git commit [file1] [file2] ... -m [message]
+
+#commit workplace to repository directly
+git commit -a
+
+#display diff info when committing
+git commit -v
+
+# replace last commit.
+# If no changes, changes commition info.
+git commit --amend -m [message]
+
+git commit --amend [file1] [file2] ...
+
+#+END_SRC
+
+
+* 分支
+#+BEGIN_SRC shell
+# list all local branch
+git branch
+
+# list all remote branch
+git branch -r
+
+# list all branchs both local and remote
+git branch -a
+
+# create branch and stay in current branch
+git branch [branch]
+
+# create branch and move to it
+git branch -b [branch]
+
+# create branch from a commit of current branch
+git branch [branch] [commit]
+
+# create branch from a remote branch, and build up tracking connection with it
+git branch --track [branch] [remote-branch]
+
+# move to branch and fresh workplace
+git check [branch-name]
+
+# move to last branch
+git check -
+
+# build track-connection between local branch and remote-branch
+git branch --set-upstream [branch] [remote-branch]
+
+# merge branch to current branch
+git merge [branch]
+
+# merge a commit to current branch
+git cherry-pick [commit]
+
+# delete branch
+git branch -d  [branch-name]
+
+# delete remote branch
+git push origin --delete [branch-name]
+git branch -dr [remote/branch]
+
+#+END_SRC
+
+* 标签
+#+BEGIN_SRC shell
+
+# list tag
+git tag
+
+# add a tag to current commit
+git tag [tag]
+
+# add tag to certain commit
+git tag [tag] [commit]
+
+# delete tag
+git tag -d [tag]
+git push origin :refs/tags/[tagsname]
+
+# check tag info
+git show [tag]
+
+# commit tag to remote
+git push [remote] [tag]
+
+# commit all tag to remote
+git push [remote] --tags
+
+# build a new branch point a tag
+git checkout -b [branch] [tag]
+
+#+END_SRC
+
+
+* 查看信息
+#+BEGIN_SRC shell
+
+git status
+git log
+
+# list commit history, and file changes
+git log --stat
+
+git log -S [keyword]
+
+git log [tag] HEAD --pretty=format:%s
+
+git log [tag] HEAD --grep feature
+
+git log --follow [file]
+
+git whatchanged [file]
+
+git log -p [file]
+
+git shortlog -sn
+
+git blame [file]
+
+git diff
+
+git diff --cached [file]
+
+git diff HEAD
+
+git diff [first-branch] ... [second-branch]
+
+git diff --shortstat "@{0 day ago}"
+
+git show [commit]
+
+git show --name-only [commit]
+
+git show [commit]:[filename]
+
+git reflog
+#+END_SRC
+
+
+* 远程同步
+#+BEGIN_SRC shell
+git fetch [remote]
+
+git remote -V
+
+git remote show [remote]
+
+git remote add [shortname] [url]
+
+git pull [remote] [branch]
+
+git push [remote] [branch]
+
+git push [remote] --force
+
+git push [remote] --all
+#+END_SRC
+* 撤销
+#+BEGIN_SRC shell
+git checkout [file]
+
+git check [commit] [file]
+
+git checkout
+
+git reset [file]
+
+git reset --hard
+
+git reset [commit]
+
+git reset --hard [commit]
+
+git reset --keep [commit]
+
+git revert [commit]
+
+git stash 
+git stash pop
+
+#+END_SRC
+
+* 其他
+#+BEGIN_SRC shell
+git archive
+#+END_SRC
+
+
