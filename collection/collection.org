@@ -1,0 +1,247 @@
+* ARM
+
+** assemble
+*** data copy continuous
+#+BEGIN_SRC asm
+num EQU 20;定义一个常量num，值为20
+ 
+;---------------------------------------------------------------------------------------------------
+;AREA分析如下：
+ 
+;语法格式：
+;AREA   段名  属性1，属性2，。。。
+ 
+;AREA伪指令用于定义一个代码段或数据段。其中段名若以数字开头，则该段名需用"|"
+;括起来，如|1_test|;属性字段表示该代码段（或数据段） 的相关属性，多个属性用逗号分开常用
+;属性如下：
+ 
+;CODE属性：用于定义代码段，默认为READONLY
+ 
+;DATA属性：用于定义数据段，默认为READWRITE
+ 
+;READONLY属性：指定本段为只读，代码段默认为READONLY
+ 
+;READWRITE属性：指定本段为可读可写，数据段的默认属性为READWRITE
+ 
+;ALIGN属性：使用方式为ALIGN表达式。
+ 
+;COMMON属性：该属性定义一个通用的段，不包含任何的用户代码和数据。各源文件中同名的COMMON段共享
+;同一段存储单元
+;---------------------------------------------------------------------------------------------------
+ 
+ 
+    AREA    EXAMPLE2,CODE,READONLY  ;声明一个代码段，名为EXAMPLE2
+    ENTRY   ;指定程序入口点
+    ;-----------------------------------------------------------------------------------------------  
+    ;ENTRY:一个完整的汇编程序中至少要有一个ENTRY，也可以有多个。当有多个ENTRY时，程序的真正入口点由
+    ;连接器指定，但在一个源文件里最多只能有一个ENTRY，也可以没有。
+    ;-----------------------------------------------------------------------------------------------
+Start
+    LDR     r0, =src            ;/*  r0 = pointer to source block 指向源操作数的首地址*/
+    LDR     r1, =dst            ;/*  r1 = pointer to destination block 指向目的操作数的首地址*/
+    MOV     r2, #num            ;/*  r2 = number of words to copy 要拷贝大小*/
+    MOV     sp, #0x400          ;/*  set up stack pointer (r13) 确定堆栈地址*/
+     
+blockcopy
+    MOVS    r3,r2, LSR #3       ;/*  number of eight word multiples */
+    BEQ     copywords           ;/*  less than eight words to move ? */
+    STMFD   sp!, {r4-r11}       ;/*  save some working registers */
+octcopy
+    LDMIA   r0!, {r4-r11}       ;/*  load 8 words from the source */
+    STMIA   r1!, {r4-r11}       ;/*  and put them at the destination */
+    SUBS    r3, r3, #1          ;/*  decrement the counter */
+    BNE     octcopy             ;/*  ... copy more */
+    LDMFD   sp!, {r4-r11}       ;/*  don't need these now - restore originals */
+copywords
+    ANDS    r2, r2, #7          ;/*  number of odd words to copy */
+    BEQ     stop                ;/*  No words left to copy ? */
+wordcopy
+    LDR     r3, [r0], #4        ;/*  a word from the source */
+    STR     r3, [r1], #4        ;/*  store a word to the destination */
+    SUBS    r2, r2, #1          ;/*  decrement the counter */
+    BNE     wordcopy            ;/*  ... copy more */
+stop
+    B       stop                ;/*在此进入死循环*/
+ 
+    AREA    blockdata,DATA,READWRITE    ;声明一个数据段，名为blockdata
+     
+src DCD 1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4
+ 
+dst DCD 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    END
+#+END_SRC
+* design
+** verilog
+*** register                                                     :register:
+**** firmware configure part of register without read first. :without:read:write:part:
+
+Divid register into 2 parts. 
+First part as regesiter value.
+Second part as write enable bit.
+When try to configure any-bits of the low register,
+the Second part of the register must set to active respectily.
+If the Second part does not set to active, the first parts won't changes.
+
+#+BEGIN_SRC verilog
+reg [15:0] value;
+wire [15:0] value_we = wdata[31:16];
+wire [31:0] register = {16'd0, value};
+always @(posedge clock or negedge resetn)
+if  (!resetn)
+   value <= 16'd0;
+else if (wr)
+   value <= wdata[15:0] & value_we;
+#+END_SRC
+
+* verification
+** system verilog                                                      :SV:
+*** UVM                                                               :UVM:
+**** backdoor access through hierachy
+#+BEGIN_SRC verilog
+import "DPI-C" function int uvm_hdl_check_path(	string 	path	)
+import "DPI-C" function int uvm_hdl_deposit(	string 	path, uvm_hdl_data_t 	value	)
+import "DPI-C" function int uvm_hdl_force(	string 	path, uvm_hdl_data_t 	value	)
+task uvm_hdl_force_time(	string 	path,	uvm_hdl_data_t 	value,	time 	force_time	 = 	)
+import "DPI-C" function int uvm_hdl_release_and_read(string 	path,	inout 	uvm_hdl_data_t 	value)
+import "DPI-C" function int uvm_hdl_release(	string 	path	)
+
+#+END_SRC
+**** get_response()
+#+BEGIN_SRC verilog
+virtual task get_response(
+ output RSP response, input int transaction_id = -1
+)
+#+END_SRC
+By default, sequences must retrieve responses by calling get_response. If no
+transaction_id is specified, this task will return the next response sent to this sequence.
+If no response is available in the response queue, the method will block until a response
+is received.
+
+
+If a transaction_id is parameter is specified, the task will block until a response with that
+transaction_id is received in the response queue.
+
+
+The default size of the response queue is 8. The get_response method must be called
+soon enough to avoid an overflow of the response queue to prevent responses from
+being dropped.
+
+
+If a response is dropped in the response queue, an error will be reported unless the error
+reporting is disabled via set_response_queue_error_report_disabled.
+**** uvm_event, uvm_event_pool, uvm_event_callback, uvm_barier, uvm_barier_pool
+[[w3m:http://www.eetop.cn/blog/html/28/1561828-5940103.html]]
+**** VIP, Do not modify VIP ports.
+May course error.
+e.g. Interface conflict.
+In EFC tc07 prefetch, in reset sequence, ahb_if is reset by manual sequence(efc_ahb_in_reset).
+And vip found reset action, vip reset ahb_if as well. It cause a conflict onf ahb_if. 
+And transaction went wrong in later waveform.
+
+
+*** Task & function port value not changes    :not:pass:port:Function:Task:
+#+BEGIN_SRC verilog
+task pulse_gen(ref logic en, ref logic pulse);
+    forever begin
+        @pulse_e;
+        pulse = 1'b1;
+        repeat (2) @(posedge clk_if.ClkSrc);
+        pulse = 1'b0;
+    end
+endtask
+#+END_SRC
+
+* emacs
+** \n \t \m
+Horizontal Tab	HT	9	\t	^I	【Ctrl+q Ctrl+i】
+Line Feed	LF	10	\n	^J	【Ctrl+q Ctrl+j】
+Carriage Return	CR	13	\r	^M	【Ctrl+q Ctrl+m】
+
+http://ergoemacs.org/emacs/emacs_line_ending_char.html
+* shell
+** multi-thread
+
+[[https://jerkwin.github.io/2013/12/14/Bash%25E8%2584%259A%25E6%259C%25AC%25E5%25AE%259E%25E7%258E%25B0%25E6%2589%25B9%25E9%2587%258F%25E4%25BD%259C%25E4%25B8%259A%25E5%25B9%25B6%25E8%25A1%258C%25E5%258C%2596/][multi-thread blog]]
+
+[[http://blog.sciencenet.cn/blog-548663-750136.html][multi-thread blog2]]
+#+BEGIN_SRC bash
+#!/bin/bash
+fifo="/tmp/$$.fifo"  #建立管道$$表示shell分配的进程号
+mkfifo $fifo
+exec 6<>$fifo        #将fifo的fd与6号fd绑定
+thread_num=8         #启动的进程个数
+count=0;
+#预分配资源
+while [[ $count -lt $thread_num ]]; do
+  echo >&6
+  #let count=count+1
+  count=$((count + 1 ))
+done
+#任务列表
+file_list=$1
+for file in $file_list
+do
+  read -u6       #请求一个资源
+  {
+    echo "Task Begin"
+    sleep 1
+    echo $file   #任务
+    echo "Task End"
+    # produce a cook
+    echo >&6     #完成任务，释放一个资源
+  }&             #后台执行
+done
+wait             #等待所有的任务完成
+exec 6>&-        #关闭fd 6描述符
+rm $fifo
+#+END_SRC
+
+#+BEGIN_SRC bash
+Njob=10    # 作业数目
+Nproc=5    # 可同时运行的最大作业数
+
+function CMD {        # 测试命令, 随机等待几秒钟
+	n=$((RANDOM % 5 + 1))
+	echo "Job $1 Ijob $2 sleeping for $n seconds ..."
+	sleep $n
+	echo "Job $1 Ijob $2 exiting ..."
+}
+
+Pfifo="/tmp/$$.fifo"   # 以PID为名, 防止创建命名管道时与已有文件重名，从而失败
+mkfifo $Pfifo          # 创建命名管道
+exec 6<>$Pfifo         # 以读写方式打开命名管道, 文件标识符fd为6
+                       # fd可取除0, 1, 2,5外0-9中的任意数字
+rm -f $Pfifo           # 删除文件, 也可不删除, 不影响后面操作
+
+# 在fd6中放置$Nproc个空行作为令牌
+for((i=1; i<=$Nproc; i++)); do
+	echo
+done >&6
+
+for((i=1; i<=$Njob; i++)); do  # 依次提交作业
+	read -u6                   # 领取令牌, 即从fd6中读取行, 每次一行
+                               # 对管道，读一行便少一行，每次只能读取一行
+                               # 所有行读取完毕, 执行挂起, 直到管道再次有可读行
+                               # 因此实现了进程数量控制
+	{                          # 要批量执行的命令放在大括号内, 后台运行
+		CMD $i && {            # 可使用判断子进程成功与否的语句
+			echo "Job $i finished"
+		} || {
+			echo "Job $i error"
+		}
+		sleep 1     # 暂停1秒，可根据需要适当延长,
+                    # 关键点，给系统缓冲时间，达到限制并行进程数量的作用
+		echo >&6    # 归还令牌, 即进程结束后，再写入一行，使挂起的循环继续执行
+	} &
+
+done
+
+wait                # 等待所有的后台子进程结束
+exec 6>&-           # 删除文件标识符
+#+END_SRC
+
+** timestamp
+#+BEGIN_SRC shell
+date %s
+date %s%N
+#+END_SRC

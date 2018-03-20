@@ -101,6 +101,7 @@ git branch -dr [remote/branch]
 
 #+END_SRC
 
+
 * 标签
 #+BEGIN_SRC shell
 
@@ -178,7 +179,9 @@ git reflog
 
 
 * 远程同步
+
 #+BEGIN_SRC shell
+
 git fetch [remote]
 
 git remote -V
@@ -194,7 +197,10 @@ git push [remote] [branch]
 git push [remote] --force
 
 git push [remote] --all
+
 #+END_SRC
+
+
 * 撤销
 #+BEGIN_SRC shell
 git checkout [file]
@@ -219,6 +225,7 @@ git stash
 git stash pop
 
 #+END_SRC
+
 
 * 其他
 #+BEGIN_SRC shell
