@@ -1,7 +1,7 @@
 #!/bin/sh
 
 function CMD () {        # 测试命令, 随机等待几秒钟
-    n=$((RANDOM % 5 + 1))
+    n=$((RANDOM % 100 + 1))
     echo $n >> tmp.txt
 }
 
@@ -13,7 +13,7 @@ function rand(){
     echo $(($num%$max+$min))
 }
 
-Nproc=$(rand 50 100)
+Nproc=$(rand 4 6)
 
 cat /dev/null > tmp.txt
 for((i=1; i<=$Nproc; i++)); do
