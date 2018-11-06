@@ -92,11 +92,127 @@ if  (!resetn)
 else if (wr)
    value <= wdata[15:0] & value_we;
 #+END_SRC
+*** Usage of define value.
+#+BEGIN_SRC verilog
+`define FLASH_HEX ../../st/software/code.dua
+readmemh(`"`FLASH_HEX`",CodeTmp);
 
+#+END_SRC
+*** operator priority                                  :priority:oprerator:
+#+BEGIN_SRC verilog
+assign a = b | c | d && e;
+// equel to 
+assign a = ( b | c | d ) && e;
+// we want
+assign a = b | c | (d && e);
+#+END_SRC
+**** more quote when it is neededd.
+**** use oprerator for what it mean to be used
+***** (|, &) bit operator
+***** (||, &&) logic oprerator, expectially in conditional statement.
 * verification
+** SVA
+*** Website                                                       :WEB:SVA:Tutorial:
+[[http://www.project-veripage.com/index.php][project-veripage]]
+[[https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html][Design Reuse]]
+[[https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/][Doulos Assertion]]
 ** system verilog                                                      :SV:
+*** DPI-C CPP                                          :dpi:c::CPP:
+2 ways to use cpp in dpi interface.
+#+BEGIN_SRC cpp
+extern "C" int helloFromCpp(svLogic a) {
+  // 0 is 0
+  // 1 is 1
+  // 2 is Z
+  // 3 is X
+  int a_int = a;
+  cout << "(C++) a is " << a_int << endl;
+  return 0;
+}
+#+END_SRC
+#+BEGIN_SRC cpp
+#ifdef __cplusplus
+extern "C" {
+#endif
+ // code 
+ // code
+#ifdef __cplusplus
+}
+#endif
+#+END_SRC
+*** include V.S. filelist
+Filelist is hard to maintain.
+Use include can avoid path problems.
 *** UVM                                                               :UVM:
+**** uvm_callback
+
+#+BEGIN_SRC verilog
+class my_callback extends uvm_callback;
+`uvm_object_utils(my_callback)
+  virtual task cb_task(my_driver drv, my_transaction tr);
+  endtask
+endclass
+#+END_SRC
+#+BEGIN_SRC verilog
+typedef uvm_callbacks #(my_driver, my_callback) my_cb_pool;
+#+END_SRC
+#+BEGIN_SRC verilog
+class my_tc extends uvm_test;
+my_callback my_cb;
+function void connect_phase(uvm_phase phase);
+  my_cb = my_callback::type_id::create("my_cb");
+  my_cb_pool::add(env.agt.drv, my_cb);
+endfunction
+endclass
+#+END_SRC
+#+BEGIN_SRC verilog
+task my_driver::run_phase();
+   `uvm_do_callbacks(my_driver, my_callback,
+   cb_task(this, req))
+endtask
+#+END_SRC
+**** assign values to child component in /build_phase/ for phase excution order.
+ If a component directly assigns the values of variables (including virtual interfaces)
+ in its child components, it should do so in its build_phase method after creating 
+ those child components.
+
+**** Getting p_sequencer of sequence.
+#+BEGIN_SRC verilog
+class my_sequence extends uvm_sequence #(my_tx);
+  `uvm_object_utils(my_sequence)
+  `uvm_declare_p_sequencer(the_sequencer_class_name)
+  ...
+  
+  task pre_start;
+    // Get the configuration object associated with the sequencer component
+    // on which this sequence is currently running
+    uvm_config_db #(my_config)::get(p_sequencer, "",  "config", m_config);
+  endtask
+
+  task body;
+    // Set the arbitration algorithm of the current sequencer
+    p_sequencer.set_arbitration(SEQ_ARB_STRICT_RANDOM);
+    begin
+      sequence2 seq2;
+      seq2 = sequence2::type_id::create("seq2");
+      seq2.set_item_context(this, p_sequencer);
+      if ( !seq2.randomize() )
+        `uvm_error(get_type_name(), "Randomize failed")
+      // Start a child sequence on the current sequencer
+      seq2.start(p_sequencer, this);
+    ...
+  endtask
+endclass
+#+END_SRC
+**** Do not use wildcard import at compilation unit scope.
+That is, do not write import declarations such as /import my_package::*;/
+outside of any module or package, because doing so would make any imported
+names visible across all modules and packages in the file, thus defeating 
+the purpose of using packages to restrict the scope of names. This advice 
+applies to all import declarations at compilation unit scope, not just 
+wildcard imports, but wildcard imports are the most damaging.
 **** backdoor access through hierachy
+***** uvm routine
 #+BEGIN_SRC verilog
 import "DPI-C" function int uvm_hdl_check_path(	string 	path	)
 import "DPI-C" function int uvm_hdl_deposit(	string 	path, uvm_hdl_data_t 	value	)
@@ -104,8 +220,11 @@ import "DPI-C" function int uvm_hdl_force(	string 	path, uvm_hdl_data_t 	value	)
 task uvm_hdl_force_time(	string 	path,	uvm_hdl_data_t 	value,	time 	force_time	 = 	)
 import "DPI-C" function int uvm_hdl_release_and_read(string 	path,	inout 	uvm_hdl_data_t 	value)
 import "DPI-C" function int uvm_hdl_release(	string 	path	)
-
 #+END_SRC
+***** disavantage
+****** not working in post-simulation
+****** need extra option('-debug' '-debug_accsess+all') that will slow down simulation
+***** better ways is through (interface)
 **** get_response()
 #+BEGIN_SRC verilog
 virtual task get_response(
@@ -137,9 +256,243 @@ e.g. Interface conflict.
 In EFC tc07 prefetch, in reset sequence, ahb_if is reset by manual sequence(efc_ahb_in_reset).
 And vip found reset action, vip reset ahb_if as well. It cause a conflict onf ahb_if. 
 And transaction went wrong in later waveform.
+**** Customizing UVM Message Format
+[http://cluelogic.com/2011/05/customizing-uvm-message-format/]
+#+BEGIN_SRC verilog
+class my_report_server extends uvm_report_server;
+   virtual function string compose_message( uvm_severity severity,
+                                            string name,
+                                            string id,
+                                            string message,
+                                            string filename,
+                                            int line );
+      uvm_severity_type severity_type = uvm_severity_type'( severity );
+      return $psprintf( "%-8s | %16s | %2d | %0t | %-21s | %-7s | %s",
+             severity_type.name(), filename, line, $time, name, id, message );
+   endfunction: compose_message
+endclass: my_report_server
+#+END_SRC
+#+BEGIN_SRC verilog
+class my_test extends uvm_test;
+   // ...
+   function void start_of_simulation();
+      my_report_server my_server = new;
+      uvm_report_server::set_server( my_server );
+   endfunction: start_of_simulation
+endclass: my_test
+#+END_SRC
+#+BEGIN_SRC shell
+# UVM_INFO my_uvm_report.sv(83) @ 0: reporter [top] This is a message from top.
+# UVM_INFO | my_uvm_report.sv | 68 | 0 | uvm_test_top          | my_test | This is a message from my_test.
+# UVM_INFO | my_uvm_report.sv | 39 | 0 | uvm_test_top.my_env_h | my_env  | This is a message from my_env.
+#+END_SRC
+#+BEGIN_SRC verilog
+   function string getShortFileName(string s);
+      int offset = 0;
+      int lastChar;
+      string shortFileName;
+      int slashPosition;
+      
+      lastChar = s.len()-1;
+      for (int i = lastChar; i >= offset; i=i-1) begin
+        if (s.getc(i) inside {"/", "\\"}) begin
+          slashPosition = i;
+          break;
+        end
+      end // for loop
+          
+       shortFileName = s.substr(slashPosition+1, lastChar);
+       return shortFileName;
+    endfunction
+#+END_SRC
+**** randomize bug of vcs
+Use config_db to sequence instead of randomize constraint.
+#+BEGIN_SRC verilog
+class a;
+rand int a1;
+function new();
+endfunction
+endclass
+
+class b;
+rand int a1;
+int a1_tmp;
+a a;
+function new(;
+endfunction
+
+function test;
+//not working
+a.randomize() with {a1 == this.a1};
+
+//working
+a1_tmp=a1;
+a.randomize() with {a1 == a1_tmp};
+endfunction
+endclass
+#+END_SRC
+**** save/restore to run different cases :define:Macro:restore:save:
+***** basic
+#+BEGIN_SRC verilog
+  if($test$plusargs("seq")) begin
+      $value$plusargs("seq=%s", seq_name); 
+      $display("The value of sequence::%s", seq_name);
+    end
+    $cast(exec_seq, factory.create_object_by_name(seq_name));
+    exec_seq.start(ubus_example_tb0.ubus0.masters[0].sequencer);
+#+END_SRC
+1. insert point of time want to save.
+2. use $test$plusargs to check run_time option
+3. cast seq to type that is wanted.
+***** article
+Run-Time Save-Restore Strategy with UVM and VCS
 
 
-*** Task & function port value not changes    :not:pass:port:Function:Task:
+In many verification environments, 
+you re-use the same configuration cycles across different testcases. 
+These cycles might involve writing and reading from different configuration and status registers, 
+loading program memories, and other similar tasks to set up a DUT for the targeted stimulus. 
+In many of these environments, the time taken during these configuration cycles are very long. 
+Also, there is a lot of redundancy as the verification engineers have to run the same set of 
+verified configuration cycles for different testcases leading to a loss in productivity. 
+This is especially true for complex verification environments with multiple interfaces which require
+different components to be configured.
+
+
+The Verilog language provides an option of saving the state of the design and the testbench at a 
+particular point in time. You can restore the simulation to the same state and continue from there. 
+This can be done by adding appropriate built-in system calls from the Verilog code. 
+VCS provides the same options from the Unified Command Line Interface (UCLI).
+
+
+However, it is not enough for you to restore simulation from the saved state. 
+For different simulations, you may want to apply different random stimulus to the DUT. 
+In the context of UVM, you would want to run different sequences from a saved state.
+
+
+This article explains how to achieve the above strategy with the simple existing UBUS example 
+available in the standard UVM installation. You can also refer to the attached example: [[file:ubus_save_restore.tar.gz][ubus_save_restore.tar.gz]]
+
+
+Simple changes are made in the environment to show what needs to be done to bring in this additional capability. 
+Within the existing set of tests, the two namely, “test_read_modify_write” and “test_r8_w8_r4_w4”, 
+differ only with respect to the master sequence being executed, that is, “read_modify_write_seq” 
+and “r8_w8_r4_w4_seq” respectively.
+
+
+
+// Read Modify Write Read Test
+
+class test_read_modify_write extends ubus_example_base_test;
+   ….
+  virtual function void build_phase(uvm_phase phase);
+   uvm_config_db#(uvm_object_wrapper)::set(this,
+                    "ubus_example_tb0.ubus0.masters[0].sequencer.main_phase",
+                    "default_sequence", read_modify_write_seq::type_id::get());
+   uvm_config_db#(uvm_object_wrapper)::set(this,
+                    "ubus_example_tb0.ubus0.slaves[0].sequencer.main_phase",
+                    "default_sequence", slave_memory_seq::type_id::get());
+   endfunction : build_phase
+endclass : test_read_modify_write
+ 
+
+// Large word read/write test
+
+class test_r8_w8_r4_w4 extends ubus_example_base_test;
+  …
+   virtual function void build_phase(uvm_phase phase);
+     uvm_config_db#(uvm_object_wrapper)::set(this,
+             "ubus_example_tb0.ubus0.masters[0].sequencer.main_phase",
+             "default_sequence", r8_w8_r4_w4_seq::type_id::get());
+     uvm_config_db#(uvm_object_wrapper)::set(this,
+             "ubus_example_tb0.ubus0.slaves[0].sequencer.main_phase",
+                    "default_sequence", slave_memory_seq::type_id::get());
+   endfunction : build_phase
+endclass : test_r8_w8_r4_w4
+
+
+For example, consider that you have a scenario where you would want to save a simulation once 
+the reset_phase is done and then start executing different sequences post the reset_phase the 
+restored simulations. To demonstrate a similar scenario through the UBUS tests, a delay is
+introduced in the reset_phase of the base test (in a real test, this may correspond to the PLL
+lock, DDR Initialization, Basic DUT Configuration).
+
+// Base Test
+
+class ubus_example_base_test extends uvm_test;
+  `uvm_component_utils(ubus_example_base_test)
+  .. .
+  task reset_phase(uvm_phase phase);
+    `uvm_info("reset_phase", "Entering...", UVM_NONE)
+    phase.raise_objection(this);
+    #100;
+    phase.drop_objection(this);
+    `uvm_info("reset_phase", "Exiting...", UVM_NONE)
+  endtask : reset_phase
+endclass : ubus_example_base_test
+
+The following snippet shows how the existing tests are modified to bring in 
+the capability of running different tests in different ‘restored’ simulations:
+
+// 1 Master – 1 Slave Test
+
+class test_generic_1m_1s extends ubus_example_base_test;
+  `uvm_component_utils(test_generic_1m_1s)
+   ….
+  virtual task main_phase(uvm_phase phase);
+    uvm_sequence_base exec_seq;
+    string seq_name;
+    `uvm_info(“main_phase", "Entering...", UVM_NONE)
+    phase.raise_objection(this);
+    super.main_phase(phase);
+    if($test$plusargs("seq")) begin
+      $value$plusargs("seq=%s", seq_name); 
+      $display("The value of sequence::%s", seq_name);
+    end
+    $cast(exec_seq, factory.create_object_by_name(seq_name));
+    exec_seq.start(ubus_example_tb0.ubus0.masters[0].sequencer);
+    phase.drop_objection(this);
+    `uvm_info(“main_phase", "Exiting...", UVM_NONE)
+  endtask
+endclass : test_generic_1m_1s
+ As evident in the code, two major modifications are made:
+
+Shift the setting of the phase default_sequence from the build phase to the start of the main phase.
+
+Get the name of the sequence as an argument from the command-line and process the string appropriately 
+in the code to execute the sequence on the relevant sequencer.
+
+As you can see, the changes are kept to a minimum. With this, the above generic framework is ready to 
+be simulated.  In VCS, one of the different ways, the save/restore flow can be enabled as follows.
+
+
+//Compilation
+
+vcs -sverilog -ntb_opts uvm +incdir+../sv ubus_tb_top.sv -debug
+//Simulate to a common state
+
+./simv +UVM_TESTNAME=test_generic_1m_1s -ucli -i makerestore.in
+//Simulate different stimulus
+
+./simv +seq=read_modify_write_seq -ucli -i runrestore.in
+./simv +seq=r8_w8_r4_w4_seq -ucli -i runrestore.in
+ 
+
+% cat makerestore.in
+run 100
+## saving the state in saveddesign after 100 timeunits
+save saveddesign
+quit
+% cat runrestore.in
+## Restoring saved design
+restore saveddesign
+## simulation proceeds after 100 time units
+run
+Thus, the above strategy helps in optimal utilization of the compute resources with simple changes 
+in your verification flow. Hope this was useful and you manage to easily make the changes in your 
+verification environment to adopt this flow and avoid redundant simulation cycles.
+
+*** Task & function port value not changes      :not:pass:port:Function:Task:
 #+BEGIN_SRC verilog
 task pulse_gen(ref logic en, ref logic pulse);
     forever begin
@@ -151,6 +504,171 @@ task pulse_gen(ref logic en, ref logic pulse);
 endtask
 #+END_SRC
 
+*** Use macro as string.                                     :String:Macro:
+#+BEGIN_SRC verilog
+`define FLASh_HEX  ../../st/software/code.dua
+#` $readmemh(`"`FLASH_HEX`",CodeTmp);
+#+END_SRC
+*** Use macro as with /include/ .                            :String:Macro:include:
+#+BEGIN_SRC verilog
+`define TMP_DIR ../
+`define TMP_FILE `"`TMP_DIR/tmp.sv`"
+`include `TMP_MODULE
+#+END_SRC
+*** critical signal control should be inside interface. Do not control clk in class with virtual interface.
+Clock edge may not be sample correctly for register. Recommanded clock is in inside /module/.
+
+False example
+#+BEGIN_SRC verilog
+class clk_ctrl;
+   task clk_t(time delay);
+      forever #delay vif.clk = ~vif.clk;
+   endtask
+endclass
+#+END_SRC
+
+Correct example
+#+BEGIN_SRC verilog
+interface clk_if();
+logic clk
+time delay;
+initial begin
+   clk = 0;
+   forever #delay clk = ~clk;
+end
+endinterface
+
+class clk_ctrl;
+   task clk_t(time delay);
+      vif.delay = delay;
+   endtask
+endclass
+#+END_SRC
+*** Do not use *define* in test-bench              :testbench:Macro:define:
+Benifits: No need to re-compile source code.
+#+BEGIN_SRC verilog
+initial begin
+`ifdef DEF1
+task_a();
+`else
+task_b();
+`endif
+end
+#+END_SRC
+
+#+BEGIN_SRC verilog
+initial begin
+  if ($test$plusargs("DEF1="))
+     $value$plusargs("DEF1=%s",DEF1);
+  case (DEF1)
+    "DEF1" : task_a();
+    default : task_b();
+  endcase
+end
+#+END_SRC
+*** predefined macro in system verilog                          :FILE:LINE:
+predefined macro for debugging. `__FILE__ `__LINE__.
+** simulation directory structure
+*** tree
+st
++-- rm
++-- software
+    +-- submodule1
++-- tb
++-- tc
+    +-- submodule1
++-- sim
+    +-- makefile1
+    +-- submode1
+       +-- cover
+       +-- logs
+       +-- output
+       +-- run
+       +-- wave
+*** makefile1
+
+** FSDB division
+*** By size
+#+BEGIN_SRC tcl
+fsdbAutoSwitch 1000 merge.fsdb 0
+#1000 MB per fsdb , basic name merge.fsdb, how many fsdbs (0 means no limit)
+dump -file merge.fsdb -type fsdb -msv on
+dump -add / -fid FSDB0
+run
+#+END_SRC
+*** by time
+#+BEGIN_SRC tcl
+set interval 1; #save for each interval time
+set n 11      ; #how many time to save
+set keep 5    ; #how many save point to keep
+run 1ps
+dump -close
+
+dump -file merge_0.fsdb -type fsdb -msv on
+dump -add / -fid FSDB0
+run $(interval) us
+
+for {set i 1} {$i < ${n}} {incr i} {
+    set  j [expr $i -${keep}]
+    dump -switch merge_${i}.fsdb -fid FSDB0
+    run ${interval} us
+    exec rm -rf merge_$j.fsdb
+}
+#+END_SRC
+** AMS
+*** verilog-ams
+[[w3m:https://verilogams.com/][verilog-AMS document]]
+*** mix signals
+Question:
+
+How to generate merged FSDB file in a mixed-signal simulation (Cosim –VCS-XA/Finesim)?
+
+Answer:
+
+Merged FSDB is supported in the VCS AMS and FineSim/ Cosim tools.
+
+Generating Merged FSDB
+
+You can use this method to generate a unified FSDB output file that contains both analog and digital waveforms.
+
+Note:
+
+The CustomSim and FineSim tools support a merged FSDB file with FSDB version 5.4 or later only.
+
+To generate a merged FSDB file, perform the following steps:
+
+Use these commands to generate FSDB output from VCS
+    Using the UCLI approach :
+
+    ucli%dump –file vcsAms.fsdb –type fsdb -msv
+
+   Usage of -msv is mandatory.
+
+The CustomSim and FineSim tools must be instructed to merge their FSDB output with the digital FSDB file.
+Use the following commands to merge a FSDB file containing both analog and digital signals:
+
+For the CustomSim tool:
+
+Use the set_waveform_option –format fsdb –file merge configuration command.
+
+For the FineSim tool:
+
+Use the .option finesim_output=fsdb and .option finesim_merge_fsdb=1 commands.
+
+Run the VCS tool with the debug switch as an elaboration switch. 
+After simulation, only one FSDB file would be available that contains both digital and analog signals.
+
+The attached [[file:XA_EXAMPLE.zip][EXAMPLE.zip]] provides the demo on this usage. Use ./run_ucli to compile , simulate, and 
+invoke Verdi with generated FSDB. You can select Get signals to see both digital and analog signals.
+
+#+BEGIN_SRC verilog
+task test_file_line(string filename="", int line=0);
+`uvm_info("Debug",$sformat("%m,%s,%d",filename,line),UVM_NONE)
+uvm_report_info("DEBUG",$sformat("%m"),UVM_MEDIUM,filename,line,)
+end
+test_file_line(`uvm_file,`uvm_line);
+uvm_report_info()
+#+END_SRC
 * emacs
 ** \n \t \m
 Horizontal Tab	HT	9	\t	^I	【Ctrl+q Ctrl+i】
@@ -158,9 +676,52 @@ Line Feed	LF	10	\n	^J	【Ctrl+q Ctrl+j】
 Carriage Return	CR	13	\r	^M	【Ctrl+q Ctrl+m】
 
 http://ergoemacs.org/emacs/emacs_line_ending_char.html
-* shell
-** multi-thread
+** REGEX
+ Align declaration " *[0-9a-zA-Z_]+ *;"
+** gtags
+Jump to tags for verilog
+1) exubrent ctags
+2) gnu global
+   install with :  --with-ctags=/path/to/ctags
+   add env valuable: GTAGSLABEL=pygements
+3) Instal pygements
+   no root : pip install pygements____name.whl --user
+   #+BEGIN_SRC 
+   cp /path/to/global/share/gtags/gtags.conf ~/.globalrc
+   #+END_SRC
+   inside .globalrc
+   #+BEGIN_SRC text
+   default:\
+           :tc=pygements:tc=native:
+   #+END_SRC
+5) spacemacs gtags layer
 
+
+* shell
+** value test in cshell
+To plan for the case where a variable, say $var, may not be defined, it gets tricky:
+#+BEGIN_SRC shell
+if (! $?var) then       
+  echo "variable is undefined"
+else
+  if ("$var" == "")  then
+      echo "variable is empty"
+  else 
+      echo "variable contains $var"
+  endif
+#+END_SRC
+
+The nested ifs are required to avoid breaking the script, as tcsh 
+apparently doesn't short-circuit (an else if branch's conditional will get evaluated 
+even if the if branch is entered; similarly, both sides of && and || expressions
+are seemingly always evaluated - this applies at least with respect to use of undefined variables).
+** multi-thread
+*** xargs
+#+BEGIN_SRC shell
+cat CmdList | xargs -P max-procs -l 1 -I {} run_sim.sh {}
+#+END_SRC
+*** gnu parallel
+*** shell script
 [[https://jerkwin.github.io/2013/12/14/Bash%25E8%2584%259A%25E6%259C%25AC%25E5%25AE%259E%25E7%258E%25B0%25E6%2589%25B9%25E9%2587%258F%25E4%25BD%259C%25E4%25B8%259A%25E5%25B9%25B6%25E8%25A1%258C%25E5%258C%2596/][multi-thread blog]]
 
 [[http://blog.sciencenet.cn/blog-548663-750136.html][multi-thread blog2]]
@@ -244,4 +805,55 @@ exec 6>&-           # 删除文件标识符
 #+BEGIN_SRC shell
 date %s
 date %s%N
+#+END_SRC
+
+** valuable export
+To use sub-script valuable. 
+#+BEGIN_SRC shell
+# in main script
+source sub-script.sh
+#+END_SRC
+To use sub_script valuable in other sub-script
+#+BEGIN_SRC shell
+# in sub script
+export valuable=xxx
+# in main script
+source sub-script.sh
+#+END_SRC
+** LSF
+maximum nodes is 6.
+#+BEGIN_SRC shell
+bsub -n (node number) -np (threads per nodes) -q (queue) -o (stdout file) -e (stderr file) CMD
+bqueues (queue name)
+lshosts
+lsload
+bhosts
+bacct
+bjobs -l (pid) # jobs status
+bjobs -p (pid) # check pending reason
+#+END_SRC
+** sed
+#+BEGIN_SRC shell
+sed -i 's/$/&TAIL/g' file.txt
+sed -i 's/$/TAIL&/g' file.txt
+sed -i 's/^/HEAD&/g' file.txt
+#+END_SRC
+match line to end
+#+BEGIN_SRC shell
+sed '/^abc/,$/p' x.txt
+#+END_SRC
+** xargs                                           :bash:argument:Function:
+#+BEGIN_SRC shell
+showword() {
+  echo $1
+}
+
+export -f showword
+echo This is a sample message | xargs -d' ' -t -n1 -P2 bash -c 'showword "$@"' _
+#+END_SRC
+* vim
+#+BEGIN_SRC batch
+@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+
+choco install spf13-vim -y
 #+END_SRC
