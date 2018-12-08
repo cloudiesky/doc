@@ -116,6 +116,25 @@ assign a = b | c | (d && e);
 [[http://www.project-veripage.com/index.php][project-veripage]]
 [[https://www.design-reuse.com/articles/10907/using-systemverilog-assertions-in-rtl-code.html][Design Reuse]]
 [[https://www.doulos.com/knowhow/sysverilog/tutorial/assertions/][Doulos Assertion]]
+*** property and sequence can be trigger by event :TIRGER:
+#+BEGIN_SRC verilog
+property pro_1;
+@(EN1 or EN2);
+endproperty
+#+END_SRC
+*** Sample value is before sample event.
+*** $past(signal, N).
+return signal value N cycles before.
+*** *not (A |=> B)* is not recommend.
+The behaviour is not defined in LRM.
+*** *default disable iff (RST)*
+*** Cross clock domain assertion is not recommended for dificulties in debugging.
+*** Add as much as 20% to simulation time. Good for earlier debugging.
+*** Auxiliary code could help correct debug.
+*** Assertion can be written in *generate* block.
+*** formal
+Assume runs all the time, while assertion runs once at a time.
+*** guide line
 ** system verilog                                                      :SV:
 *** DPI-C CPP                                          :dpi:c::CPP:
 2 ways to use cpp in dpi interface.
@@ -512,8 +531,10 @@ endtask
 *** Use macro as with /include/ .                            :String:Macro:include:
 #+BEGIN_SRC verilog
 `define TMP_DIR ../
-`define TMP_FILE `"`TMP_DIR/tmp.sv`"
-`include `TMP_MODULE
+`define TMP_FILE1 `"`TMP_DIR/tmp1.sv`"
+`define TMP_FILE2 `"`TMP_DIR/tmp2.sv`"
+`include `TMP_FILE1
+`include `TMP_FILE2
 #+END_SRC
 *** critical signal control should be inside interface. Do not control clk in class with virtual interface.
 Clock edge may not be sample correctly for register. Recommanded clock is in inside /module/.
@@ -695,8 +716,15 @@ Jump to tags for verilog
            :tc=pygements:tc=native:
    #+END_SRC
 5) spacemacs gtags layer
-
-
+** ORG mode
+*** disabled /_/  /^/
+#+BEGIN_SRC org
+#+OPTIONS: ^:nil
+#+END_SRC
+#+BEGIN_SRC lisp
+(setq-default org-use-sub-superscripts nil)
+#+END_SRC
+*** 
 * shell
 ** value test in cshell
 To plan for the case where a variable, say $var, may not be defined, it gets tricky:
@@ -850,6 +878,52 @@ showword() {
 
 export -f showword
 echo This is a sample message | xargs -d' ' -t -n1 -P2 bash -c 'showword "$@"' _
+#+END_SRC
+* Makefile
+** environment variable
+Makefile用来调用各种命令做自动化构建工具非常方便。最近在写给Flask项目写Makefile时，需要设置环境变量，却遇到一些小问题。
+
+如果是在全局设置环境变量时很容易：
+#+BEGIN_SRC makefile
+
+export FLASK_ENV=dev
+export FLASK_DEBUG=1
+
+dev:
+    @echo $(FLASK_ENV)
+    @echo $(FLASK_DEBUG)
+#+END_SRC
+运行make dev时则返回：
+#+BEGIN_SRC shell
+make dev
+dev
+1
+#+END_SRC
+但是如果需要在不同target下设置不同环境变量的话，这样就会有问题了。具体应该这样设置：
+
+#+BEGIN_SRC makefile
+dev:export FLASK_ENV=dev
+dev:export FLASK_DEBUG=1
+dev:
+    @echo $(FLASK_ENV)
+    @echo $(FLASK_DEBUG)
+
+
+prod:export FLASK_ENV=prod
+prod:export FLASK_DEBUG=0
+prod:
+    @echo $(FLASK_ENV)
+    @echo $(FLASK_DEBUG)
+#+END_SRC
+这样再执行make dev和make prod时，不同的target下的环境变量就不会干扰了：
+
+#+BEGIN_SRC shell 
+make dev
+dev
+1
+$ make prod
+prod
+0
 #+END_SRC
 * vim
 #+BEGIN_SRC batch
