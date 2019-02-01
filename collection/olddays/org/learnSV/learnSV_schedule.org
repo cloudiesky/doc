@@ -1,0 +1,57 @@
+* SystemVerilog验证
+** Part 1
+*** DONE Chp1 验证导论
+CLOSED: [2016-08-05 周五 15:36] DEADLINE: <2016-08-12 周五>
+- State "DONE"       from "TODO"       [2016-08-31 周三 15:36] \\
+  完成
+- State "TODO"       from ""           [2016-08-07 周日 16:25]
+
+*** DONE Chp2 数据类型
+CLOSED: [2016-08-19 周五 15:36] DEADLINE: <2016-08-12 周五>
+- State "DONE"       from "TODO"       [2016-08-31 周三 15:36] \\
+  完成
+- State "TODO"       from ""           [2016-08-07 周日 16:25]
+
+*** DONE Chp3 过程语句和子程序
+CLOSED: [2016-08-31 周三 15:36] DEADLINE: <2016-08-12 周五>
+- State "DONE"       from "TODO"       [2016-08-31 周三 15:36] \\
+  完成
+- State "TODO"       from ""           [2016-08-07 周日 16:25]
+
+** Part 2
+*** TODO Chp4 连接设计和测试平台
+DEADLINE: <2016-09-09 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:26]
+
+*** TODO Chp5 面对对象编程基础
+DEADLINE: <2016-09-23 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:27]
+
+*** TODO Chp6 随机化
+DEADLINE: <2016-10-14 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:27]
+
+*** TODO Chp7 线程以及线程间的通信
+DEADLINE: <2016-10-28 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:26]
+
+** Part 3
+*** TODO Chp8 面向对象编程的高级技巧
+DEADLINE: <2016-11-11 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:27]
+
+*** TODO Chp9 功能覆盖率
+DEADLINE: <2016-11-25 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:27]
+
+*** TODO Chp10 高级接口
+DEADLINE: <2016-12-09 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:28]
+
+*** TODO Chp11 完整的SystemVerilog测试平台
+DEADLINE: <2016-12-23 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:28]
+
+*** TODO Chp12 SystemVerilog与C语言的接口
+DEADLINE: <2017-01-06 周五>
+- State "TODO"       from ""           [2016-08-07 周日 16:29]

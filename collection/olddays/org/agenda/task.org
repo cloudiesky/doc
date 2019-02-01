@@ -1,0 +1,145 @@
+#+STARTUP: showall
+#+TAGS: { @Office(o) @Home(h) @Computer(c) }
+* Tasks
+: To show items in Agenda View, add '#CATEGORY'
+#+CATEGORY: Tasks
+** TODO RTL & C integrated simulation guide.[0/2]
+*** TODO RTL side
+
+*** TODO C side
+
+** DONE Review 3460 project [6/6]
+CLOSED: [2017-02-14 Tue 09:07] SCHEDULED: <2017-02-06 Mon>
+- State "DONE"       from "TODO"       [2017-02-14 Tue 09:07]
+*** DONE turbo
+CLOSED: [2017-02-14 Tue 09:07]
+- State "DONE"       from "TODO"       [2017-02-14 Tue 09:07]
+- State "TODO"       from ""           [2017-02-06 Mon 15:33]
+*** DONE mapping
+CLOSED: [2017-02-09 Thu 09:23]
+- State "DONE"       from "TODO"       [2017-02-09 Thu 09:23] \\
+  clear
+- State "TODO"       from ""           [2017-02-06 Mon 15:33]
+*** DONE dfe
+CLOSED: [2017-02-14 Tue 09:06]
+- State "DONE"       from "TODO"       [2017-02-14 Tue 09:06]
+- State "TODO"       from ""           [2017-02-06 Mon 15:33]
+*** DONE fir
+CLOSED: [2017-02-14 Tue 09:06]
+- State "DONE"       from "TODO"       [2017-02-14 Tue 09:06]
+- State "TODO"       from ""           [2017-02-06 Mon 15:33]
+*** DONE interpolator
+CLOSED: [2017-02-14 Tue 09:06]
+- State "DONE"       from "TODO"       [2017-02-14 Tue 09:06]
+- State "TODO"       from ""           [2017-02-06 Mon 15:33]
+*** DONE crc
+CLOSED: [2017-02-14 Tue 09:06]
+- State "DONE"       from "TODO"       [2017-02-14 Tue 09:06]
+- State "TODO"       from ""           [2017-02-06 Mon 15:33]
+
+** TODO Update design environment
+SCHEDULED: <2016-12-16 周五>
+- State "TODO" from ""           [2016-12-16 周五 10:04]
+
+** TODO Learn SVA [0/3]                                            :@Office:SVA:
+- State "TODO"       from ""           [2016-12-16 周五 10:04]
+*** TODO make up a plan
+SCHEDULED: <2016-12-16 Fri>
+- State "TODO"       from "TODO"       [2017-02-06 Mon 10:49]
+- State "TODO"       from ""           [2016-12-16 周五 10:15]
+*** PLAN learn the text book
+- State "PLAN"       from ""           [2016-12-16 周五 10:15] \\
+  wait for  previous job
+*** PLAN review
+- State "PLAN"       from ""           [2016-12-16 周五 10:16] \\
+  On to go
+
+
+** TODO basic technique plan
+SCHEDULED: <2016-09-07 周三>
+- State "TODO"       from ""           [2016-09-05 周一 10:21]
+
+
+** TODO Learn SV [1/2] <2016-08-02 周二>              :SystemVerilog:@Office:
+DEADLINE: <2017-02-28 Tue>
+- State "TODO"       from "DONE"       [2016-12-01 周四 09:53]
+  done
+- State "TODO"       from ""           [2016-08-02 周二 13:27]
+*** TODO Learn SV daily <2016-08-26 Fri +1d>
+- State "DONE"       from "TODO"       [2017-02-16 Thu 16:02]
+  chapter 12.3
+- State "DONE"       from "TODO"       [2017-02-16 Thu 10:10] \\
+  chapter 12.2 done
+- State "DONE"       from "TODO"       [2017-02-14 Tue 11:59] \\
+  chapter 12.1 done
+- State "TODO"       from "TODO"       [2017-02-06 Mon 15:22]
+  chapter 12.1.1 done
+- State "TODO"       from "TODO"       [2017-02-06 Mon 10:51]
+  Chapter 12
+- State "TODO"       from "TODO"       [2017-02-06 Mon 10:49]
+  chp7, chp8, chp9, chp10 read one time,
+- State "DONE"       from "TODO"       [2016-12-01 周四 09:53] \\
+  chp5 done
+- State "DONE"       from "TODO"       [2016-08-18 周四 10:17] \\
+  chapter 2 section 7.2
+- State "TODO"       from "DONE"       [2016-08-18 周四 10:17]
+- State "NEXT"       from "TODO"       [2016-08-12 周五 09:18] \\
+  Chp2 today.
+- State "TODO"       from ""           [2016-08-02 周二 13:44]
+:PROPERTIES:
+:LAST_REPEAT: [2017-02-16 Thu 16:02]
+:END:
+*** DONE Make up a plan
+CLOSED: [2016-08-09 周二 09:07] DEADLINE: <2016-08-09 周二>
+- State "DONE"       from "NEXT"       [2016-08-09 周二 09:07] \\
+  Plan has been make.
+- State "NEXT"       from "NEXT"       [2016-08-05 周五 17:07] \\
+  Postpone  2 days <2016-08-05 周五>
+- State "NEXT"       from ""           [2016-08-02 周二 13:42] \\
+  Divide the book into pieces.
+
+** TODO Learn Python [1/2]                                   :Python:@Office:
+- State "TODO"       from ""           [2016-08-02 周二 13:25]
+*** TODO Learn python daily <2017-02-18 Sat +1d>
+- State "DONE"       from "TODO"       [2017-02-16 Thu 15:45]
+  chapter 6
+- State "DONE"       from "TODO"       [2017-02-15 Wed 18:03] \\
+  chapter 5
+- State "DONE"       from "TODO"       [2017-02-14 Tue 16:42] \\
+  chapter 4 done
+- State "TODO"       from ""           [2017-02-14 Tue 09:02]
+:PROPERTIES:
+:LAST_REPEAT: [2017-02-16 Thu 15:45]
+:END:
+*** DONE make up plans                                          :@Computer:
+CLOSED: [2017-02-14 Tue 09:00] SCHEDULED: <2017-02-06 Mon>
+- State "DONE"       from "NEXT"       [2017-02-14 Tue 09:00] \\
+  Everyday one chapter.
+- State "NEXT"       from ""           [2016-08-15 周一 11:00] \\
+  I should make it quick.
+
+
+** TODO Running <2016-06-23 周四 +1w>                                :@Home:
+- State "DONE"       from "TODO"       [2016-12-01 周四 09:54] \\
+  11/30
+- State "DONE"       from "TODO"       [2016-08-12 周五 09:52] \\
+  Done this week.
+- State "TODO"       from ""           [2016-08-02 周二 12:05]
+:PROPERTIES:
+:LAST_REPEAT: [2016-12-01 周四 09:54]
+:END:
+
+** DONE Setup GDT  <2016-08-02 周二>                                  :@Home:
+DEADLINE: <2016-08-03 周三> SCHEDULED: <2016-08-02 周二>
+CLOSED: [2016-08-02 周二 11:20]
+: C-c C-c: add tags
+: C-c C-t: add TODO
+: C-c C-s: SCHEDULED
+: C-c C-d: DEADLINE
+: C-c .: add time stamp
+- State "DONE"       from ""           [2016-08-02 周二 11:20] \\
+  Just some example for the Task project
+
+
+* Ideas
+** New ideas 1

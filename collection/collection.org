@@ -724,7 +724,9 @@ Jump to tags for verilog
 #+BEGIN_SRC lisp
 (setq-default org-use-sub-superscripts nil)
 #+END_SRC
-*** 
+*** inset vertical bar into a table field  :|:vertical bar:
+To insert a vertical bar into a table field, use \vert or, inside a word abc\vert{}def.
+If \vert is not automatically converted to |, call org-toggle-pretty-entities, per: C-c C-x \
 * shell
 ** value test in cshell
 To plan for the case where a variable, say $var, may not be defined, it gets tricky:

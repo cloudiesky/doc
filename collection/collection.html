@@ -1,0 +1,1574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-10-16 周二 11:21 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3777e48">1. ARM</a>
+<ul>
+<li><a href="#org8d5f473">1.1. assemble</a>
+<ul>
+<li><a href="#org3879835">1.1.1. data copy continuous</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb17f271">2. design</a>
+<ul>
+<li><a href="#org7c8b729">2.1. verilog</a>
+<ul>
+<li><a href="#orge7c9e81">2.1.1. register&#xa0;&#xa0;&#xa0;<span class="tag"><span class="register">register</span></span></a></li>
+<li><a href="#orgf6ce92c">2.1.2. Usage of define value.</a></li>
+<li><a href="#org1e97e5b">2.1.3. operator priority&#xa0;&#xa0;&#xa0;<span class="tag"><span class="priority">priority</span>&#xa0;<span class="oprerator">oprerator</span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9905f1a">3. verification</a>
+<ul>
+<li><a href="#org80fa128">3.1. system verilog&#xa0;&#xa0;&#xa0;<span class="tag"><span class="SV">SV</span></span></a>
+<ul>
+<li><a href="#org725c591">3.1.1. include V.S. filelist</a></li>
+<li><a href="#org3c2d737">3.1.2. UVM&#xa0;&#xa0;&#xa0;<span class="tag"><span class="UVM">UVM</span></span></a></li>
+<li><a href="#org044ebf9">3.1.3. Task &amp; function port value not changes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="not">not</span>&#xa0;<span class="pass">pass</span>&#xa0;<span class="port">port</span>&#xa0;<span class="Function">Function</span>&#xa0;<span class="Task">Task</span></span></a></li>
+<li><a href="#orgacf3eb9">3.1.4. Use macro as string.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="String">String</span>&#xa0;<span class="Macro">Macro</span></span></a></li>
+<li><a href="#orgdd723dc">3.1.5. critical signal control should be inside interface. Do not control clk in class with virtual interface.</a></li>
+<li><a href="#org08b2d6b">3.1.6. Do not use <b>define</b> in test-bench&#xa0;&#xa0;&#xa0;<span class="tag"><span class="testbench">testbench</span>&#xa0;<span class="Macro">Macro</span>&#xa0;<span class="define">define</span></span></a></li>
+<li><a href="#org1711452">3.1.7. predefined macro in system verilog&#xa0;&#xa0;&#xa0;<span class="tag"><span class="FILE">FILE</span>&#xa0;<span class="LINE">LINE</span></span></a></li>
+</ul>
+</li>
+<li><a href="#orged29ac8">3.2. simulation directory structure</a>
+<ul>
+<li><a href="#org24c17ff">3.2.1. tree</a></li>
+<li><a href="#orgb44f103">3.2.2. makefile1</a></li>
+</ul>
+</li>
+<li><a href="#org3eb85f3">3.3. FSDB division</a>
+<ul>
+<li><a href="#orgd0ef512">3.3.1. By size</a></li>
+<li><a href="#org9612714">3.3.2. by time</a></li>
+</ul>
+</li>
+<li><a href="#orgb74ab9c">3.4. AMS</a>
+<ul>
+<li><a href="#orgfd6034f">3.4.1. verilog-ams</a></li>
+<li><a href="#org9ebcb31">3.4.2. mix signals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd47e191">4. emacs</a>
+<ul>
+<li><a href="#org8382674">4.1. \n \t \m</a></li>
+<li><a href="#org4a18f3a">4.2. REGEX</a></li>
+<li><a href="#orgba02cf3">4.3. gtags</a></li>
+</ul>
+</li>
+<li><a href="#orgdb0517f">5. shell</a>
+<ul>
+<li><a href="#org8d9b9c6">5.1. value test in cshell</a></li>
+<li><a href="#org12b3400">5.2. multi-thread</a>
+<ul>
+<li><a href="#org88536f6">5.2.1. xargs</a></li>
+<li><a href="#org20b007c">5.2.2. gnu parallel</a></li>
+<li><a href="#org8aac712">5.2.3. shell script</a></li>
+</ul>
+</li>
+<li><a href="#orgccda3ad">5.3. timestamp</a></li>
+<li><a href="#orgaf229a0">5.4. valuable export</a></li>
+<li><a href="#orge32a64e">5.5. LSF</a></li>
+<li><a href="#orgd21f349">5.6. sed</a></li>
+<li><a href="#org68c6abd">5.7. xargs&#xa0;&#xa0;&#xa0;<span class="tag"><span class="bash">bash</span>&#xa0;<span class="argument">argument</span>&#xa0;<span class="Function">Function</span></span></a></li>
+</ul>
+</li>
+<li><a href="#orgdbd91ae">6. vim</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3777e48" class="outline-2">
+<h2 id="org3777e48"><span class="section-number-2">1</span> ARM</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org8d5f473" class="outline-3">
+<h3 id="org8d5f473"><span class="section-number-3">1.1</span> assemble</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-org3879835" class="outline-4">
+<h4 id="org3879835"><span class="section-number-4">1.1.1</span> data copy continuous</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<div class="org-src-container">
+<pre class="src src-asm"><span style="color: #93E0E3;">num</span> <span style="color: #F0DFAF; font-weight: bold;">EQU</span> 20<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#23450;&#20041;&#19968;&#20010;&#24120;&#37327;num&#65292;&#20540;&#20026;20</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">---------------------------------------------------------------------------------------------------</span>
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">AREA&#20998;&#26512;&#22914;&#19979;&#65306;</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#35821;&#27861;&#26684;&#24335;&#65306;</span>
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">AREA   &#27573;&#21517;  &#23646;&#24615;1&#65292;&#23646;&#24615;2&#65292;&#12290;&#12290;&#12290;</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">AREA&#20266;&#25351;&#20196;&#29992;&#20110;&#23450;&#20041;&#19968;&#20010;&#20195;&#30721;&#27573;&#25110;&#25968;&#25454;&#27573;&#12290;&#20854;&#20013;&#27573;&#21517;&#33509;&#20197;&#25968;&#23383;&#24320;&#22836;&#65292;&#21017;&#35813;&#27573;&#21517;&#38656;&#29992;"|"</span>
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#25324;&#36215;&#26469;&#65292;&#22914;|1_test|;&#23646;&#24615;&#23383;&#27573;&#34920;&#31034;&#35813;&#20195;&#30721;&#27573;&#65288;&#25110;&#25968;&#25454;&#27573;&#65289; &#30340;&#30456;&#20851;&#23646;&#24615;&#65292;&#22810;&#20010;&#23646;&#24615;&#29992;&#36887;&#21495;&#20998;&#24320;&#24120;&#29992;</span>
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#23646;&#24615;&#22914;&#19979;&#65306;</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">CODE&#23646;&#24615;&#65306;&#29992;&#20110;&#23450;&#20041;&#20195;&#30721;&#27573;&#65292;&#40664;&#35748;&#20026;READONLY</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">DATA&#23646;&#24615;&#65306;&#29992;&#20110;&#23450;&#20041;&#25968;&#25454;&#27573;&#65292;&#40664;&#35748;&#20026;READWRITE</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">READONLY&#23646;&#24615;&#65306;&#25351;&#23450;&#26412;&#27573;&#20026;&#21482;&#35835;&#65292;&#20195;&#30721;&#27573;&#40664;&#35748;&#20026;READONLY</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">READWRITE&#23646;&#24615;&#65306;&#25351;&#23450;&#26412;&#27573;&#20026;&#21487;&#35835;&#21487;&#20889;&#65292;&#25968;&#25454;&#27573;&#30340;&#40664;&#35748;&#23646;&#24615;&#20026;READWRITE</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">ALIGN&#23646;&#24615;&#65306;&#20351;&#29992;&#26041;&#24335;&#20026;ALIGN&#34920;&#36798;&#24335;&#12290;</span>
+
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">COMMON&#23646;&#24615;&#65306;&#35813;&#23646;&#24615;&#23450;&#20041;&#19968;&#20010;&#36890;&#29992;&#30340;&#27573;&#65292;&#19981;&#21253;&#21547;&#20219;&#20309;&#30340;&#29992;&#25143;&#20195;&#30721;&#21644;&#25968;&#25454;&#12290;&#21508;&#28304;&#25991;&#20214;&#20013;&#21516;&#21517;&#30340;COMMON&#27573;&#20849;&#20139;</span>
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#21516;&#19968;&#27573;&#23384;&#20648;&#21333;&#20803;</span>
+<span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">---------------------------------------------------------------------------------------------------</span>
+
+
+    <span style="color: #F0DFAF; font-weight: bold;">AREA</span>    EXAMPLE2,CODE,READONLY  <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#22768;&#26126;&#19968;&#20010;&#20195;&#30721;&#27573;&#65292;&#21517;&#20026;EXAMPLE2</span>
+    <span style="color: #F0DFAF; font-weight: bold;">ENTRY</span>   <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#25351;&#23450;&#31243;&#24207;&#20837;&#21475;&#28857;</span>
+    <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">-----------------------------------------------------------------------------------------------  </span>
+    <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">ENTRY:&#19968;&#20010;&#23436;&#25972;&#30340;&#27719;&#32534;&#31243;&#24207;&#20013;&#33267;&#23569;&#35201;&#26377;&#19968;&#20010;ENTRY&#65292;&#20063;&#21487;&#20197;&#26377;&#22810;&#20010;&#12290;&#24403;&#26377;&#22810;&#20010;ENTRY&#26102;&#65292;&#31243;&#24207;&#30340;&#30495;&#27491;&#20837;&#21475;&#28857;&#30001;</span>
+    <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#36830;&#25509;&#22120;&#25351;&#23450;&#65292;&#20294;&#22312;&#19968;&#20010;&#28304;&#25991;&#20214;&#37324;&#26368;&#22810;&#21482;&#33021;&#26377;&#19968;&#20010;ENTRY&#65292;&#20063;&#21487;&#20197;&#27809;&#26377;&#12290;</span>
+    <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">-----------------------------------------------------------------------------------------------</span>
+<span style="color: #93E0E3;">Start</span>
+    <span style="color: #F0DFAF; font-weight: bold;">LDR</span>     r0, =src            <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  r0 = pointer to source block &#25351;&#21521;&#28304;&#25805;&#20316;&#25968;&#30340;&#39318;&#22320;&#22336;*/</span>
+    <span style="color: #F0DFAF; font-weight: bold;">LDR</span>     r1, =dst            <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  r1 = pointer to destination block &#25351;&#21521;&#30446;&#30340;&#25805;&#20316;&#25968;&#30340;&#39318;&#22320;&#22336;*/</span>
+    <span style="color: #F0DFAF; font-weight: bold;">MOV</span>     r2, #num            <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  r2 = number of words to copy &#35201;&#25335;&#36125;&#22823;&#23567;*/</span>
+    <span style="color: #F0DFAF; font-weight: bold;">MOV</span>     sp, #0x400          <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  set up stack pointer (r13) &#30830;&#23450;&#22534;&#26632;&#22320;&#22336;*/</span>
+
+<span style="color: #93E0E3;">blockcopy</span>
+    <span style="color: #F0DFAF; font-weight: bold;">MOVS</span>    r3,r2, LSR #3       <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  number of eight word multiples */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">BEQ</span>     copywords           <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  less than eight words to move ? */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">STMFD</span>   sp!, <span style="color: #DCDCCC;">{</span>r4-r11<span style="color: #DCDCCC;">}</span>       <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  save some working registers */</span>
+<span style="color: #93E0E3;">octcopy</span>
+    <span style="color: #F0DFAF; font-weight: bold;">LDMIA</span>   r0!, <span style="color: #DCDCCC;">{</span>r4-r11<span style="color: #DCDCCC;">}</span>       <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  load 8 words from the source */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">STMIA</span>   r1!, <span style="color: #DCDCCC;">{</span>r4-r11<span style="color: #DCDCCC;">}</span>       <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  and put them at the destination */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">SUBS</span>    r3, r3, #1          <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  decrement the counter */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">BNE</span>     octcopy             <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  ... copy more */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">LDMFD</span>   sp!, <span style="color: #DCDCCC;">{</span>r4-r11<span style="color: #DCDCCC;">}</span>       <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  don't need these now - restore originals */</span>
+<span style="color: #93E0E3;">copywords</span>
+    <span style="color: #F0DFAF; font-weight: bold;">ANDS</span>    r2, r2, #7          <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  number of odd words to copy */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">BEQ</span>     stop                <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  No words left to copy ? */</span>
+<span style="color: #93E0E3;">wordcopy</span>
+    <span style="color: #F0DFAF; font-weight: bold;">LDR</span>     r3, <span style="color: #DCDCCC;">[</span>r0<span style="color: #DCDCCC;">]</span>, #4        <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  a word from the source */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">STR</span>     r3, <span style="color: #DCDCCC;">[</span>r1<span style="color: #DCDCCC;">]</span>, #4        <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  store a word to the destination */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">SUBS</span>    r2, r2, #1          <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  decrement the counter */</span>
+    <span style="color: #F0DFAF; font-weight: bold;">BNE</span>     wordcopy            <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*  ... copy more */</span>
+<span style="color: #93E0E3;">stop</span>
+    <span style="color: #F0DFAF; font-weight: bold;">B</span>       stop                <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">/*&#22312;&#27492;&#36827;&#20837;&#27515;&#24490;&#29615;*/</span>
+
+    <span style="color: #F0DFAF; font-weight: bold;">AREA</span>    blockdata,DATA,READWRITE    <span style="color: #5F7F5F;">;</span><span style="color: #7F9F7F;">&#22768;&#26126;&#19968;&#20010;&#25968;&#25454;&#27573;&#65292;&#21517;&#20026;blockdata</span>
+
+<span style="color: #93E0E3;">src</span> <span style="color: #F0DFAF; font-weight: bold;">DCD</span> 1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4
+
+<span style="color: #93E0E3;">dst</span> <span style="color: #F0DFAF; font-weight: bold;">DCD</span> 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    <span style="color: #F0DFAF; font-weight: bold;">END</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb17f271" class="outline-2">
+<h2 id="orgb17f271"><span class="section-number-2">2</span> design</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org7c8b729" class="outline-3">
+<h3 id="org7c8b729"><span class="section-number-3">2.1</span> verilog</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-orge7c9e81" class="outline-4">
+<h4 id="orge7c9e81"><span class="section-number-4">2.1.1</span> register&#xa0;&#xa0;&#xa0;<span class="tag"><span class="register">register</span></span></h4>
+<div class="outline-text-4" id="text-2-1-1">
+</div>
+<ol class="org-ol">
+<li><a id="orgdf45c5c"></a>firmware configure part of register without read first.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="without">without</span>&#xa0;<span class="read">read</span>&#xa0;<span class="write">write</span>&#xa0;<span class="part">part</span></span><br />
+<div class="outline-text-5" id="text-2-1-1-1">
+<p>
+Divid register into 2 parts. 
+First part as regesiter value.
+Second part as write enable bit.
+When try to configure any-bits of the low register,
+the Second part of the register must set to active respectily.
+If the Second part does not set to active, the first parts won't changes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #7CB8BB;">reg</span> <span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">15</span>:<span style="color: #BFEBBF;">0</span><span style="color: #DCDCCC;">]</span> value;
+<span style="color: #7CB8BB;">wire</span> <span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">15</span>:<span style="color: #BFEBBF;">0</span><span style="color: #DCDCCC;">]</span> value_we = wdata<span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">31</span>:<span style="color: #BFEBBF;">16</span><span style="color: #DCDCCC;">]</span>;
+<span style="color: #7CB8BB;">wire</span> <span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">31</span>:<span style="color: #BFEBBF;">0</span><span style="color: #DCDCCC;">]</span> register = <span style="color: #DCDCCC;">{</span><span style="color: #BFEBBF;">16</span>'d0, value<span style="color: #DCDCCC;">}</span>;
+<span style="color: #F0DFAF; font-weight: bold;">always</span> <span style="color: #7CB8BB;">@</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">posedge</span> clock <span style="color: #7CB8BB;">or</span> <span style="color: #F0DFAF; font-weight: bold;">negedge</span> resetn<span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">if</span>  <span style="color: #DCDCCC;">(</span>!resetn<span style="color: #DCDCCC;">)</span>
+   value &lt;= <span style="color: #BFEBBF;">16</span>'d0;
+<span style="color: #F0DFAF; font-weight: bold;">else</span> <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span>wr<span style="color: #DCDCCC;">)</span>
+   value &lt;= wdata<span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">15</span>:<span style="color: #BFEBBF;">0</span><span style="color: #DCDCCC;">]</span> &amp; value_we;
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgf6ce92c" class="outline-4">
+<h4 id="orgf6ce92c"><span class="section-number-4">2.1.2</span> Usage of define value.</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #94BFF3;">`define</span> FLASH_HEX ../../st/software/code.dua
+<span style="color: #93E0E3;">readmemh</span><span style="color: #DCDCCC;">(</span>`<span style="color: #CC9393;">"`FLASH_HEX`"</span>,CodeTmp<span style="color: #DCDCCC;">)</span>;
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1e97e5b" class="outline-4">
+<h4 id="org1e97e5b"><span class="section-number-4">2.1.3</span> operator priority&#xa0;&#xa0;&#xa0;<span class="tag"><span class="priority">priority</span>&#xa0;<span class="oprerator">oprerator</span></span></h4>
+<div class="outline-text-4" id="text-2-1-3">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">assign</span> a = b | c | d &amp;&amp; e;
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">equel to </span>
+<span style="color: #F0DFAF; font-weight: bold;">assign</span> a = <span style="color: #DCDCCC;">(</span> b | c | d <span style="color: #DCDCCC;">)</span> &amp;&amp; e;
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">we want</span>
+<span style="color: #F0DFAF; font-weight: bold;">assign</span> a = b | c | <span style="color: #DCDCCC;">(</span>d &amp;&amp; e<span style="color: #DCDCCC;">)</span>;
+</pre>
+</div>
+</div>
+<ol class="org-ol">
+<li><a id="orge199200"></a>more quote when it is neededd.<br /></li>
+<li><a id="org47b33cd"></a>use oprerator for what it mean to be used<br />
+<ol class="org-ol">
+<li><a id="orgfb796a9"></a>(|, &amp;) bit operator<br /></li>
+<li><a id="org66a4bff"></a>(||, &amp;&amp;) logic oprerator, expectially in conditional statement.<br /></li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org9905f1a" class="outline-2">
+<h2 id="org9905f1a"><span class="section-number-2">3</span> verification</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org80fa128" class="outline-3">
+<h3 id="org80fa128"><span class="section-number-3">3.1</span> system verilog&#xa0;&#xa0;&#xa0;<span class="tag"><span class="SV">SV</span></span></h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-org725c591" class="outline-4">
+<h4 id="org725c591"><span class="section-number-4">3.1.1</span> include V.S. filelist</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+Filelist is hard to maintain.
+Use include can avoid path problems.
+</p>
+</div>
+</div>
+<div id="outline-container-org3c2d737" class="outline-4">
+<h4 id="org3c2d737"><span class="section-number-4">3.1.2</span> UVM&#xa0;&#xa0;&#xa0;<span class="tag"><span class="UVM">UVM</span></span></h4>
+<div class="outline-text-4" id="text-3-1-2">
+</div>
+<ol class="org-ol">
+<li><a id="org1b7b510"></a>uvm_callback<br />
+<div class="outline-text-5" id="text-3-1-2-1">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> my_callback <span style="color: #ffa500; font-weight: bold;">extends</span> uvm_callback;
+<span style="color: #94BFF3;">`uvm_object_utils</span><span style="color: #DCDCCC;">(</span>my_callback<span style="color: #DCDCCC;">)</span>
+  <span style="color: #ffa500; font-weight: bold;">virtual</span> <span style="color: #F0DFAF; font-weight: bold;">task</span> <span style="color: #93E0E3;">cb_task</span><span style="color: #DCDCCC;">(</span>my_driver drv, my_transaction tr<span style="color: #DCDCCC;">)</span>;
+  <span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #7CB8BB;">typedef</span> uvm_callbacks<span style="color: #7CB8BB;"> #</span><span style="color: #DCDCCC;">(</span><span style="color: #7CB8BB;">my_driver, my_callback</span><span style="color: #DCDCCC;">)</span> my_cb_pool;
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> my_tc <span style="color: #ffa500; font-weight: bold;">extends</span> uvm_test;
+my_callback my_cb;
+<span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">void</span> <span style="color: #93E0E3;">connect_phase</span><span style="color: #DCDCCC;">(</span>uvm_phase phase<span style="color: #DCDCCC;">)</span>;
+  my_cb = my_callback::type_id::<span style="color: #93E0E3;">create</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"my_cb"</span><span style="color: #DCDCCC;">)</span>;
+  my_cb_pool::<span style="color: #93E0E3;">add</span><span style="color: #DCDCCC;">(</span>env.agt.drv, my_cb<span style="color: #DCDCCC;">)</span>;
+<span style="color: #F0DFAF; font-weight: bold;">endfunction</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">task</span> my_driver::<span style="color: #93E0E3;">run_phase</span><span style="color: #DCDCCC;">()</span>;
+   <span style="color: #94BFF3;">`uvm_do_callbacks</span><span style="color: #DCDCCC;">(</span>my_driver, my_callback,
+   <span style="color: #93E0E3;">cb_task</span><span style="color: #BFEBBF;">(</span><span style="color: #ffa500; font-weight: bold;">this</span>, req<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org5819572"></a>assign values to child component in <i>build_phase</i> for phase excution order.<br />
+<div class="outline-text-5" id="text-3-1-2-2">
+<p>
+If a component directly assigns the values of variables (including virtual interfaces)
+in its child components, it should do so in its build_phase method after creating 
+those child components.
+</p>
+</div>
+</li>
+
+<li><a id="orgb1e698d"></a>Getting p_sequencer of sequence.<br />
+<div class="outline-text-5" id="text-3-1-2-3">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> my_sequence <span style="color: #ffa500; font-weight: bold;">extends</span> uvm_sequence<span style="color: #7CB8BB;"> #</span><span style="color: #DCDCCC;">(</span><span style="color: #7CB8BB;">my_tx</span><span style="color: #DCDCCC;">)</span>;
+  <span style="color: #94BFF3;">`uvm_object_utils</span><span style="color: #DCDCCC;">(</span>my_sequence<span style="color: #DCDCCC;">)</span>
+  <span style="color: #94BFF3;">`uvm_declare_p_sequencer</span><span style="color: #DCDCCC;">(</span>the_sequencer_class_name<span style="color: #DCDCCC;">)</span>
+  ...
+
+  <span style="color: #F0DFAF; font-weight: bold;">task</span> pre_start;
+    <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Get the configuration object associated with the sequencer component</span>
+    <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">on which this sequence is currently running</span>
+    uvm_config_db<span style="color: #7CB8BB;"> #</span><span style="color: #DCDCCC;">(</span><span style="color: #7CB8BB;">my_config</span><span style="color: #DCDCCC;">)</span>::<span style="color: #93E0E3;">get</span><span style="color: #DCDCCC;">(</span>p_sequencer, <span style="color: #CC9393;">""</span>,  <span style="color: #CC9393;">"config"</span>, m_config<span style="color: #DCDCCC;">)</span>;
+  <span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+
+  <span style="color: #F0DFAF; font-weight: bold;">task</span> body;
+    <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Set the arbitration algorithm of the current sequencer</span>
+    p_sequencer.<span style="color: #93E0E3;">set_arbitration</span><span style="color: #DCDCCC;">(</span>SEQ_ARB_STRICT_RANDOM<span style="color: #DCDCCC;">)</span>;
+    <span style="color: #7CB8BB;">begin</span>
+      sequence2 seq2;
+      seq2 = sequence2::type_id::<span style="color: #93E0E3;">create</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"seq2"</span><span style="color: #DCDCCC;">)</span>;
+      seq2.<span style="color: #93E0E3;">set_item_context</span><span style="color: #DCDCCC;">(</span><span style="color: #ffa500; font-weight: bold;">this</span>, p_sequencer<span style="color: #DCDCCC;">)</span>;
+      <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span> !seq2.<span style="color: #93E0E3;">randomize</span><span style="color: #BFEBBF;">()</span> <span style="color: #DCDCCC;">)</span>
+        <span style="color: #94BFF3;">`uvm_error</span><span style="color: #DCDCCC;">(</span><span style="color: #93E0E3;">get_type_name</span><span style="color: #BFEBBF;">()</span>, <span style="color: #CC9393;">"Randomize failed"</span><span style="color: #DCDCCC;">)</span>
+      <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Start a child sequence on the current sequencer</span>
+      seq2.<span style="color: #93E0E3;">start</span><span style="color: #DCDCCC;">(</span>p_sequencer, <span style="color: #ffa500; font-weight: bold;">this</span><span style="color: #DCDCCC;">)</span>;
+    ...
+  <span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org36c0ac2"></a>Do not use wildcard import at compilation unit scope.<br />
+<div class="outline-text-5" id="text-3-1-2-4">
+<p>
+That is, do not write import declarations such as <i>import my_package::*;</i>
+outside of any module or package, because doing so would make any imported
+names visible across all modules and packages in the file, thus defeating 
+the purpose of using packages to restrict the scope of names. This advice 
+applies to all import declarations at compilation unit scope, not just 
+wildcard imports, but wildcard imports are the most damaging.
+</p>
+</div>
+</li>
+<li><a id="orgaad35cd"></a>backdoor access through hierachy<br />
+<ol class="org-ol">
+<li><a id="org3ca4e29"></a>uvm routine<br />
+<div class="outline-text-6" id="text-3-1-2-5-1">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #ffa500; font-weight: bold;">import</span> <span style="color: #CC9393;">"DPI-C"</span> <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">int</span> <span style="color: #93E0E3;">uvm_hdl_check_path</span><span style="color: #DCDCCC;">(</span> <span style="color: #ffa500; font-weight: bold;">string</span>  path  <span style="color: #DCDCCC;">)</span>
+<span style="color: #ffa500; font-weight: bold;">import</span> <span style="color: #CC9393;">"DPI-C"</span> <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">int</span> <span style="color: #93E0E3;">uvm_hdl_deposit</span><span style="color: #DCDCCC;">(</span>  <span style="color: #ffa500; font-weight: bold;">string</span>  path, uvm_hdl_data_t  value <span style="color: #DCDCCC;">)</span>
+<span style="color: #ffa500; font-weight: bold;">import</span> <span style="color: #CC9393;">"DPI-C"</span> <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">int</span> <span style="color: #93E0E3;">uvm_hdl_force</span><span style="color: #DCDCCC;">(</span>  <span style="color: #ffa500; font-weight: bold;">string</span>  path, uvm_hdl_data_t  value <span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">task</span> <span style="color: #93E0E3;">uvm_hdl_force_time</span><span style="color: #DCDCCC;">(</span>  <span style="color: #ffa500; font-weight: bold;">string</span>  path, uvm_hdl_data_t  value,  <span style="color: #7CB8BB;">time</span>  force_time   =  <span style="color: #DCDCCC;">)</span>
+<span style="color: #ffa500; font-weight: bold;">import</span> <span style="color: #CC9393;">"DPI-C"</span> <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">int</span> <span style="color: #93E0E3;">uvm_hdl_release_and_read</span><span style="color: #DCDCCC;">(</span><span style="color: #ffa500; font-weight: bold;">string</span>   path, <span style="color: #7CB8BB;">inout</span>   uvm_hdl_data_t  value<span style="color: #DCDCCC;">)</span>
+<span style="color: #ffa500; font-weight: bold;">import</span> <span style="color: #CC9393;">"DPI-C"</span> <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">int</span> <span style="color: #93E0E3;">uvm_hdl_release</span><span style="color: #DCDCCC;">(</span>  <span style="color: #ffa500; font-weight: bold;">string</span>  path  <span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org510e7fb"></a>disavantage<br />
+<ol class="org-ol">
+<li><a id="org2ccbdd6"></a>not working in post-simulation<br /></li>
+<li><a id="org37addd4"></a>need extra option('-debug' '-debug_accsess+all') that will slow down simulation<br /></li>
+</ol>
+</li>
+<li><a id="org916d99b"></a>better ways is through (interface)<br /></li>
+</ol>
+</li>
+<li><a id="org540089e"></a>get_response()<br />
+<div class="outline-text-5" id="text-3-1-2-6">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #ffa500; font-weight: bold;">virtual</span> <span style="color: #F0DFAF; font-weight: bold;">task</span> <span style="color: #93E0E3;">get_response</span><span style="color: #DCDCCC;">(</span>
+ <span style="color: #7CB8BB;">output</span> RSP response, <span style="color: #7CB8BB;">input</span> <span style="color: #ffa500; font-weight: bold;">int</span> transaction_id = -<span style="color: #BFEBBF;">1</span>
+<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+By default, sequences must retrieve responses by calling get_response. If no
+transaction_id is specified, this task will return the next response sent to this sequence.
+If no response is available in the response queue, the method will block until a response
+is received.
+</p>
+
+
+<p>
+If a transaction_id is parameter is specified, the task will block until a response with that
+transaction_id is received in the response queue.
+</p>
+
+
+<p>
+The default size of the response queue is 8. The get_response method must be called
+soon enough to avoid an overflow of the response queue to prevent responses from
+being dropped.
+</p>
+
+
+<p>
+If a response is dropped in the response queue, an error will be reported unless the error
+reporting is disabled via set_response_queue_error_report_disabled.
+</p>
+</div>
+</li>
+<li><a id="org523930e"></a>uvm_event, uvm_event_pool, uvm_event_callback, uvm_barier, uvm_barier_pool<br />
+<div class="outline-text-5" id="text-3-1-2-7">
+<p>
+<a href="http://www.eetop.cn/blog/html/28/1561828-5940103.html">http://www.eetop.cn/blog/html/28/1561828-5940103.html</a>
+</p>
+</div>
+</li>
+<li><a id="org9b3e23e"></a>VIP, Do not modify VIP ports.<br />
+<div class="outline-text-5" id="text-3-1-2-8">
+<p>
+May course error.
+e.g. Interface conflict.
+In EFC tc07 prefetch, in reset sequence, ahb_if is reset by manual sequence(efc_ahb_in_reset).
+And vip found reset action, vip reset ahb_if as well. It cause a conflict onf ahb_if. 
+And transaction went wrong in later waveform.
+</p>
+</div>
+</li>
+<li><a id="orge12d81b"></a>Customizing UVM Message Format<br />
+<div class="outline-text-5" id="text-3-1-2-9">
+<p>
+[<a href="http://cluelogic.com/2011/05/customizing-uvm-message-format/">http://cluelogic.com/2011/05/customizing-uvm-message-format/</a>]
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> my_report_server <span style="color: #ffa500; font-weight: bold;">extends</span> uvm_report_server;
+   <span style="color: #ffa500; font-weight: bold;">virtual</span> <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">string</span> <span style="color: #93E0E3;">compose_message</span><span style="color: #DCDCCC;">(</span> uvm_severity severity,
+                                            <span style="color: #ffa500; font-weight: bold;">string</span> name,
+                                            <span style="color: #ffa500; font-weight: bold;">string</span> id,
+                                            <span style="color: #ffa500; font-weight: bold;">string</span> message,
+                                            <span style="color: #ffa500; font-weight: bold;">string</span> filename,
+                                            <span style="color: #ffa500; font-weight: bold;">int</span> line <span style="color: #DCDCCC;">)</span>;
+      uvm_severity_type severity_type = uvm_severity_type'<span style="color: #DCDCCC;">(</span> severity <span style="color: #DCDCCC;">)</span>;
+      <span style="color: #F0DFAF; font-weight: bold;">return</span> <span style="color: #F0DFAF; font-weight: bold;">$psprintf</span><span style="color: #DCDCCC;">(</span> <span style="color: #CC9393;">"%-8s | %16s | %2d | %0t | %-21s | %-7s | %s"</span>,
+             severity_type.<span style="color: #93E0E3;">name</span><span style="color: #BFEBBF;">()</span>, filename, line, <span style="color: #F0DFAF; font-weight: bold;">$time</span>, name, id, message <span style="color: #DCDCCC;">)</span>;
+   <span style="color: #F0DFAF; font-weight: bold;">endfunction</span>: compose_message
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>: my_report_server
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> my_test <span style="color: #ffa500; font-weight: bold;">extends</span> uvm_test;
+   <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">...</span>
+   <span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">void</span> <span style="color: #93E0E3;">start_of_simulation</span><span style="color: #DCDCCC;">()</span>;
+      my_report_server my_server = <span style="color: #ffa500; font-weight: bold;">new</span>;
+      uvm_report_server::<span style="color: #93E0E3;">set_server</span><span style="color: #DCDCCC;">(</span> my_server <span style="color: #DCDCCC;">)</span>;
+   <span style="color: #F0DFAF; font-weight: bold;">endfunction</span>: start_of_simulation
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>: my_test
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">UVM_INFO my_uvm_report.sv(83) @ 0: reporter [top] This is a message from top.</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">UVM_INFO | my_uvm_report.sv | 68 | 0 | uvm_test_top          | my_test | This is a message from my_test.</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">UVM_INFO | my_uvm_report.sv | 39 | 0 | uvm_test_top.my_env_h | my_env  | This is a message from my_env.</span>
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">string</span> <span style="color: #93E0E3;">getShortFileName</span><span style="color: #DCDCCC;">(</span><span style="color: #ffa500; font-weight: bold;">string</span> s<span style="color: #DCDCCC;">)</span>;
+   <span style="color: #ffa500; font-weight: bold;">int</span> offset = <span style="color: #BFEBBF;">0</span>;
+   <span style="color: #ffa500; font-weight: bold;">int</span> lastChar;
+   <span style="color: #ffa500; font-weight: bold;">string</span> shortFileName;
+   <span style="color: #ffa500; font-weight: bold;">int</span> slashPosition;
+
+   lastChar = s.<span style="color: #93E0E3;">len</span><span style="color: #DCDCCC;">()</span>-<span style="color: #BFEBBF;">1</span>;
+   <span style="color: #F0DFAF; font-weight: bold;">for</span> <span style="color: #DCDCCC;">(</span><span style="color: #ffa500; font-weight: bold;">int</span> i = lastChar; i &gt;= offset; i=i-<span style="color: #BFEBBF;">1</span><span style="color: #DCDCCC;">)</span> <span style="color: #7CB8BB;">begin</span>
+     <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span>s.<span style="color: #93E0E3;">getc</span><span style="color: #BFEBBF;">(</span>i<span style="color: #BFEBBF;">)</span> <span style="color: #ffa500; font-weight: bold;">inside</span> <span style="color: #BFEBBF;">{</span><span style="color: #CC9393;">"/"</span>, <span style="color: #CC9393;">"\\"</span><span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span> <span style="color: #7CB8BB;">begin</span>
+       slashPosition = i;
+       <span style="color: #F0DFAF; font-weight: bold;">break</span>;
+     <span style="color: #7CB8BB;">end</span>
+   <span style="color: #7CB8BB;">end</span> <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">for loop</span>
+
+    shortFileName = s.<span style="color: #93E0E3;">substr</span><span style="color: #DCDCCC;">(</span>slashPosition+<span style="color: #BFEBBF;">1</span>, lastChar<span style="color: #DCDCCC;">)</span>;
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> shortFileName;
+ <span style="color: #F0DFAF; font-weight: bold;">endfunction</span>
+</pre>
+</div>
+</div>
+</li>
+<li><a id="orgbd96822"></a>randomize bug of vcs<br />
+<div class="outline-text-5" id="text-3-1-2-10">
+<p>
+Use config_db to sequence instead of randomize constraint.
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> a;
+<span style="color: #ffa500; font-weight: bold;">rand</span> <span style="color: #ffa500; font-weight: bold;">int</span> a1;
+<span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">new</span><span style="color: #DCDCCC;">()</span>;
+<span style="color: #F0DFAF; font-weight: bold;">endfunction</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">class</span> b;
+<span style="color: #ffa500; font-weight: bold;">rand</span> <span style="color: #ffa500; font-weight: bold;">int</span> a1;
+<span style="color: #ffa500; font-weight: bold;">int</span> a1_tmp;
+a a;
+<span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #ffa500; font-weight: bold;">new</span><span style="color: #DCDCCC;">(</span>;
+<span style="color: #F0DFAF; font-weight: bold;">endfunction</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #BFEBBF;">test</span>;
+<span style="color: #5F7F5F;">//</span><span style="color: #7F9F7F;">not working</span>
+a.<span style="color: #93E0E3;">randomize</span><span style="color: #BFEBBF;">()</span> <span style="color: #ffa500; font-weight: bold;">with</span> <span style="color: #BFEBBF;">{</span>a1 == <span style="color: #ffa500; font-weight: bold;">this</span>.a1<span style="color: #BFEBBF;">}</span>;
+
+<span style="color: #5F7F5F;">//</span><span style="color: #7F9F7F;">working</span>
+a1_tmp=a1;
+a.<span style="color: #93E0E3;">randomize</span><span style="color: #BFEBBF;">()</span> <span style="color: #ffa500; font-weight: bold;">with</span> <span style="color: #BFEBBF;">{</span>a1 == a1_tmp<span style="color: #BFEBBF;">}</span>;
+<span style="color: #F0DFAF; font-weight: bold;">endfunction</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org646f23d"></a>save/restore to run different cases&#xa0;&#xa0;&#xa0;<span class="tag"><span class="define">define</span>&#xa0;<span class="Macro">Macro</span>&#xa0;<span class="restore">restore</span>&#xa0;<span class="save">save</span></span><br />
+<ol class="org-ol">
+<li><a id="orge9f761f"></a>basic<br />
+<div class="outline-text-6" id="text-3-1-2-11-1">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">if</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">$test$plusargs</span><span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">"seq"</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span> <span style="color: #7CB8BB;">begin</span>
+    <span style="color: #F0DFAF; font-weight: bold;">$value$plusargs</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"seq=%s"</span>, seq_name<span style="color: #DCDCCC;">)</span>; 
+    <span style="color: #F0DFAF; font-weight: bold;">$display</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"The value of sequence::%s"</span>, seq_name<span style="color: #DCDCCC;">)</span>;
+  <span style="color: #7CB8BB;">end</span>
+  <span style="color: #F0DFAF; font-weight: bold;">$cast</span><span style="color: #DCDCCC;">(</span>exec_seq, factory.<span style="color: #93E0E3;">create_object_by_name</span><span style="color: #BFEBBF;">(</span>seq_name<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>;
+  exec_seq.<span style="color: #93E0E3;">start</span><span style="color: #DCDCCC;">(</span>ubus_example_tb0.ubus0.masters<span style="color: #BFEBBF;">[</span><span style="color: #BFEBBF;">0</span><span style="color: #BFEBBF;">]</span>.sequencer<span style="color: #DCDCCC;">)</span>;
+</pre>
+</div>
+<ol class="org-ol">
+<li>insert point of time want to save.</li>
+<li>use $test$plusargs to check run_time option</li>
+<li>cast seq to type that is wanted.</li>
+</ol>
+</div>
+</li>
+<li><a id="orgd00543c"></a>article<br />
+<div class="outline-text-6" id="text-3-1-2-11-2">
+<p>
+Run-Time Save-Restore Strategy with UVM and VCS
+</p>
+
+
+<p>
+In many verification environments, 
+you re-use the same configuration cycles across different testcases. 
+These cycles might involve writing and reading from different configuration and status registers, 
+loading program memories, and other similar tasks to set up a DUT for the targeted stimulus. 
+In many of these environments, the time taken during these configuration cycles are very long. 
+Also, there is a lot of redundancy as the verification engineers have to run the same set of 
+verified configuration cycles for different testcases leading to a loss in productivity. 
+This is especially true for complex verification environments with multiple interfaces which require
+different components to be configured.
+</p>
+
+
+<p>
+The Verilog language provides an option of saving the state of the design and the testbench at a 
+particular point in time. You can restore the simulation to the same state and continue from there. 
+This can be done by adding appropriate built-in system calls from the Verilog code. 
+VCS provides the same options from the Unified Command Line Interface (UCLI).
+</p>
+
+
+<p>
+However, it is not enough for you to restore simulation from the saved state. 
+For different simulations, you may want to apply different random stimulus to the DUT. 
+In the context of UVM, you would want to run different sequences from a saved state.
+</p>
+
+
+<p>
+This article explains how to achieve the above strategy with the simple existing UBUS example 
+available in the standard UVM installation. You can also refer to the attached example: <a href="ubus_save_restore.tar.gz">ubus_save_restore.tar.gz</a>
+</p>
+
+
+<p>
+Simple changes are made in the environment to show what needs to be done to bring in this additional capability. 
+Within the existing set of tests, the two namely, “test_read_modify_write” and “test_r8_w8_r4_w4”, 
+differ only with respect to the master sequence being executed, that is, “read_modify_write_seq” 
+and “r8_w8_r4_w4_seq” respectively.
+</p>
+
+
+
+<p>
+// Read Modify Write Read Test
+</p>
+
+<p>
+class test_read_modify_write extends ubus_example_base_test;
+   ….
+  virtual function void build_phase(uvm_phase phase);
+   uvm_config_db#(uvm_object_wrapper)::set(this,
+                    "ubus_example_tb0.ubus0.masters[0].sequencer.main_phase",
+                    "default_sequence", read_modify_write_seq::type_id::get());
+   uvm_config_db#(uvm_object_wrapper)::set(this,
+                    "ubus_example_tb0.ubus0.slaves[0].sequencer.main_phase",
+                    "default_sequence", slave_memory_seq::type_id::get());
+   endfunction : build_phase
+endclass : test_read_modify_write
+</p>
+
+
+<p>
+// Large word read/write test
+</p>
+
+<p>
+class test_r8_w8_r4_w4 extends ubus_example_base_test;
+  …
+   virtual function void build_phase(uvm_phase phase);
+     uvm_config_db#(uvm_object_wrapper)::set(this,
+             "ubus_example_tb0.ubus0.masters[0].sequencer.main_phase",
+             "default_sequence", r8_w8_r4_w4_seq::type_id::get());
+     uvm_config_db#(uvm_object_wrapper)::set(this,
+             "ubus_example_tb0.ubus0.slaves[0].sequencer.main_phase",
+                    "default_sequence", slave_memory_seq::type_id::get());
+   endfunction : build_phase
+endclass : test_r8_w8_r4_w4
+</p>
+
+
+<p>
+For example, consider that you have a scenario where you would want to save a simulation once 
+the reset_phase is done and then start executing different sequences post the reset_phase the 
+restored simulations. To demonstrate a similar scenario through the UBUS tests, a delay is
+introduced in the reset_phase of the base test (in a real test, this may correspond to the PLL
+lock, DDR Initialization, Basic DUT Configuration).
+</p>
+
+<p>
+// Base Test
+</p>
+
+<p>
+class ubus_example_base_test extends uvm_test;
+  `uvm_component_utils(ubus_example_base_test)
+  .. .
+  task reset_phase(uvm_phase phase);
+    `uvm_info("reset_phase", "Entering&#x2026;", UVM_NONE)
+    phase.raise_objection(this);
+    #100;
+    phase.drop_objection(this);
+    `uvm_info("reset_phase", "Exiting&#x2026;", UVM_NONE)
+  endtask : reset_phase
+endclass : ubus_example_base_test
+</p>
+
+<p>
+The following snippet shows how the existing tests are modified to bring in 
+the capability of running different tests in different ‘restored’ simulations:
+</p>
+
+<p>
+// 1 Master – 1 Slave Test
+</p>
+
+<p>
+class test_generic_1m_1s extends ubus_example_base_test;
+  `uvm_component_utils(test_generic_1m_1s)
+   ….
+  virtual task main_phase(uvm_phase phase);
+    uvm_sequence_base exec_seq;
+    string seq_name;
+    `uvm_info(“main_phase", "Entering&#x2026;", UVM_NONE)
+    phase.raise_objection(this);
+    super.main_phase(phase);
+    if($test$plusargs("seq")) begin
+      $value$plusargs("seq=%s", seq_name); 
+      $display("The value of sequence::%s", seq_name);
+    end
+    $cast(exec_seq, factory.create_object_by_name(seq_name));
+    exec_seq.start(ubus_example_tb0.ubus0.masters[0].sequencer);
+    phase.drop_objection(this);
+    `uvm_info(“main_phase", "Exiting&#x2026;", UVM_NONE)
+  endtask
+endclass : test_generic_1m_1s
+ As evident in the code, two major modifications are made:
+</p>
+
+<p>
+Shift the setting of the phase default_sequence from the build phase to the start of the main phase.
+</p>
+
+<p>
+Get the name of the sequence as an argument from the command-line and process the string appropriately 
+in the code to execute the sequence on the relevant sequencer.
+</p>
+
+<p>
+As you can see, the changes are kept to a minimum. With this, the above generic framework is ready to 
+be simulated.  In VCS, one of the different ways, the save/restore flow can be enabled as follows.
+</p>
+
+
+<p>
+//Compilation
+</p>
+
+<p>
+vcs -sverilog -ntb_opts uvm <del>incdir</del>../sv ubus_tb_top.sv -debug
+//Simulate to a common state
+</p>
+
+<p>
+./simv +UVM_TESTNAME=test_generic_1m_1s -ucli -i makerestore.in
+//Simulate different stimulus
+</p>
+
+<p>
+./simv +seq=read_modify_write_seq -ucli -i runrestore.in
+./simv +seq=r8_w8_r4_w4_seq -ucli -i runrestore.in
+</p>
+
+
+<p>
+% cat makerestore.in
+run 100
+## saving the state in saveddesign after 100 timeunits
+save saveddesign
+quit
+% cat runrestore.in
+## Restoring saved design
+restore saveddesign
+## simulation proceeds after 100 time units
+run
+Thus, the above strategy helps in optimal utilization of the compute resources with simple changes 
+in your verification flow. Hope this was useful and you manage to easily make the changes in your 
+verification environment to adopt this flow and avoid redundant simulation cycles.
+</p>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org044ebf9" class="outline-4">
+<h4 id="org044ebf9"><span class="section-number-4">3.1.3</span> Task &amp; function port value not changes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="not">not</span>&#xa0;<span class="pass">pass</span>&#xa0;<span class="port">port</span>&#xa0;<span class="Function">Function</span>&#xa0;<span class="Task">Task</span></span></h4>
+<div class="outline-text-4" id="text-3-1-3">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">task</span> <span style="color: #93E0E3;">pulse_gen</span><span style="color: #DCDCCC;">(</span><span style="color: #ffa500; font-weight: bold;">ref</span> <span style="color: #7CB8BB;">logic</span> en, <span style="color: #ffa500; font-weight: bold;">ref</span> <span style="color: #7CB8BB;">logic</span> pulse<span style="color: #DCDCCC;">)</span>;
+    <span style="color: #F0DFAF; font-weight: bold;">forever</span> <span style="color: #7CB8BB;">begin</span>
+        <span style="color: #7CB8BB;">@</span>pulse_e;
+        pulse = <span style="color: #BFEBBF;">1</span>'b1;
+        <span style="color: #F0DFAF; font-weight: bold;">repeat</span> <span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">2</span><span style="color: #DCDCCC;">)</span> <span style="color: #7CB8BB;">@</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">posedge</span> clk_if.ClkSrc<span style="color: #DCDCCC;">)</span>;
+        pulse = <span style="color: #BFEBBF;">1</span>'b0;
+    <span style="color: #7CB8BB;">end</span>
+<span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgacf3eb9" class="outline-4">
+<h4 id="orgacf3eb9"><span class="section-number-4">3.1.4</span> Use macro as string.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="String">String</span>&#xa0;<span class="Macro">Macro</span></span></h4>
+<div class="outline-text-4" id="text-3-1-4">
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #94BFF3;">`define</span> FLASh_HEX  ../../st/software/code.dua
+<span style="color: #7CB8BB;">#`</span> <span style="color: #F0DFAF; font-weight: bold;">$readmemh</span><span style="color: #DCDCCC;">(</span>`<span style="color: #CC9393;">"`FLASH_HEX`"</span>,CodeTmp<span style="color: #DCDCCC;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdd723dc" class="outline-4">
+<h4 id="orgdd723dc"><span class="section-number-4">3.1.5</span> critical signal control should be inside interface. Do not control clk in class with virtual interface.</h4>
+<div class="outline-text-4" id="text-3-1-5">
+<p>
+Clock edge may not be sample correctly for register. Recommanded clock is in inside <i>module</i>.
+</p>
+
+<p>
+False example
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">class</span> clk_ctrl;
+   <span style="color: #F0DFAF; font-weight: bold;">task</span> <span style="color: #93E0E3;">clk_t</span><span style="color: #DCDCCC;">(</span><span style="color: #7CB8BB;">time</span> delay<span style="color: #DCDCCC;">)</span>;
+      <span style="color: #F0DFAF; font-weight: bold;">forever</span><span style="color: #7CB8BB;"> #delay</span> vif.clk = ~vif.clk;
+   <span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+</pre>
+</div>
+
+<p>
+Correct example
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">interface</span> <span style="color: #93E0E3;">clk_if</span><span style="color: #DCDCCC;">()</span>;
+<span style="color: #7CB8BB;">logic</span> clk
+<span style="color: #7CB8BB;">time</span> delay;
+<span style="color: #F0DFAF; font-weight: bold;">initial</span> <span style="color: #7CB8BB;">begin</span>
+   clk = <span style="color: #BFEBBF;">0</span>;
+   <span style="color: #F0DFAF; font-weight: bold;">forever</span><span style="color: #7CB8BB;"> #delay</span> clk = ~clk;
+<span style="color: #7CB8BB;">end</span>
+<span style="color: #F0DFAF; font-weight: bold;">endinterface</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">class</span> clk_ctrl;
+   <span style="color: #F0DFAF; font-weight: bold;">task</span> <span style="color: #93E0E3;">clk_t</span><span style="color: #DCDCCC;">(</span><span style="color: #7CB8BB;">time</span> delay<span style="color: #DCDCCC;">)</span>;
+      vif.delay = delay;
+   <span style="color: #F0DFAF; font-weight: bold;">endtask</span>
+<span style="color: #F0DFAF; font-weight: bold;">endclass</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org08b2d6b" class="outline-4">
+<h4 id="org08b2d6b"><span class="section-number-4">3.1.6</span> Do not use <b>define</b> in test-bench&#xa0;&#xa0;&#xa0;<span class="tag"><span class="testbench">testbench</span>&#xa0;<span class="Macro">Macro</span>&#xa0;<span class="define">define</span></span></h4>
+<div class="outline-text-4" id="text-3-1-6">
+<p>
+Benifits: No need to re-compile source code.
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">initial</span> <span style="color: #7CB8BB;">begin</span>
+<span style="color: #94BFF3;">`ifdef</span> DEF1
+<span style="color: #93E0E3;">task_a</span><span style="color: #DCDCCC;">()</span>;
+<span style="color: #94BFF3;">`else</span>
+<span style="color: #93E0E3;">task_b</span><span style="color: #DCDCCC;">()</span>;
+<span style="color: #94BFF3;">`endif</span>
+<span style="color: #7CB8BB;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #F0DFAF; font-weight: bold;">initial</span> <span style="color: #7CB8BB;">begin</span>
+  <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">$test$plusargs</span><span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">"DEF1="</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+     <span style="color: #F0DFAF; font-weight: bold;">$value$plusargs</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"DEF1=%s"</span>,DEF1<span style="color: #DCDCCC;">)</span>;
+  <span style="color: #F0DFAF; font-weight: bold;">case</span> <span style="color: #DCDCCC;">(</span>DEF1<span style="color: #DCDCCC;">)</span>
+    <span style="color: #CC9393;">"DEF1"</span> : <span style="color: #93E0E3;">task_a</span><span style="color: #DCDCCC;">()</span>;
+    <span style="color: #F0DFAF; font-weight: bold;">default</span> : <span style="color: #93E0E3;">task_b</span><span style="color: #DCDCCC;">()</span>;
+  <span style="color: #F0DFAF; font-weight: bold;">endcase</span>
+<span style="color: #7CB8BB;">end</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1711452" class="outline-4">
+<h4 id="org1711452"><span class="section-number-4">3.1.7</span> predefined macro in system verilog&#xa0;&#xa0;&#xa0;<span class="tag"><span class="FILE">FILE</span>&#xa0;<span class="LINE">LINE</span></span></h4>
+<div class="outline-text-4" id="text-3-1-7">
+<p>
+predefined macro for debugging. `__FILE__ `__LINE__.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orged29ac8" class="outline-3">
+<h3 id="orged29ac8"><span class="section-number-3">3.2</span> simulation directory structure</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-org24c17ff" class="outline-4">
+<h4 id="org24c17ff"><span class="section-number-4">3.2.1</span> tree</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+st
++&#x2013; rm
++&#x2013; software
+    +&#x2013; submodule1
++&#x2013; tb
++&#x2013; tc
+    +&#x2013; submodule1
++&#x2013; sim
+    +&#x2013; makefile1
+    +&#x2013; submode1
+       +&#x2013; cover
+       +&#x2013; logs
+       +&#x2013; output
+       +&#x2013; run
+       +&#x2013; wave
+</p>
+</div>
+</div>
+<div id="outline-container-orgb44f103" class="outline-4">
+<h4 id="orgb44f103"><span class="section-number-4">3.2.2</span> makefile1</h4>
+</div>
+</div>
+
+<div id="outline-container-org3eb85f3" class="outline-3">
+<h3 id="org3eb85f3"><span class="section-number-3">3.3</span> FSDB division</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-orgd0ef512" class="outline-4">
+<h4 id="orgd0ef512"><span class="section-number-4">3.3.1</span> By size</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+<pre class="src src-tcl">fsdbAutoSwitch <span style="color: #BFEBBF;">1000</span> merge.fsdb <span style="color: #BFEBBF;">0</span>
+<span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">1000 MB per fsdb , basic name merge.fsdb, how many fsdbs (0 means no limit)</span>
+dump -file merge.fsdb -type fsdb -msv on
+dump -add / -fid FSDB0
+run
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9612714" class="outline-4">
+<h4 id="org9612714"><span class="section-number-4">3.3.2</span> by time</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="color: #DCDCCC; font-weight: bold;">set</span> <span style="color: #DFAF8F;">interval</span> <span style="color: #BFEBBF;">1</span>; <span style="color: #7F9F7F;">#save for each interval time</span>
+<span style="color: #DCDCCC; font-weight: bold;">set</span> <span style="color: #DFAF8F;">n</span> <span style="color: #BFEBBF;">11</span>      ; <span style="color: #7F9F7F;">#how many time to save</span>
+<span style="color: #DCDCCC; font-weight: bold;">set</span> <span style="color: #DFAF8F;">keep</span> <span style="color: #BFEBBF;">5</span>    ; <span style="color: #7F9F7F;">#how many save point to keep</span>
+run <span style="color: #BFEBBF;">1ps</span>
+dump -close
+
+dump -file merge_0.fsdb -type fsdb -msv on
+dump -add / -fid FSDB0
+run $<span style="color: #DCDCCC;">(</span>interval<span style="color: #DCDCCC;">)</span> us
+
+<span style="color: #F0DFAF; font-weight: bold;">for</span> <span style="color: #DCDCCC;">{</span><span style="color: #DCDCCC; font-weight: bold;">set</span> i <span style="color: #BFEBBF;">1</span><span style="color: #DCDCCC;">}</span> <span style="color: #DCDCCC;">{</span>$<span style="color: #DFAF8F;">i</span> &lt; $<span style="color: #BFEBBF;">{</span><span style="color: #DFAF8F;">n</span><span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">}</span> <span style="color: #DCDCCC;">{</span><span style="color: #DCDCCC; font-weight: bold;">incr</span> i<span style="color: #DCDCCC;">}</span> <span style="color: #DCDCCC;">{</span>
+    <span style="color: #DCDCCC; font-weight: bold;">set</span>  <span style="color: #DFAF8F;">j</span> <span style="color: #BFEBBF;">[</span><span style="color: #DCDCCC; font-weight: bold;">expr</span> $<span style="color: #DFAF8F;">i</span> -$<span style="color: #D0BF8F;">{</span><span style="color: #DFAF8F;">keep</span><span style="color: #D0BF8F;">}</span><span style="color: #BFEBBF;">]</span>
+    dump -switch merge_$<span style="color: #BFEBBF;">{</span><span style="color: #DFAF8F;">i</span><span style="color: #BFEBBF;">}</span>.fsdb -fid FSDB0
+    run $<span style="color: #BFEBBF;">{</span><span style="color: #DFAF8F;">interval</span><span style="color: #BFEBBF;">}</span> us
+    <span style="color: #DCDCCC; font-weight: bold;">exec</span> rm -rf merge_$<span style="color: #DFAF8F;">j</span>.fsdb
+<span style="color: #DCDCCC;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb74ab9c" class="outline-3">
+<h3 id="orgb74ab9c"><span class="section-number-3">3.4</span> AMS</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-orgfd6034f" class="outline-4">
+<h4 id="orgfd6034f"><span class="section-number-4">3.4.1</span> verilog-ams</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+<a href="https://verilogams.com/">verilog-AMS document</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org9ebcb31" class="outline-4">
+<h4 id="org9ebcb31"><span class="section-number-4">3.4.2</span> mix signals</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<p>
+Question:
+</p>
+
+<p>
+How to generate merged FSDB file in a mixed-signal simulation (Cosim –VCS-XA/Finesim)?
+</p>
+
+<p>
+Answer:
+</p>
+
+<p>
+Merged FSDB is supported in the VCS AMS and FineSim/ Cosim tools.
+</p>
+
+<p>
+Generating Merged FSDB
+</p>
+
+<p>
+You can use this method to generate a unified FSDB output file that contains both analog and digital waveforms.
+</p>
+
+<p>
+Note:
+</p>
+
+<p>
+The CustomSim and FineSim tools support a merged FSDB file with FSDB version 5.4 or later only.
+</p>
+
+<p>
+To generate a merged FSDB file, perform the following steps:
+</p>
+
+<p>
+Use these commands to generate FSDB output from VCS
+    Using the UCLI approach :
+</p>
+
+<p>
+ucli%dump –file vcsAms.fsdb –type fsdb -msv
+</p>
+
+<p>
+Usage of -msv is mandatory.
+</p>
+
+<p>
+The CustomSim and FineSim tools must be instructed to merge their FSDB output with the digital FSDB file.
+Use the following commands to merge a FSDB file containing both analog and digital signals:
+</p>
+
+<p>
+For the CustomSim tool:
+</p>
+
+<p>
+Use the set_waveform_option –format fsdb –file merge configuration command.
+</p>
+
+<p>
+For the FineSim tool:
+</p>
+
+<p>
+Use the .option finesim_output=fsdb and .option finesim_merge_fsdb=1 commands.
+</p>
+
+<p>
+Run the VCS tool with the debug switch as an elaboration switch. 
+After simulation, only one FSDB file would be available that contains both digital and analog signals.
+</p>
+
+<p>
+The attached <a href="XA_EXAMPLE.zip">EXAMPLE.zip</a> provides the demo on this usage. Use ./run_ucli to compile , simulate, and 
+invoke Verdi with generated FSDB. You can select Get signals to see both digital and analog signals.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd47e191" class="outline-2">
+<h2 id="orgd47e191"><span class="section-number-2">4</span> emacs</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org8382674" class="outline-3">
+<h3 id="org8382674"><span class="section-number-3">4.1</span> \n \t \m</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Horizontal Tab	HT	9	\t ^I	【Ctrl+q Ctrl+i】
+Line Feed	LF	10	\n ^J	【Ctrl+q Ctrl+j】
+Carriage Return	CR	13	\r ^M	【Ctrl+q Ctrl+m】
+</p>
+
+<p>
+<a href="http://ergoemacs.org/emacs/emacs_line_ending_char.html">http://ergoemacs.org/emacs/emacs_line_ending_char.html</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org4a18f3a" class="outline-3">
+<h3 id="org4a18f3a"><span class="section-number-3">4.2</span> REGEX</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Align declaration " *[0-9a-zA-Z_]+ *;"
+</p>
+</div>
+</div>
+<div id="outline-container-orgba02cf3" class="outline-3">
+<h3 id="orgba02cf3"><span class="section-number-3">4.3</span> gtags</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Jump to tags for verilog
+</p>
+<ol class="org-ol">
+<li>exubrent ctags</li>
+<li>gnu global
+install with :  &#x2013;with-ctags=/path/to/ctags
+add env valuable: GTAGSLABEL=pygements</li>
+<li><p>
+Instal pygements
+no root : pip install pygements____name.whl &#x2013;user
+</p>
+<pre class="example">
+cp /path/to/global/share/gtags/gtags.conf ~/.globalrc
+</pre>
+<p>
+inside .globalrc
+</p>
+<div class="org-src-container">
+<pre class="src src-text">default:\
+        :tc=pygements:tc=native:
+</pre>
+</div></li>
+<li>spacemacs gtags layer</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgdb0517f" class="outline-2">
+<h2 id="orgdb0517f"><span class="section-number-2">5</span> shell</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org8d9b9c6" class="outline-3">
+<h3 id="org8d9b9c6"><span class="section-number-3">5.1</span> value test in cshell</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+To plan for the case where a variable, say $var, may not be defined, it gets tricky:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">!</span> $<span style="color: #DFAF8F;">?</span>var<span style="color: #DCDCCC;">)</span> <span style="color: #F0DFAF; font-weight: bold;">then</span>       
+  <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"variable is undefined"</span>
+<span style="color: #F0DFAF; font-weight: bold;">else</span>
+  <span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"$var"</span> == <span style="color: #CC9393;">""</span><span style="color: #DCDCCC;">)</span>  <span style="color: #F0DFAF; font-weight: bold;">then</span>
+      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"variable is empty"</span>
+  <span style="color: #F0DFAF; font-weight: bold;">else</span> 
+      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"variable contains $var"</span>
+  endif
+</pre>
+</div>
+
+<p>
+The nested ifs are required to avoid breaking the script, as tcsh 
+apparently doesn't short-circuit (an else if branch's conditional will get evaluated 
+even if the if branch is entered; similarly, both sides of &amp;&amp; and || expressions
+are seemingly always evaluated - this applies at least with respect to use of undefined variables).
+</p>
+</div>
+</div>
+<div id="outline-container-org12b3400" class="outline-3">
+<h3 id="org12b3400"><span class="section-number-3">5.2</span> multi-thread</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+<div id="outline-container-org88536f6" class="outline-4">
+<h4 id="org88536f6"><span class="section-number-4">5.2.1</span> xargs</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="org-src-container">
+<pre class="src src-shell">cat CmdList | xargs -P max-procs -l <span style="color: #BFEBBF;">1</span> -I <span style="color: #DCDCCC;">{}</span> run_sim.sh <span style="color: #DCDCCC;">{}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org20b007c" class="outline-4">
+<h4 id="org20b007c"><span class="section-number-4">5.2.2</span> gnu parallel</h4>
+</div>
+<div id="outline-container-org8aac712" class="outline-4">
+<h4 id="org8aac712"><span class="section-number-4">5.2.3</span> shell script</h4>
+<div class="outline-text-4" id="text-5-2-3">
+<p>
+<a href="https://jerkwin.github.io/2013/12/14/Bash%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E4%BD%9C%E4%B8%9A%E5%B9%B6%E8%A1%8C%E5%8C%96/">multi-thread blog</a>
+</p>
+
+<p>
+<a href="http://blog.sciencenet.cn/blog-548663-750136.html">multi-thread blog2</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">!/bin/</span><span style="color: #F0DFAF; font-weight: bold;">bash</span>
+<span style="color: #DFAF8F;">fifo</span>=<span style="color: #CC9393;">"/tmp/$$.fifo"</span>  <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#24314;&#31435;&#31649;&#36947;$$&#34920;&#31034;shell&#20998;&#37197;&#30340;&#36827;&#31243;&#21495;</span>
+mkfifo $<span style="color: #DFAF8F;">fifo</span>
+<span style="color: #F0DFAF; font-weight: bold;">exec</span> <span style="color: #BFEBBF;">6</span>&lt;&gt;$<span style="color: #DFAF8F;">fifo</span>        <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#23558;fifo&#30340;fd&#19982;6&#21495;fd&#32465;&#23450;</span>
+<span style="color: #DFAF8F;">thread_num</span>=<span style="color: #BFEBBF;">8</span>         <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#21551;&#21160;&#30340;&#36827;&#31243;&#20010;&#25968;</span>
+<span style="color: #DFAF8F;">count</span>=<span style="color: #BFEBBF;">0</span>;
+<span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#39044;&#20998;&#37197;&#36164;&#28304;</span>
+<span style="color: #F0DFAF; font-weight: bold;">while</span> <span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">[</span> $<span style="color: #DFAF8F;">count</span> -lt $<span style="color: #DFAF8F;">thread_num</span> <span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">]</span>; <span style="color: #F0DFAF; font-weight: bold;">do</span>
+  <span style="color: #DCDCCC; font-weight: bold;">echo</span> &gt;&amp;<span style="color: #BFEBBF;">6</span>
+  <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">let count=count+1</span>
+  <span style="color: #DFAF8F;">count</span>=$<span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">(</span>count + <span style="color: #BFEBBF;">1</span> <span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">done</span>
+<span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#20219;&#21153;&#21015;&#34920;</span>
+<span style="color: #DFAF8F;">file_list</span>=$<span style="color: #BFEBBF;">1</span>
+<span style="color: #F0DFAF; font-weight: bold;">for</span> file<span style="color: #F0DFAF; font-weight: bold;"> in</span> $<span style="color: #DFAF8F;">file_list</span>
+<span style="color: #F0DFAF; font-weight: bold;">do</span>
+  <span style="color: #DCDCCC; font-weight: bold;">read</span> -u6       <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#35831;&#27714;&#19968;&#20010;&#36164;&#28304;</span>
+  <span style="color: #DCDCCC;">{</span>
+    <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Task Begin"</span>
+    sleep <span style="color: #BFEBBF;">1</span>
+    <span style="color: #DCDCCC; font-weight: bold;">echo</span> $<span style="color: #DFAF8F;">file</span>   <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#20219;&#21153;</span>
+    <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Task End"</span>
+    <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">produce a cook</span>
+    <span style="color: #DCDCCC; font-weight: bold;">echo</span> &gt;&amp;<span style="color: #BFEBBF;">6</span>     <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#23436;&#25104;&#20219;&#21153;&#65292;&#37322;&#25918;&#19968;&#20010;&#36164;&#28304;</span>
+  <span style="color: #DCDCCC;">}</span>&amp;             <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#21518;&#21488;&#25191;&#34892;</span>
+<span style="color: #F0DFAF; font-weight: bold;">done</span>
+<span style="color: #DCDCCC; font-weight: bold;">wait</span>             <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#31561;&#24453;&#25152;&#26377;&#30340;&#20219;&#21153;&#23436;&#25104;</span>
+<span style="color: #F0DFAF; font-weight: bold;">exec</span> <span style="color: #BFEBBF;">6</span>&gt;&amp;-        <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">&#20851;&#38381;fd 6&#25551;&#36848;&#31526;</span>
+rm $<span style="color: #DFAF8F;">fifo</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #DFAF8F;">Njob</span>=<span style="color: #BFEBBF;">10</span>    <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#20316;&#19994;&#25968;&#30446;</span>
+<span style="color: #DFAF8F;">Nproc</span>=<span style="color: #BFEBBF;">5</span>    <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21487;&#21516;&#26102;&#36816;&#34892;&#30340;&#26368;&#22823;&#20316;&#19994;&#25968;</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">function</span> <span style="color: #93E0E3;">CMD</span> <span style="color: #DCDCCC;">{</span>        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#27979;&#35797;&#21629;&#20196;, &#38543;&#26426;&#31561;&#24453;&#20960;&#31186;&#38047;</span>
+  <span style="color: #DFAF8F;">n</span>=$<span style="color: #BFEBBF;">(</span><span style="color: #D0BF8F;">(</span>RANDOM % <span style="color: #BFEBBF;">5</span> + <span style="color: #BFEBBF;">1</span><span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span>
+  <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Job $1 Ijob $2 sleeping for $n seconds ..."</span>
+  sleep $<span style="color: #DFAF8F;">n</span>
+  <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Job $1 Ijob $2 exiting ..."</span>
+<span style="color: #DCDCCC;">}</span>
+
+<span style="color: #DFAF8F;">Pfifo</span>=<span style="color: #CC9393;">"/tmp/$$.fifo"</span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#20197;PID&#20026;&#21517;, &#38450;&#27490;&#21019;&#24314;&#21629;&#21517;&#31649;&#36947;&#26102;&#19982;&#24050;&#26377;&#25991;&#20214;&#37325;&#21517;&#65292;&#20174;&#32780;&#22833;&#36133;</span>
+mkfifo $<span style="color: #DFAF8F;">Pfifo</span>          <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21019;&#24314;&#21629;&#21517;&#31649;&#36947;</span>
+<span style="color: #F0DFAF; font-weight: bold;">exec</span> <span style="color: #BFEBBF;">6</span>&lt;&gt;$<span style="color: #DFAF8F;">Pfifo</span>         <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#20197;&#35835;&#20889;&#26041;&#24335;&#25171;&#24320;&#21629;&#21517;&#31649;&#36947;, &#25991;&#20214;&#26631;&#35782;&#31526;fd&#20026;6</span>
+                       <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">fd&#21487;&#21462;&#38500;0, 1, 2,5&#22806;0-9&#20013;&#30340;&#20219;&#24847;&#25968;&#23383;</span>
+rm -f $<span style="color: #DFAF8F;">Pfifo</span>           <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21024;&#38500;&#25991;&#20214;, &#20063;&#21487;&#19981;&#21024;&#38500;, &#19981;&#24433;&#21709;&#21518;&#38754;&#25805;&#20316;</span>
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#22312;fd6&#20013;&#25918;&#32622;$Nproc&#20010;&#31354;&#34892;&#20316;&#20026;&#20196;&#29260;</span>
+<span style="color: #F0DFAF; font-weight: bold;">for</span><span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">(</span><span style="color: #DFAF8F;">i</span>=<span style="color: #BFEBBF;">1</span>; i&lt;=$<span style="color: #DFAF8F;">Nproc</span>; i++<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>; <span style="color: #F0DFAF; font-weight: bold;">do</span>
+  <span style="color: #DCDCCC; font-weight: bold;">echo</span>
+<span style="color: #F0DFAF; font-weight: bold;">done</span> &gt;&amp;<span style="color: #BFEBBF;">6</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">for</span><span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">(</span><span style="color: #DFAF8F;">i</span>=<span style="color: #BFEBBF;">1</span>; i&lt;=$<span style="color: #DFAF8F;">Njob</span>; i++<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>; <span style="color: #F0DFAF; font-weight: bold;">do</span>  <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#20381;&#27425;&#25552;&#20132;&#20316;&#19994;</span>
+  <span style="color: #DCDCCC; font-weight: bold;">read</span> -u6                   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#39046;&#21462;&#20196;&#29260;, &#21363;&#20174;fd6&#20013;&#35835;&#21462;&#34892;, &#27599;&#27425;&#19968;&#34892;</span>
+                               <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#23545;&#31649;&#36947;&#65292;&#35835;&#19968;&#34892;&#20415;&#23569;&#19968;&#34892;&#65292;&#27599;&#27425;&#21482;&#33021;&#35835;&#21462;&#19968;&#34892;</span>
+                               <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#25152;&#26377;&#34892;&#35835;&#21462;&#23436;&#27605;, &#25191;&#34892;&#25346;&#36215;, &#30452;&#21040;&#31649;&#36947;&#20877;&#27425;&#26377;&#21487;&#35835;&#34892;</span>
+                               <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#22240;&#27492;&#23454;&#29616;&#20102;&#36827;&#31243;&#25968;&#37327;&#25511;&#21046;</span>
+  <span style="color: #DCDCCC;">{</span>                          <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#35201;&#25209;&#37327;&#25191;&#34892;&#30340;&#21629;&#20196;&#25918;&#22312;&#22823;&#25324;&#21495;&#20869;, &#21518;&#21488;&#36816;&#34892;</span>
+    CMD $<span style="color: #DFAF8F;">i</span> &amp;&amp; <span style="color: #BFEBBF;">{</span>            <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21487;&#20351;&#29992;&#21028;&#26029;&#23376;&#36827;&#31243;&#25104;&#21151;&#19982;&#21542;&#30340;&#35821;&#21477;</span>
+      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Job $i finished"</span>
+    <span style="color: #BFEBBF;">}</span> || <span style="color: #BFEBBF;">{</span>
+      <span style="color: #DCDCCC; font-weight: bold;">echo</span> <span style="color: #CC9393;">"Job $i error"</span>
+    <span style="color: #BFEBBF;">}</span>
+    sleep <span style="color: #BFEBBF;">1</span>     <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#26242;&#20572;1&#31186;&#65292;&#21487;&#26681;&#25454;&#38656;&#35201;&#36866;&#24403;&#24310;&#38271;,</span>
+                    <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#20851;&#38190;&#28857;&#65292;&#32473;&#31995;&#32479;&#32531;&#20914;&#26102;&#38388;&#65292;&#36798;&#21040;&#38480;&#21046;&#24182;&#34892;&#36827;&#31243;&#25968;&#37327;&#30340;&#20316;&#29992;</span>
+    <span style="color: #DCDCCC; font-weight: bold;">echo</span> &gt;&amp;<span style="color: #BFEBBF;">6</span>    <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#24402;&#36824;&#20196;&#29260;, &#21363;&#36827;&#31243;&#32467;&#26463;&#21518;&#65292;&#20877;&#20889;&#20837;&#19968;&#34892;&#65292;&#20351;&#25346;&#36215;&#30340;&#24490;&#29615;&#32487;&#32493;&#25191;&#34892;</span>
+  <span style="color: #DCDCCC;">}</span> &amp;
+
+<span style="color: #F0DFAF; font-weight: bold;">done</span>
+
+<span style="color: #DCDCCC; font-weight: bold;">wait</span>                <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#31561;&#24453;&#25152;&#26377;&#30340;&#21518;&#21488;&#23376;&#36827;&#31243;&#32467;&#26463;</span>
+<span style="color: #F0DFAF; font-weight: bold;">exec</span> <span style="color: #BFEBBF;">6</span>&gt;&amp;-           <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21024;&#38500;&#25991;&#20214;&#26631;&#35782;&#31526;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgccda3ad" class="outline-3">
+<h3 id="orgccda3ad"><span class="section-number-3">5.3</span> timestamp</h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+<pre class="src src-shell">date %s
+date %s%N
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf229a0" class="outline-3">
+<h3 id="orgaf229a0"><span class="section-number-3">5.4</span> valuable export</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+To use sub-script valuable. 
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">in main script</span>
+<span style="color: #DCDCCC; font-weight: bold;">source</span> sub-script.sh
+</pre>
+</div>
+<p>
+To use sub_script valuable in other sub-script
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">in sub script</span>
+<span style="color: #DCDCCC; font-weight: bold;">export</span> <span style="color: #DFAF8F;">valuable</span>=xxx
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">in main script</span>
+<span style="color: #DCDCCC; font-weight: bold;">source</span> sub-script.sh
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge32a64e" class="outline-3">
+<h3 id="orge32a64e"><span class="section-number-3">5.5</span> LSF</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+maximum nodes is 6.
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">bsub -n <span style="color: #DCDCCC;">(</span>node number<span style="color: #DCDCCC;">)</span> -np <span style="color: #DCDCCC;">(</span>threads per nodes<span style="color: #DCDCCC;">)</span> -q <span style="color: #DCDCCC;">(</span>queue<span style="color: #DCDCCC;">)</span> -o <span style="color: #DCDCCC;">(</span>stdout file<span style="color: #DCDCCC;">)</span> -e <span style="color: #DCDCCC;">(</span>stderr file<span style="color: #DCDCCC;">)</span> CMD
+<span style="color: #93E0E3;">bqueues</span> <span style="color: #DCDCCC;">(</span>queue name<span style="color: #DCDCCC;">)</span>
+lshosts
+lsload
+bhosts
+bacct
+bjobs -l <span style="color: #DCDCCC;">(</span>pid<span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">jobs status</span>
+bjobs -p <span style="color: #DCDCCC;">(</span>pid<span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">check pending reason</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd21f349" class="outline-3">
+<h3 id="orgd21f349"><span class="section-number-3">5.6</span> sed</h3>
+<div class="outline-text-3" id="text-5-6">
+<div class="org-src-container">
+<pre class="src src-shell">sed -i <span style="color: #CC9393;">'s/$/&amp;TAIL/g'</span> file.txt
+sed -i <span style="color: #CC9393;">'s/$/TAIL&amp;/g'</span> file.txt
+sed -i <span style="color: #CC9393;">'s/^/HEAD&amp;/g'</span> file.txt
+</pre>
+</div>
+<p>
+match line to end
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">sed <span style="color: #CC9393;">'/^abc/,$/p'</span> x.txt
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org68c6abd" class="outline-3">
+<h3 id="org68c6abd"><span class="section-number-3">5.7</span> xargs&#xa0;&#xa0;&#xa0;<span class="tag"><span class="bash">bash</span>&#xa0;<span class="argument">argument</span>&#xa0;<span class="Function">Function</span></span></h3>
+<div class="outline-text-3" id="text-5-7">
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #93E0E3;">showword</span><span style="color: #DCDCCC;">()</span> <span style="color: #DCDCCC;">{</span>
+  <span style="color: #DCDCCC; font-weight: bold;">echo</span> $<span style="color: #BFEBBF;">1</span>
+<span style="color: #DCDCCC;">}</span>
+
+<span style="color: #DCDCCC; font-weight: bold;">export</span> -f showword
+<span style="color: #DCDCCC; font-weight: bold;">echo</span> This is a sample message | xargs -d<span style="color: #CC9393;">' '</span> -t -n1 -P2 bash -c <span style="color: #CC9393;">'showword "$@"'</span> _
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdbd91ae" class="outline-2">
+<h2 id="orgdbd91ae"><span class="section-number-2">6</span> vim</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+<pre class="src src-batch">@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+
+choco install spf13-vim -y
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-10-16 周二 11:21</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

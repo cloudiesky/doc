@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Apr  5 09:13:00 2017
+;; Desktop file format version 206
+;; Emacs version 25.2.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22756 17564 482539 700000) (desktop . "208") "LME_zhangz@WIN-EQF9PG1MUIR" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-17-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 10) (alpha) (menu-bar-lines . 1) (tool-bar-lines . 0) (height . 43) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (scroll-bar-height . 0) (fullscreen . maximized) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (powerline-cache) (tabbar-cache . "Unprintable entity") (frameset--id . "7B44-D973-BF8D-181B") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top) (visibility . t) (width . 175) (left . 58) (top + -4)) ((min-height . 4) (min-width . 10) (min-height-ignore . 4) (min-width-ignore . 8) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 88) (min-pixel-width . 100) (min-pixel-height-ignore . 88) (min-pixel-width-ignore . 80) (min-pixel-height-safe . 22) (min-pixel-width-safe . 20)) leaf (pixel-width . 1772) (pixel-height . 943) (total-width . 177) (total-height . 42) (normal-height . 1.0) (normal-width . 1.0) (buffer "learnSV.org" (selected . t) (hscroll . 0) (fringes 10 10 nil) (margins 4) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 27385) (start . 27151))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/home/LME_zhangz/doc/org/learnSV/learnSV.org" "d:/Personal/Documents/org/collection/experience.org" "d:/Personal/Documents/org/learnSV/learnSV.org" "d:/Personal/Documents/org/learnSV/code.c" "d:/Personal/Documents/org/learnSV/learnSV.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/LME_zhangz/doc/org/learnSV/learnSV.org"
+  "learnSV.org"
+  'org-mode
+  '(linum-mode yas-minor-mode undo-tree-mode org-indent-mode writegood-mode)
+  27385
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . chinese-gbk-dos) (truncate-lines)))
+

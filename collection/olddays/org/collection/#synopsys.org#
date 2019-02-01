@@ -1,0 +1,9 @@
+* lisence
+** ÖÆ×÷lisence
+** ÐÞ¸Ähostname
+hostnamectl set-hostname
+ÐèÒªÐÞ¸Ä /etc/hosts 
+** ÐÞ¸ÄÍø¿¨ÉèÖÃ
+   eth0 rules
+** É¾³ý resolv.cfg
+/etc/resolv.cfg

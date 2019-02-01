@@ -1,0 +1,125 @@
+* Conditional Assignment and Memries
+** Conditional Register Updates
+- when
+- .elsewhen
+- .otherwise
+** The *.elsewhen* Clause
+#+BEGIN_SRC scala
+  when (condition_1) {register_update_1}
+    .elsewhen (condition_2) {register_update_2}
+    .elsewhen (condition_3) {register_update_3}
+#+END_SRC
+if...elseif...elseif...
+** The *.otherwise* Clause
+#+BEGIN_SRC scala
+when (<condition 1>) {<register update 1>} 
+.elsewhen (<condition 2>) {<register update 2>} 
+... 
+.elsewhen (<condition N>) {<register update N>} 
+.otherwise {<default register update>}
+#+END_SRC
+** The *unless* Clause
+#+BEGIN_SRC scala
+unless ( <condition> ) { <assignments> }// condition false, execute.
+#+END_SRC
+** Combinational Conditional Assignment
+#+BEGIN_SRC scala
+class BasicALU extends Module {
+  val io = IO(new Bundle {
+    val a      = Input(UInt(4.W))
+    val b      = Input(UInt(4.W))
+    val opcode = Input(UInt(2.W))
+    val output = Output(UInt(4.W))
+  })
+  io.output := 0.U
+  when (io.opcode === 0.U) {
+    io.output := io.a + io.b   // ADD
+  } .elsewhen (io.opcode === 1.U) {
+    io.output := io.b - io.b   // SUB
+  } .elsewhen (io.opcode === 2.U) {
+    io.output := io.a        // PASS A
+  } .otherwise {
+    io.output := io.b          // PASS B
+  }
+}
+#+END_SRC
+** Read Only Memories
+#+BEGIN_SRC scala
+val numbers = Vec(0.U, 1.U, 2.U, 3.U)
+val entry2 = numbers(2)
+#+END_SRC
+** Read-Write Memories
+** Basic instantiation
+#+BEGIN_SRC scala
+val myMem = Mem(<size>, <type>) //Note: No initialization.
+#+END_SRC
+** Synchronous vs. Asynchronous Read
+#+BEGIN_SRC scala
+val combMem = Mem(128, UInt(32.W))  // Asynchronous
+val seqMem = SyncReadMem(128, UInt(32.W)) //Synchronous
+#+END_SRC
+** Add Write Ports
+#+BEGIN_SRC scala
+when (<write condition> ) { 
+  <memory name>( <write address> ) := <write data> 
+}
+#+END_SRC
+** Adding Read Ports
+#+BEGIN_SRC scala
+when (<read condition>) { 
+  <read data 1> := <memory name>( <read address 1> ) 
+  ... 
+  <read data N> := <memory name>( <read address N>) 
+}
+#+END_SRC
+** Example of Mem in Action
+#+BEGIN_SRC scala
+class Stack(size: Int) extends Module {
+  val io = IO(new Bundle {
+    val dataIn  = Input(UInt(32.W))
+    val dataOut = Output(UInt(32.W))
+    val push    = Input(Bool())
+    val pop     = Input(Bool())
+    val en      = Input(Bool())
+  })
+
+  // declare the memory for the stack
+  val stack_mem = Mem(size, UInt(32.W))
+  val sp = RegInit(0.U(log2Ceil(size).W))
+  val dataOut = RegInit(0.U(32.W))
+
+  // Push condition - make sure stack isn't full
+  when(io.en && io.push && (sp != (size-1).U)) {
+    stack_mem(sp + 1.U) := io.dataIn
+    sp := sp + 1.U
+  }
+    // Pop condition - make sure the stack isn't empty
+    .elsewhen(io.en && io.pop && (sp > 0.U)) {
+    sp := sp - 1.U
+  }
+
+  when(io.en) {
+    dataOut := stack_mem(sp)
+  }
+
+  io.dataOut := dataOut
+}
+#+END_SRC
+** Load/Search Mem Problem
+ #+BEGIN_SRC scala
+ class DynamicMemorySearch(val n: Int, val w: Int) extends Module {
+  val io = IO(new Bundle {
+    val isWr   = Input(Bool())
+    val wrAddr = Input(UInt(log2Ceil(n).W))
+    val data   = Input(UInt(w.W))
+    val en     = Input(Bool())
+    val target = Output(UInt(log2Ceil(n).W))
+    val done   = Output(Bool())
+  })
+  val index  = RegInit(0.U(log2Ceil(n).W))
+  val memVal = 0.U
+  /// fill in here
+  io.done   := false.B
+  io.target := index
+}
+ #+END_SRC

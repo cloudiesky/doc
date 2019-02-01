@@ -1,0 +1,222 @@
+* Q&A
+* how python works
+* running a program
+** 交互模式下写代码
+windows 和 unix Python
+*** 交互地运行代码
+加入空行运行
+*** 为什么使用交互模式
+**** 实验
+**** 测试
+*** 使用交互提示模式
+- 只能输入Python命令
+- 打印时必须的
+- 不需要缩进
+- 注意提示符变化
+- 使用空行结束复合语句
+- 一次运行一条语句
+**** 输入多行语句
+** 系统命令行和文件
+*** 第一段脚本
+#+BEGIN_SRC python
+import sys
+print (sys.platform)
+x = 'spam'
+print(x * 8)
+#+END_SRC
+*** 使用命令行运行文件
+- Python script1.py
+- #!/usr/bin/env python
+** 点击文件图标
+- Windows 中双击文件
+- input 停住命令行
+** 模块导入和重载
+#+BEGIN_SRC python
+ import script1
+ from imp import reload
+ reload(script)
+#+END_SRC
+*** 属性
+#+BEGIN_SRC python
+title = "The meaning of life"
+#+END_SRC
+#+BEGIN_SRC python
+import myfile
+pring (myfile.title)
+#+END_SRC
+** 使用exec运行模块文件
+等于重新从外部读入并处理文件。
+** IDE用户界面
+** 其他IDE
+** 其他启动选项
+** 我应该选用哪种
+pdb
+
+* 介绍Python对象类型
+** 使用内置类型
+** 核心数据类型
+| 类型         | 例子                     |
+| 数字         | 123                      |
+| 字符串       | 'spam' "ab's"            |
+| 列表         | [a,[b,3],"three",4]      |
+| 字典         | {'food':'spam':'yim'}    |
+| 元组         | (1,'spam',4,'U')         |
+| 文件         | myfile=open('eggs','r')  |
+| 集合         | set('abc'),('a','b','c') |
+| other        | type，None，bool         |
+| 编程单元类型 | 函数，模块，类         |
+| 与实现相关的类型 | 编译的代码堆栈跟踪       |
+** 数字
+- 自动变大
+- 显示奇怪时使用打印显示
+- import math
+- import random
+
+** 字符串
+作为序列
+*** 序列的操作
+- len(string)
+- string\[0]
+- string\[-1]
+- string\[1:3]
+- string[:3]
+- string[:]
+- string[:-1]
+- string_A+string_B
+- string * 8
+*** 不可变性
+*** Python中每个对象都可以分为可变或不可变
+*** 类型特定的方法
+- string.find('pa')
+- string.replace('pa','xyz')  #不改变原始的string
+- string.split(',')
+- string.isalpha() # isdigit
+- string.rstrip #remove right side characters
+*** 寻求帮助
+- dir(string)
+- help(string)
+*** 编写字符串的其他方法
+*** 模式匹配
+- import re  # regular expression
+** 列表
+可以改变
+*** 序列操作
+类似字符串
+*** 类型特定操作
+- list.append("xx")
+- list.pop(n)
+- list.sort()
+- list.reverse()
+*** 边界检查
+不能超出边界
+*** 嵌套
+可以任意嵌套
+*** 列表解析
+- col2 = [row\[1] for row in M]
+- [row\[1] + 1 for row in M if row[1] % 2  == 0]
+- g = (sum(row) for row in m)
+- next(g)
+** 字典
+唯一映射类型，可变性
+*** 映射操作
+- d= {'a':1 , 'b':ok , 'll':oo}
+- d= {}
+*** 重访嵌套
+重新赋值会清掉内存空间
+*** 键的重排 for循环
+- ks = d.keys
+- for key in ks
+- while x > 0
+*** 迭代优化
+迭代协议
+*** 不存在的键：if
+- if not 'f' in d:
+  print("missing")
+- d.get()
+** 元组
+不可变得列表
+** 文件
+- open
+- write
+- close
+- read
+- split
+** 破坏代码的灵活性
+规定类型
+** 用户定义的类
+class
+* 数字
+** Python的数字类型
+整数和浮点，复数，固定精度的十进制数，有理分数，集合，布尔类型，无穷的整数精度，各种数字内置函数和模块
+*** 数字常量
+hex(15),oct(15),bin(15),complex(real,imag)
+*** 内置的数学工具和扩展
+表达式操作符
+内置数学函数
+公用模块 random math
+*** Python表达式操作符
+**** 混合操作所遵循的操作符优先级
+**** 混合类型自动升级
+**** 运算符重载
+*** 在实际应用中的数字
+**** 变量和基本的表达式
+**** 比较：一般的和连续的
+- 显示格式 str() 和 repr()
+- 允许连续比较 x<y<z <=> x<y and y<z
+**** 除法：传统 floor 真除法
+- x/y
+- x//y
+**** 整数精度
+**** 复数
+**** 十六进制
+int('64'), int('100',8)
+eval('0o100')
+**** 位操作
+**** 其他的内置数学工具
+import math，
+math.pi math.sin math.sqrt  pow(x,y) abs(), sum((1,2,3,4)) min(1,2,3,4) max(,,,)
+
+*** 其他数字类型
+**** 小数数字
+***** 基础知识
+浮点计算小数时，精度不够，结果会奇怪
+***** 设置全局精度
+#+BEGIN_SRC python
+import decimal
+decimal.Decimal(1)/decimal.Decimal(7)  #0.1429
+decimal.getcontext().prec = 04 #设置全局精度
+#+END_SRC
+
+***** 小数上下文管理器
+
+**** 分数类型
+***** 基础知识
+from fraction import fraction
+y=Fraction(1,3)
+***** 数值精度
+***** 转换和混合类型
+(2.5).as_integer_ratio()
+
+**** 集合
+- 无序，无键值
+- 只能包含不可变的对象类型，不可包含列表和字典
+- 可以解析构造  Python 3.0
+- 可以使用集合运算 或 与
+**** 布尔类型
+**** 数字扩
+* 动态类型
+- 变量名 引用 对象。变量名没有类型，对象有类型
+- 没有被引用的对象，将可能会被消灭。
+- 变量名b = 变量名a， 对象被共享。
+  #+BEGIN_SRC python
+  a = 3
+  b = a
+  a = a + 2 
+  #a=5 , b = 3 整型不可变
+  #+END_SRC
+- 可变的对象，则为在原处修改。
+- 使用复制，则可避免修改可变对象
+- "==" 对象值相等判断， "is" 同一对象判断
+  
+* 字符串
+** 

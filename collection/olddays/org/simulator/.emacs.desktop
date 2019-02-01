@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Thu Sep  1 09:31:44 2016
+;; Desktop file format version 206
+;; Emacs version 24.5.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22471 34048 281000 0) (desktop . "206") "LME_zhangz@LME_ZHANGZ-PC" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-16-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 10) (alpha) (menu-bar-lines . 1) (tool-bar-lines . 0) (title) (fullscreen . maximized) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (powerline-cache) (tabbar-cache . "Unprintable entity") (frameset--id . "3CD6-1046-2E1D-DA88") (frameset--mini t . t) (height . 42) (width . 135) (modeline . t) (minibuffer . t) (unsplittable) (left . 54) (top + -8) (icon-name) (visibility . t) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 4) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 80) (min-pixel-width . 100) (min-pixel-height-ignore . 80) (min-pixel-width-ignore . 40) (min-pixel-height-safe . 20) (min-pixel-width-safe . 20)) leaf (pixel-width . 1378) (pixel-height . 838) (total-width . 137) (total-height . 41) (normal-height . 1.0) (normal-width . 1.0) (buffer "simulator.org" (selected . t) (hscroll . 0) (fringes 10 10 nil) (margins 2) (scroll-bars 0 0 t nil) (vscroll . 0) (dedicated) (point . 501) (start . 1))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist '((48 . "\n- State \"TODO\"       from \"TODO\"       [2016-08-31 ‘ÖÜ‘Èý 16:51]")))
+(setq file-name-history '("d:/Personal/Documents/org/simulator/simulator.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "d:/Personal/Documents/org/simulator/simulator.org"
+  "simulator.org"
+  'org-mode
+  '(linum-mode org-indent-mode writegood-mode flyspell-mode)
+  501
+  '(1121 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . chinese-gbk-dos) (truncate-lines . t)))
+

@@ -1,0 +1,31 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sun Apr 16 21:10:15 2017
+;; Desktop file format version 208
+;; Emacs version 25.2.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22771 27959 168580 600000) (desktop . "208") "LME_zhangz@WIN-EQF9PG1MUIR" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-17-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (alpha) (menu-bar-lines . 0) (tool-bar-lines . 0) (height . 48) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (scroll-bar-height . 0) (fullscreen) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (frameset--id . "02A6-681A-961D-79D3") (frameset--mini t . t) (width . 184) (modeline . t) (minibuffer . t) (unsplittable) (left . 58) (top + -4) (icon-name) (visibility . t) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 88) (min-pixel-width . 100) (min-pixel-height-ignore . 66) (min-pixel-width-ignore . 40) (min-pixel-height-safe . 22) (min-pixel-width-safe . 20)) leaf (pixel-width . 1858) (pixel-height . 1039) (total-width . 185) (total-height . 47) (normal-height . 1.0) (normal-width . 1.0) (buffer "*Org PDF LaTeX Output*" (selected . t) (hscroll . 0) (fringes 8 8 nil) (margins nil) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 735) (start . 1))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/home/LME_zhangz/doc/org/uvm/uvm.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/home/LME_zhangz/doc/org/uvm/uvm.org"
+  "uvm.org"
+  'org-mode
+  '(linum-mode yas-minor-mode undo-tree-mode org-indent-mode writegood-mode)
+  6
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring nil)))
+

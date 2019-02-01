@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Thu Feb  9 15:45:45 2017
+;; Desktop file format version 206
+;; Emacs version 24.5.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22684 7721 625000 0) (desktop . "206") "LME_zhangz@LME_ZHANGZ-PC" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-15-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 9) (right-fringe . 9) (alpha) (menu-bar-lines . 1) (tool-bar-lines . 0) (title) (fullscreen) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (powerline-cache) (tabbar-cache . "Unprintable entity") (frameset--id . "E5AE-A62B-6ABA-9841") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top) (visibility . t) (height . 34) (width . 100) (left . 175) (top . 209)) ((min-height . 4) (min-width . 10) (min-height-ignore . 4) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 76) (min-pixel-width . 90) (min-pixel-height-ignore . 76) (min-pixel-width-ignore . 36) (min-pixel-height-safe . 19) (min-pixel-width-safe . 18)) leaf (pixel-width . 918) (pixel-height . 627) (total-width . 102) (total-height . 33) (normal-height . 1.0) (normal-width . 1.0) (buffer "prjlme3460.org" (selected . t) (hscroll . 0) (fringes 9 9 nil) (margins 3) (scroll-bars 0 0 nil nil) (vscroll . 0) (dedicated) (point . 930) (start . 749))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring '("coding"))
+(setq register-alist '((48 . "‘Ðè‘Òª‘¼Æ‘Ëã‘µÄ")))
+(setq file-name-history '("d:/Personal/Documents/org/prj_lme3460b/baoxiuxinxi.org" "d:/program/emacs/.emacs.d/init.el" "d:/Personal/Documents/org/prj_lme3460b/prjlme3460.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "d:/Personal/Documents/org/prj_lme3460b/prjlme3460.org"
+  "prjlme3460.org"
+  'org-mode
+  '(linum-mode undo-tree-mode org-indent-mode writegood-mode flyspell-mode)
+  930
+  '(715 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . chinese-iso-8bit-dos) (truncate-lines)))
+

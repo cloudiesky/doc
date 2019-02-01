@@ -1,0 +1,8 @@
+* information
+** info 1
+This is a temporary info
+** info 2
+
+* 带反馈的随机
+
+* acq_coh 仿真时间长

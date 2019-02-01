@@ -1,0 +1,69 @@
+#+STARTUP: indent
+#+TITLE: orgmode test
+#+AUTHOR: cloudiesky
+#+DATE: 2016/8/1
+#+LANGUAGE: 'en'
+#+OPTIONS: H:4 toc:t
+* org-mode
+** 大纲
+正在写大纲
+** 轻量级标记语言
+* 可以导出其他格式
+* test :lonly:
+** TODO do data :sad:
+okey
+*** dota is good for health                    :favourate:strongly:adicted:
+支持html，pdf
+*bold* /italic/ +delete_line+ h_2 o  E=mc^2 =git= ~git~
+| name  |    phone | age |
+|-------+----------+-----|
+| david |      001 |  10 |
+| tom   | 13000901 |  12 |
+
+type of launguages
+ 1. hard ware
+ 2. [ ] 
+ 3. semic ware
+ 4. software
+    1. c_plus_plus
+    2. java
+    3. python
+ different languages
+- c :: basic for all high level languages
+- java :: most popular software language
+#+BEGIN_VERSE
+love you like i do
+touch your skin
+hell bounded
+#+END_VERSE
+#+BEGIN_QUOTE
+love you like i do
+touch your skin
+hell bounded
+#+END_QUOTE
+#+BEGIN_CENTER
+love you like i do
+touch your skin
+hell bounded
+#+END_CENTER
+#+BEGIN_SRC verilog
+module test ();
+  a = b + c;
+endmodule
+#+END_SRC
+#+BEGIN_EXAMPLE
+:module test ();
+:  a = b + c;
+endmodule
+#+END_EXAMPLE
+
+#+BEGIN_COMMENT
+module test ();
+#a = b + c;
+endmodule
+#+END_COMMENT
+
+#+INCLUDE: "~/.emacs.d/init.el" scr emacs-lisp
+
+  
+

@@ -1,0 +1,330 @@
+* git 创建操作
+** 创建新用户
+\# groupadd devs
+\# useradd -G devs -d /home/gituser -m -s /bin/bash gituser
+\# passwd gituser
+
+** 创建裸库
+\# mkdir project.git
+\# cd project.git
+\# git --bare init
+
+** 生成公共/私有密钥
+\# ssh-keygen
+
+** 添加authorized_key
+\# ssh-copy-id -i ~/.ssh/id_rsa.pub gituser@git.server.com
+
+** 推修改到版本库
+本地资源库操作
+\# mkdir tom_repo
+\# cd tom_repo/
+\# git init
+\# echo 'todo : add contents for README' > README
+\# git status -s
+\# git add .
+\# git status -s
+\# git commit -m 'Initial commit'
+\# git log
+远程仓库操作
+\# git remote add origin gituser@git.server.com:project.git
+\# git remote add origin git@github.com:michaelliao/learngit.git
+\# git push origin master
+
+
+** official reference
++ …or create a new repository on the command line
+echo "# git_test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/cloudiesky/git_test.git
+git push -u origin master
+
++ or push an existing repository from the command line
+
+git remote add origin https://github.com/cloudiesky/git_test.git
+git push -u origin master
+
++ or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
+
+*  git 版本管理
+
+** git 掌握当前仓库的状态
+#+BEGIN_SRC shell
+git status
+#+END_SRC
+
+**  git 查看更改
+#+BEGIN_SRC shell
+git diff
+#+END_SRC
+
+** git 提交文件
+
+#+BEGIN_SRC shell:
+git add SUBMIT_FILE
+git commit -m "INFO"
+#+END_SRC
+
+** git 查看提交记录
+#+BEGIN_SRC shell:
+git log   // 当前记录
+git log --pretty=oneline  // 单行显示
+git reflog  // 完整记录 提供所有ID
+#+END_SRC
+
+** git 回滚版本
+#+BEGIN_SRC shell:
+git reset --hard HEAD^  // 回滚上一个版本
+git reset --hard HEAD^^ // 回滚上连个版本
+git reset --hard HEAD~100 // 回滚100个版本
+git reset --hard commit_id // 从 reflog 中得到commit_id
+#+END_SRC
+
+* git教程
+
+** 创建版本库
+创建git仓库的步骤
+#+BEGIN_SRC shell
+git init
+git add <file>
+git commit
+#+END_SRC
+
+** 版本管理
+产看文件状态
+#+BEGIN_SRC shell
+git status // check status
+git diff // 比较文件
+#+END_SRC
+
+*** 版本回退
+
+****  /HEAD/ 是指向的版本是当前版本
+
+**** 通过 /log/ 查看提交历史
+
+**** 通过 /reflog/ 查看命令历史
+
+*** 工作区和暂存区
+
+**** 工作区 working directory
+可以直接编辑的文件区域
+
+**** 资源库 repository
+***** .git 隐藏目录其他所有的文件存储空间
+
+***** stage 暂存空间
+
+***** HEAD 指针
+
+***** 分支，默认建立master分支
+
+**** 添加到暂存区
+#+BEGIN_SRC shell:
+git add FILE   // 添加到暂存区
+#+END_SRC
+
+**** 添加到当前分支
+#+BEGIN_SRC shell:
+git commit FILE   // 添加到暂存区
+#+END_SRC
+
+**** 工作区和暂存区的信息
+#+BEGIN_SRC shell:
+git status   // 添加到暂存区
+#+END_SRC
+
+*** 管理修改
+
+**** 只有添加到暂存区的修改，才可以提交到HEAD中
+先 git add ，后 git commit
+
+**** 工作区的内容不会被提交到HEAD中
+没有 git add ，git commit不会将内容添加到HEAD中
+
+*** 撤销修改
+
+**** 丢弃工作区的修改
+#+BEGIN_SRC shell:
+git checkout -- FILE   // 注意空格
+#+END_SRC
+- 暂存区有修改，从暂存区中恢复文件
+- 暂存区没有修改，从资源库中恢复文件
+- 如果没有 '--' 操作边变成 “切换到另一个分支”
+- 可以通过 git status 可以查看暂存区内容与工作区内容差别。
+
+**** 撤销暂存区修改
+#+BEGIN_SRC shell:
+git reset HEAD FILE   // unstage, HEAD means the latest version
+#+END_SRC
+
+
+*** 删除文件
+
+#+BEGIN_SRC shell:
+rm FILE // delete FILE in working directory
+git status   // understand FILE has been delete
+git rm FILE   // delete file in stage
+git commit -m "Delete FILE" // delete in HEAD of current branch.
+#+END_SRC
+
+** 远程操作
+创建SSH key
+#+BEGIN_SRC shell
+ssh-keygen -t rsa -C "youremail@example.com"
+#+END_SRC
+登陆GitHub，打开“Account settings”，“SSH Keys”页面添加id_rsa.pub
+
+*** 添加远程库
+- 在github上建立远程库
+- 关联远程库。要关联一个远程库，使用命令 git remote add origin git@server-name:path/repo-name.git；
+- 关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+  - 由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+  - 每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+*** 克隆远程库
+- 从远程克隆资源库 git clone git@github.com:username/gitskills.git
+- git支持多种协议 包括 https://github.com/username/gitskills.git 和 ssh
+
+** 分支管理
+
+*** 创建和合并分支
+- 每次提交等于添加时间线上的节点
+- HEAD 默认指向master，master是时间线上的一个指针
+- 添加分支，等于添加时间线上的一个指针
+- 合并分支，等于将不同的指针指向同一个时间线上的点
+- 删除分支，等于删除时间线上的指针
+
+命令总结
+#+BEGIN_SRC shell:
+git checkout -b dev   // -b 创建并切换分支
+git branch // 查看当前分支，当前分支会标一个*号
+git branch <name> // 创建分支
+git checkout master // 切换到 master分支
+git merge dev // 将 dev 分支的内容合并到当前分支，简单的合并方式是fast-forward，但是不是所有的合并都可以fast-forward，有其他的合并
+git branch -d dev // 删除分支
+#+END_SRC
+
+
+*** 解决冲突
+当分支各自都有新的提交，需要先解决冲突才能合并
+#+BEGIN_SRC shell
+git merge dev // merge失败
+git status  // 查看状态
+git diff // 显示存在冲突的文件
+git log --graph --pretty=oneline --abbrev-commit // 显示记录，图像显示。
+#+END_SRC
+
+*** 分支管理策略
+
+**** 分支合并的方式
+- 分支合并时默认使用 *fast-forward* ，合并后如删除分支将丢失分支信息 :: 在主分支中不发生commit的操作，删除分支后，无法从log中知道已经发生过合并.
+- 禁用 *fast-forward* 后，merge中将产生新的commit，可以通过分支信息知道合并的过程 :: 在主分支中发生了commit的行为
+
+- --no-ff指的是强行关闭fast-forward方式。 :: fast-forward方式就是当条件允许的时候，git直接把HEAD指针指向合并分支的头，完成合并。属于“快进方式”，不过这种情况如果删除分支，则会丢失分支信息。因为在这个过程中没有创建commit
+
+- git merge --squash 是用来把一些不必要commit进行压缩 :: 比如说，你的feature在开发的时候写的commit很乱，那么我们合并的时候不希望把这些历史commit带过来，于是使用--squash进行合并，此时文件已经同合并后一样了，但不移动HEAD，不提交。需要进行一次额外的commit来“总结”一下，然后完成最终的合并。
+
+总结：
+- --no-ff :: 不使用fast-forward方式合并，保留分支的commit历史
+- --squash :: 使用squash方式合并，把多次分支commit历史压缩为一次
+
+#+BEGIN_SRC shell
+git checkout -b dev
+git add readme.txt
+git commit -m "add merge"
+git checkout master
+git merge --no-ff -m "merge with no-ff"
+#+END_SRC
+
+**** 分支策略
+- master :: 分支作为稳定版的发布分支
+- dev :: 团队的开发分支
+- colleague :: 成员的个人开发分支
+
+*** bug分支
+临时现场保存 *stash* 。
+在处理部分工作的时，需要临时处理另外一个任务。当前工作又不应进行commit的时候。
+使用 *stash* 保存现场，然后处理其他事务。处理完成后，从 *stash* 中恢复现场。
+
+#+BEGIN_SRC shell
+git stash // 保存现场
+git stash list // 显示保存的现场
+git stash apply <stash@{0}> // 恢复某一个现场
+git stash drop <stash@{0}> // 删除某个现场
+git stash pop // 弹出某个现场，等于apply加drop
+#+END_SRC
+
+*** feature 分支
+- feature分支 :: 应当在dev分支下，为新功能添加新的分支。更深的分支层次，使得项目管理更加方便
+- 删除未合并的分支 :: 允许删除未合并的分支。
+  #+BEGIN_SRC shell
+  git branch -D <name>
+  #+END_SRC
+
+*** 多人协作
+从远程克隆时，实际是讲本地的master和远程的master对应起来
+#+BEGIN_SRC shell
+git remote  // 查看远程库信息
+git remote -v // 详细信息
+#+END_SRC
+
+**** 推送分支
+需要推送的分支
+- master :: 需要时刻同步
+- dev :: 所有团队成员都需要在上面工作，需要时刻同步
+- bug :: 本地处理，可以不推送
+- feature :: 是否需要多人合作，判断是否需要推送
+
+#+BEGIN_SRC shell
+git push origin master 
+git push origin dev
+#+END_SRC
+
+**** 抓取分支
+- 从远程克隆分支 :: 远程克隆时，只能得到master分支。
+  - 代码
+    #+BEGIN_SRC shell
+    git clone git@github.com::michaelliao/learngit.git
+    #+END_SRC
+- 创建 dev 分支 :: 除master之外的分支需要从远端检出
+  - 代码
+    #+BEGIN_SRC shell
+    git checkout -b dev orgin/dev // 是否可以使用 -u 直接关联dev 和orgin/dev
+    #+END_SRC
+
+**** 远程冲突处理
+- 关联远端的dev分支 :: 直接checkout的 dev 分支未与远程仓库关联，提取会失败
+  - 代码
+    #+BEGIN_SRC shell
+    git pull // 当前为dev， pull会失败
+    git branch --set-upstream dev origin/dev  // 关联后可以pull
+    git pull // 提示有冲突
+    git commit -m "merge &fix conflit" // 使用分支管理中的解决冲突的方法，解决冲突。（status, diff）
+    git push origin dev // 推送
+    #+END_SRC
+
+** 标签管理
+为某个commit打标签，方便管理
+
+*** 添加标签
+#+BEGIN_SRC shell
+git tag <tagname> <commit> // 为某个commit添加tag，不带commit标号时，添加为HEAD
+git tag -a <tagname> -m "message" // 添加tag时，附带标签信息
+git tag -s <tagname> // 使用pgp签名标签
+git tag // 显示所有的tag
+git show <tagname> // 显示tag的详细信息
+#+END_SRC
+
+*** 标签的推送与删除
+#+BEGIN_SRC shell
+git tag -d <tagname> //删除本地标签
+git push orgin <tagname> //推送一个标签
+git push orgin --tags //推送全部标签
+git push orgin :refs/tags/<tagname> //删除一个标签 ，需先在本地删除
+#+END_SRC
+

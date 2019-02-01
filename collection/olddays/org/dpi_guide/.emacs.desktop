@@ -1,0 +1,67 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Fri Apr 14 15:12:01 2017
+;; Desktop file format version 208
+;; Emacs version 25.2.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22768 30273 130939 400000) (desktop . "208") "LME_zhangz@WIN-EQF9PG1MUIR" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-17-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 8) (right-fringe . 8) (alpha) (menu-bar-lines . 0) (tool-bar-lines . 0) (height . 44) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (scroll-bar-height . 0) (fullscreen) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (powerline-cache) (tabbar-cache . "Unprintable entity") (frameset--id . "D16A-E961-4754-7594") (frameset--mini t . t) (width . 175) (modeline . t) (minibuffer . t) (unsplittable) (left . 58) (top + -4) (icon-name) (visibility . t) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 4) (min-width-ignore . 7) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 88) (min-pixel-width . 100) (min-pixel-height-ignore . 88) (min-pixel-width-ignore . 70) (min-pixel-height-safe . 22) (min-pixel-width-safe . 20)) leaf (pixel-width . 1772) (pixel-height . 962) (total-width . 177) (total-height . 43) (normal-height . 1.0) (normal-width . 1.0) (buffer "dpi_guide.org" (selected . t) (hscroll . 0) (fringes 8 8 nil) (margins 3) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 3594) (start . 3260))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist '((48 . "\n\n//typedef signed char sWord8_c;	//DSP‘Ó²‘¼þ‘²»‘Ö§‘³Ö8‘Î»‘Êý‘¾Ý‘Àà‘ÐÍ‘£¬‘Ëù‘ÒÔVC‘¶¨‘µã‘´ú‘Âë‘Àï‘Òª‘±Ü‘Ãâ‘Ê¹‘ÓÃ‘´Ë‘Êý‘¾Ý‘Àà‘ÐÍ\n//typedef signed char uWord8_c;	//DSP‘Ó²‘¼þ‘²»‘Ö§‘³Ö8‘Î»‘Êý‘¾Ý‘Àà‘ÐÍ‘£¬‘Ëù‘ÒÔVC‘¶¨‘µã‘´ú‘Âë‘Àï‘Òª‘±Ü‘Ãâ‘Ê¹‘ÓÃ‘´Ë‘Êý‘¾Ý‘Àà‘ÐÍ")))
+(setq file-name-history '("/cygdrive/c/Users/LME_zhangz/Desktop/src/Sys_Top.h" "~/doc/org/dpi_guide/dpi.c" "/home/LME_zhangz/doc/org/dpi_guide/dpi.v" "/home/LME_zhangz/doc/org/dpi_guide/dpi_guide.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/home/LME_zhangz/doc/org/dpi_guide/dpi_guide.org"
+  "dpi_guide.org"
+  'org-mode
+  '(linum-mode yas-minor-mode undo-tree-mode org-indent-mode writegood-mode)
+  3594
+  '(3303 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . utf-8-unix) (truncate-lines))
+  '((mark-ring (42 1146 12 4256 3978 4230 4178 3877 4148 3746 3754 3303 1240 1206 1206 3594))))
+
+(desktop-create-buffer 208
+  "/home/LME_zhangz/doc/org/dpi_guide/dpi.c"
+  "dpi.c"
+  'c-mode
+  '(abbrev-mode linum-mode auto-complete-mode yas-minor-mode undo-tree-mode)
+  2064
+  '(3033 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix))
+  '((mark-ring (2921 3014 2937 2907 2840 2602 2602 2636 2337 2337 2124 2064 1 2064 2054 132))))
+
+(desktop-create-buffer 208
+  "/cygdrive/c/Users/LME_zhangz/Desktop/src/new  5.ini"
+  "new  5.ini"
+  'conf-unix-mode
+  '(linum-mode yas-minor-mode undo-tree-mode)
+  21
+  '(662 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-dos))
+  '((mark-ring (662 662 662 212 1 42 657 662 661 662))))
+
+(desktop-create-buffer 208
+  "/home/LME_zhangz/doc/org/dpi_guide/dpi.v"
+  "dpi.v"
+  'verilog-mode
+  '(linum-mode auto-complete-mode yas-minor-mode undo-tree-mode)
+  1
+  '(1105 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix))
+  '((mark-ring (808 808 563 552 552 121 121 363 363 363 363 363 327 327 464 999))))
+

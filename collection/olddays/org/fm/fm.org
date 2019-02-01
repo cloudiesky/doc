@@ -1,0 +1,82 @@
+* setup_env
+备份旧运行结果，建立新的运行环境
+* fm_shell -f $type.tcl
+** auto setup
+set sysnopsys_auto_setup true
+- hdlin_ignore_embedded_configuration = true
+  ignore embedded configuration in vhdl file
+- hdlin_ignore_full_case = false
+  full_case directive in verilog.
+- hdlin_ignore_parallel_case = false
+  parallel_case directive in verilog.
+- signature_analysis_allow_subset_match = false
+- svf_ignore_unqualified_fsm_information = false
+- upf_assume_related_supply_default_primary = true
+- upf_use_additional_db_attributes = true
+- verification_set_undriven_signals = synthesis
+- verification_verify_directly_undriven_output = false
+** black box
+set hdlun_unresolved_module black_box
+**  verification set P1
+- set verification_clock_gate_hold_mode any
+  clock gating flip_flop equivalent to the non-clock gating design.
+- set verification_blackbox_match_mode idenity
+  blackbox verification is tighten. should be same name in the same library.
+- set verification_constant_prop_mode top
+  design constants are nets in a design tied to a logical 0 or 1.
+  (top|target|auto)
+** tools setting 
+- set hdlin_dwroot (\/tools/cad/dc201506)
+- set hdlin_synroot(\/tools/cad/dc201506)
+** verification set P2
+- set verification_set_undriven_signals "X"
+- set verification_verify_directly_undriven_output  true
+- set verification_invertion_push true
+  controls whether FM matching methods attempt to account for cases where data inversion has been moved across register boundaries.
+** svf
+set_svf
+** set search_path
+** read database
+read_db -technology_library {}
+- tech lib
+- mem lib
+** container
+- create_container REF
+- create_container IMP
+
+** ref
+1. current_container REF
+2. read rtl
+   read_vhdl,read_verilog
+3. set_top REF:/WORK/lme3410top
+4. set_constant REF:/WORK/lme3410top/chip_test_PAD 0
+   set some pad or pin or net to a constant value.
+5. current_design lme3410top
+
+** IMP
+1. current_container IMP
+2. read_verilog -con IMP /*/netlist.sv
+3. set_top IMP:/WORK/lme3410top
+4. set_constant IMP:/WORK/lme3410top/chip_test_PAD 0
+5. current_design lme3410top
+
+** setup
+- set_reference_design REF:/WORK/lme3410top
+- set_reference_design REF:/WORK/lme3410top
+- set design_name lme3410top
+- setup
+** report setup
+- report_black_boxes -all
+- report_constants
+- report_constraint -long
+
+** match
+- match
+- report_unmatched_points
+- source ../*user_match.tcl
+  set_user_match -type cell REF:/WORK/lme3460top IMP:/WORK/lme3460top/xxx_reg_0
+** verify
+verify
+
+
+

@@ -1,0 +1,199 @@
+#+TAGS: eda(A)
+
+* Linux                                             :Linux:
+** ssh                                  :ssh:pip:
+*** mathod 1
+cat dota.el | ssh cloudiesky@192.168.184.136 ' cat - > abc.txt'
+tar cvf - /path/*.jpg | ssh cloudiesky@192.168.184.136 'tar xvf -'
+*** mathod 2
+ssh cloudiesky@192.168.184.136 ' cat - > abc.txt' < file   #send to remote
+ssh cloudiesky@192.168.184.136 ' cat abc.txt' > file       #receive from remote
+
+** cygwin sshsever
+*** 文件授权
+#+BEGIN_SRC shell
+chmod +r /etc/group
+chmod +r /etc/passwd
+chmod +rwx /var
+#+END_SRC
+
+*** sshd 服务
+#+BEGIN_SRC shell
+ssh-host-config
+cygrunsrv.exe -S sshd
+cygrunsrv.exe -E sshd
+#+END_SRC
+
+*** 使用Windows用户本地认证
+#+BEGIN_SRC shell
+mkpasswd -l > /etc/passwd
+mkgroup -l > /etc/group
+#+END_SRC
+
+* Chip                                              :Chip:
+
+** RTL                                                    :RTL:
+
+*** 避免同时对memory的同一地址进行读写操作。
+
+*** memory输出需要进行打拍
+
+*** 外部输入需要进行打拍
+
+*** IO上拉，下拉，线与，弱上拉
+- 上拉下拉速度，与io的上下电阻有关，
+  大电阻，慢，省电，电阻可以变小；
+  小电阻，快，耗电，电阻无法变大。
+- 线与
+  接法：
+  + PBCUxR: CMOS 3-state output pad with controllable input and controllable pull-up.
+  + PBCU4R:(.PAD(pad), .IE(ie), .OEN(oen), .I(I), .C(C), .REN(REN))
+  + 强驱动模式：关闭REN（置高，无效），oen 始终打开（置低，有效）。响应速度快，驱动能力强
+  + 线与模式：
+    1. 打开REN，oen，i连在一起。响应速度慢，直接与其他线相连接，不会被烧坏。
+    2. i端为1时，pad的输出为VDD 经过电阻 R 后的电压，即VDD，i端为0时，输出端打开，pad的输出为 GND 。
+    3. 两个线与模式的 pad 相连时，表现出来的逻辑为与逻辑
+       | A | B | Y |
+       |---+---+---|
+       | 1 | 1 | 1 |
+       | 1 | 0 | 0 |
+       | 0 | 1 | 0 |
+       | 0 | 0 | 0 |
+    4. IO连接的电阻应使用大电阻，当外部线与其他IO时，等效于并联电阻，等效阻值会降低。
+
+
+** Verification                                               :Verification:
+*** System Verilog                                :System Verilog:
+**** 事务级的处理对象
+***** 用于交互的数据，应增大包中数据的量，减少交互次数<2016-08-22 周一>
+- 验证模组中，monitor 应当收集相当数量的数据后，才将数据传输给scoreboard
+
+**** $fscanf $fdisplay 是复杂的函数，使用较少的参数可以提高运算速度<2016-08-22 周一>
+
+**** $feof , $fscanf                                                :C:指针:
+- $fscanf 如果运行成功，则将指针移动到匹配到的最后一个位置
+  - 这导致使用$feof 作为文件读取结束时，会多读一次最后一行
+- 正确的用法应当是，在循环体中 fscanf 之后，作 feof 判断，再执行其他内容。
+  - 不应将 feof 放在for() ，while() 的括号中。
+
+*** C语言
+**** 数组传参
+- 直接传参数
+- 传递参数指针
+  - 优点 :: 减少内存拷贝。
+  - 缺点 :: 需要手动分配释放地址空间。
+  - 代码例子 :: 
+            #+BEGIN_SRC c
+            int array_pass(char **ch){
+                for (i=0; i<lenth; i++)
+                    (*ch)[i] = i;
+            }
+            void main(){
+            char *ch;
+            array_pass(&(*ch));
+            }
+            #+END_SRC
+**** 可变参数
+#+BEGIN_SRC c
+
+#include <stdarg.h>
+void debug(int level, const char *fmt, ...)
+{
+
+	va_list ap;
+  if( level <= VERB ){
+		va_start(ap, fmt);
+		vprintf(fmt, ap);
+		va_end(ap);
+	}
+}
+
+
+#+END_SRC
+**** 16进制读入浮点数，与可变数组控制
+#+BEGIN_SRC c
+int vec_rd_fd(char * Fname, int length, float **Vec){
+  int i;
+  int vec_max_lenth;
+  FILE * fp;
+  long long unsigned long_tmp;
+  double double_tmp;
+
+  debug(V_DEBUG,"read: %s\n",Fname);
+  fp  = fopen(Fname, "r");
+  assert(fp);
+
+  // init
+  i = 0;
+  vec_max_lenth = 2;
+  (*Vec) = (float*)malloc(vec_max_lenth * sizeof(float));
+
+  // read file
+  while (1) {
+    fscanf(fp,"%I64x",&long_tmp);
+
+    if (feof(fp)){
+      length = i;
+      debug(V_DEBUG, "Last line  %d\n", i);
+      break;
+    }
+
+    memcpy(&double_tmp, &long_tmp, sizeof(long long unsigned));
+    (*Vec)[i] = (float)(double_tmp);
+    i++;
+    if (i == (vec_max_lenth-1)) {
+      vec_max_lenth = vec_max_lenth * 2;
+      (*Vec) = realloc((*Vec), (vec_max_lenth * sizeof(float)));
+    }
+
+    if (i%10000 == 0)
+      debug(V_DEBUG, "Line = %d\n", i);
+  }
+
+  (*Vec) = realloc((*Vec), (length * sizeof(float)));
+
+  for (i=0; i<100; i++)
+    debug(V_DEBUG, "line: %d %f\n",i,(*Vec)[i]);
+
+  fclose(fp);
+  return EXIT_SUCCESS;
+}
+
+#+END_SRC
+**** 随机种子
+#+BEGIN_SRC c
+
+#include <time.h>
+
+#ifdef RANDSEED
+  (*config)->RandSeed = RANDSEED;
+#else
+  (*config)->RandSeed = (unsigned)time(NULL);
+#endif
+  printf("RandSeed = %d\n",(*config)->RandSeed);
+  srand((*config)->RandSeed);
+
+
+#+END_SRC
+
+** Algorithm                                                     :Algorithm:
+
+** Tools                                                             :Tools:
+*** coverage                                                          :eda:
+- vcs :: -cm cond+fsm+path+branch+line+tgl -cm_tgl mda -cm_dir cover -cm_hier path/to/cm_hier.f -lca
+- dve  :: -cov
+- irun :: -assert -sv -coverage all -covdut <dut_module>
+- imc :: -gui
+
+
+* FPGA仿真
+** 子版模块化
+将功能固定的电路制作成子版：
+- 成熟的模拟模块、
+- FPGA 的接口引线（调试使用）、
+- flash模块接口（独立烧录flash程序）。
+** 管脚电压转换
+Altera CPLD实现
+** 制版流程
+各方协调，继承稳定。
+

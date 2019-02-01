@@ -1,0 +1,21 @@
+* Tasks
+** DONE Task test2
+CLOSED: [2016-08-02 周二 11:45]
+- State "DONE"       from ""           [2016-08-02 周二 11:45] \\
+  demo task
+
+
+* Journals
+** 2016
+Year summary
+*** August
+Month summary
+**** Week 1
+Week Summary
+***** Date 2nd
+Days notes
+- Some demo of the sub-items
+- If needed add something here.
+
+***** Date Zero
+Initial journal of my GTD.

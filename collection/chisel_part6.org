@@ -1,0 +1,126 @@
+
+* Scripting Hardware Generation
+
+** Using the *for* loop
+- example of Full adder 
+  #+BEGIN_SRC scala
+  // A n-bit adder with carry in and carry out
+class Adder(n: Int) extends Module {
+  val io = IO(new Bundle {
+    val A    = Input(UInt(n.W))
+    val B    = Input(UInt(n.W))
+    val Cin  = Input(UInt(1.W))
+    val Sum  = Output(UInt(n.W))
+    val Cout = Output(UInt(1.W))
+  })
+  // create a vector of FullAdders
+  val FAs = Vec(Seq.fill(n) { Module(new FullAdder()).io })
+  val carry = Vec(Seq.fill(n + 1) { UInt(1.W) })
+  val sum = Vec(Seq.fill(n) { Bool() })
+
+  // first carry is the top level carry in
+  carry(0) := io.Cin
+
+  // wire up the ports of the full adders
+  for (i <- 0 until n) {
+    FAs(i).a := io.A(i)
+    FAs(i).b := io.B(i)
+    FAs(i).cin := carry(i)
+    carry(i + 1) := FAs(i).cout
+    sum(i) := FAs(i).sum.toBool()
+  }
+  io.Sum := sum.asUInt
+  io.Cout := carry(n)
+}
+  #+END_SRC
+** Using *if*, *else if*, *else*
+- these keywords are reserved for scala control structure.
+  #+BEGIN_SRC scala
+    class Counter(CounterWidth: Int, CounterType: String)
+        extends Module {
+      val io = IO(new Bundle {
+                    val output = Output(UInt(CounterWidth.W))
+                    val ce     = Input(Bool())
+                  })
+      if (CounterType == "UpCounter") {
+        val upcounter = new UpCounter(CounterWidth)
+        upcounter.io.ce := io.ce
+        io.output := upcounter.io.output
+      } else if (CounterType == "DownCounter") {
+        val downcounter = new DownCounter(CounterWidth)
+        downcounter.io.ce := io.ce
+        io.output := downcounter.io.output
+      } else if (CounterType == "OneHotCounter") {
+        val onehotcounter = new OneHotCounter(CounterWidth)
+        onehotcounter.io.ce := io.ce
+        io.output := onehotcounter.io.output
+      } else {
+        // default output 1
+        io.output := 1.U
+      }
+    }
+      // instantiate a down counter of width 16
+    val downcounter =
+      Module(new Counter(16, "DownCounter"))
+
+    // instantiate an up counter of width 16
+    val upcounter =
+      Module(new Counter(16, "UpCounter"))
+
+    // instantiate a one hot counter of width 16
+    val onehotcounter =
+      Module(new Counter(16, "OneHotCounter"))
+  #+END_SRC
+
+** Using *def*
+#+BEGIN_SRC scala
+  object Counter {
+    def wrapAround(n: UInt, max: UInt) =
+      Mux(n > max, 0.U, n)
+
+    def counter(max: UInt, en: Bool, amt:UInt) = {
+      val x = RegInit(0.U(max.getWidth.W))
+      x := wrapAround(x + amt, max)
+      x
+    }
+  }
+
+  class Counter extends Module {
+    val io = IO(new Bundle){
+      val inc = Input(Bool())
+      val amt = Input(UInt(4.W))
+      val tot = Output(UInt(8.W))
+    }
+    io.tot := counter(255.U, io.inc, io.amt)
+  }
+#+END_SRC
+
+** Parameterized Vec Shift Reg
+#+BEGIN_SRC scala
+  class VecShiftRegisterParam(val n: Int, val w: Int) extends Module {
+    val io = IO(new Bundle {
+                  val in  = Input(UInt(w.W))
+                  val out = Output(UInt(w.W))
+                })
+      ...
+      io.out := 0.U
+  }
+#+END_SRC
+** Mul Lookup Table
+#+BEGIN_SRC scala
+
+  class Mul extends Module {
+    val io = IO(new Bundle {
+                  val x   = Input(UInt(4.W))
+                  val y   = Input(UInt(4.W))
+                  val z   = Output(UInt(8.W))
+                })
+    val muls = new ArrayBuffer[UInt]()
+    val table = Vec(muls)
+  
+    // flush this out ...
+
+    io.z := 0.U
+  }
+#+END_SRC
+** 

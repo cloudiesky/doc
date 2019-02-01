@@ -1,0 +1,187 @@
+* review
+** turbo
+*** encode
+**** input/output
+- rate mode
+- pb lenth
+- encode in
+- encode out
+**** 编码器原理
+***** 结构框图
+- 双二进制循环递归系统卷积码（CTC）
+- 比特对输入编码器1得到p
+- 比特对交织后输入编码器2得到q
+- 结果先输出所有比特对，然后输出pq
+***** 分量编码器rsc框图
+ reg_n = u1 xor u2 xor s3
+ s3_n = u2 xor s2 xor reg
+ s2_n = u2 xor u1 xor s1
+ s1_n = u2 xor u1 xor reg
+**** 译码器原理
+***** 两个软输入软输出的分量译码器并行级联成
+***** 子译码器1 ->交织 -> 子译码器2 -> 解交织 -> 子译码器1
+***** 每次经过子译码器都产生新的外信息，作为下一级子译码器的输入内信息
+***** 子译码器根据输入的内信息，计算出各种比特位跳转的可能性，求出其中的最大值
+****** 跳转分支的可能性 alpha
+****** 前级状态可能性 beta
+****** 后期状态可能性 gamma
+***** 选取其中最大值(alpha + beta + gamma) 作为输出，更新信息
+***** 归一化
+***** 边界反馈，单个子译码器自身的边界反馈。前级状态用上一次，后级状态用上一次的beta加gamma的最大值。
+** mapping
+*** map
+**** 映射星图
+**** 计算相位
+**** 归一化
+
+*** demap
+**** 相位反旋转
+***** 去填充载波
+***** 查星座点映射相位表
+***** 正弦余弦 反旋转
+***** 修正位宽
+**** 解星座映射
+***** 消除能量增益干扰csi
+***** 修正位宽
+** scramble
+避免长串的0,1
+** channel interleaver
+减少长串干扰对整段的影响
+** 分级复制，robo复制
+冗余数据
+** cp-win
+时域的误差影响
+** fir
+滤波
+** 上采样，下采样
+获得完整信息
+** 插值
+数据更加平滑
+** dc-offset
+去直流
+** 同步
+数据位置
+
+
+* design
+** dx
+*** nshift
+**** segment table
+*** crnt
+**** en_pos 启动计算
+**** seg_cnt 计数器控制流程
+***** done有效， seg_cnt++
+***** 如果 segment 包含了npad，则需要切分成2个小段。
+**** head 和 length 有两套，同时存在
+***** done信号
+****** 选择下一个segment的参数
+****** 更新两套参数。
+***** 参数计算方法
+两种情况，有npad，无npad
+- 无pad :: head = seg_cnt * bis，lenth = bis
+- 有pad :: switch_f
+  - 0  :: head = seg_cnt * bis，lenth = nraw - head
+  - 1  :: head = 0 , lenth = npad
+**** ofdm_done
+final segment
+
+** HS
+*** nshift
+- data width
+| name               | width |
+|--------------------+-------|
+| InterNum           | U4    |
+| InterNumPerGroup   | U4    |
+| CarrierNumPerInter | u12   |
+| signle_seg_num     | u13   |
+| signle_seg_nes     | u13   |
+| bis                | u13   |
+| cis                | u11   |
+| cycleshift         | u11   |
+| col_tmp            | u11   |
+| row_tmp            | u12   |
+
+- 调用国网nshift，得到shift值。
+
+- state machine
+  * IDLE :: default
+  * CarrierNumPerInter :: generate interseg;
+       ValidCarrierNum / InterNum;
+  * InterNumPerGroup :: Divider;
+       InterNum / CopyNum
+  * 缓冲上述数据即可
+  * InterShiftStep :: floor(CarrierNumPerInter/(2*InterNum))
+                      CarrierNumPerInter : not cis
+                      InterNum Register
+                      case (0,2,4,8);
+
+*** crnt
+
+**** structure
+pb_block = i*copy > ofdm = n*group = n*m*inter
+
+copy = total_ofdm_num * group
+ofdm = copy_num * group
+
+
+**** inter calc
+
+***** params
+InterPerCopy = ofdm_num;
+InterPerOFDM = copy;
+
+***** output
+- InterNum 编号
+- PadBitsGroup = npad
+
+- inter的数据结构 第一段起点，第一段长度，第二段起点。
+
+**** inter struct
+- lenth CarrierNumPerInter
+
+- col_tmp :: 加深度，或加深度减1
+
+- stage1 ::  row_tmp, interpad
+             store 2 result: simple FIFO
+- stage2 :: 2*(k-1)*InterShiftStep,
+            #+BEGIN_SRC c
+             if (cyshift > col_tmp * interpad) {
+                  cyshift / (row_tmp+1) = col_in  ... row_in
+                  addr_in = row_in * col_tmp + col_in
+               }
+             else {
+                  (cyshift - col_tmp * interpad) / (row_tmp) = col_in_tmp  ... row_in
+                  addr_in = row_in * col_tmp + (col_in_tmp + interpad)
+               }
+
+
+            #+END_SRC
+
+
+
+- cycle_shift :: (2 * i * InterNum % cis)
+                 累加并求余数（可以实时计算）
+
+可以得到j的值。
+
+***** I/O
++ input inter_num
++ input inter_shift_step
++ input m
++ input n
++ input interpad
++ input inter_start_p0
++ input inter_start_p1
++ input inter_lenth_p0
++ input inter_lenth_p1
+
++ output seg_ready
++ input seg_done
++ output seg_head
++ output seg_len
+
++ intereative signals with previous module
+
+***** need store some stages before ready signal is valid
+
+

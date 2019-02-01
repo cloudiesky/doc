@@ -1,0 +1,2662 @@
+% Created 2017-10-19 周四 22:07
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\textit{<2016-08-31 周三>}}
+\title{learnSV}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={learnSV},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section*{SystemVerilog验证}
+\label{sec:orgdf5afad}
+
+\subsection*{Part 1}
+\label{sec:org9d3b055}
+\subsubsection*{Chp1 验证导论}
+\label{sec:orgaa0ff8e}
+
+\begin{itemize}
+\item 1.1 验证流程
+\label{sec:org1e4a03f}
+\begin{itemize}
+\item 硬件设计，创建一个基于设计规范并能完成特定任务的设备。
+\item 验证设计，确保该设备能够正确地完成预定的任务。
+\end{itemize}
+
+\begin{itemize}
+\item 1.1.1 不同层次上的测试
+\label{sec:org608c0e6}
+\begin{itemize}
+\item 代码块(block)，模块(module)内部。
+\item 代码块边界，速度快。
+\item 多个代码块，可以相互激励，工作负担较少；需要在代码和测试平台中同时查找漏洞。
+\item 最高层次，整个系统都被测试，仿真过程会简单。
+\begin{itemize}
+\item 需要更精细的测试，让待测设计尽可能多的代码块被激活。
+\end{itemize}
+\item 出现错误时的待测模块的处理。
+\end{itemize}
+
+\item 1.1.2 验证计划
+\label{sec:org16d86e1}
+\begin{itemize}
+\item 需要验证什么样的特性
+\item 采用哪些技术
+\end{itemize}
+包括
+\begin{itemize}
+\item 定向或随机的测试
+\item 断言
+\item 软硬件协同验证
+\item 硬件仿真
+\item 形式验证
+\item 对验证IP的使用
+\end{itemize}
+\end{itemize}
+
+\item 1.2 验证方法学
+\label{sec:org4194c3c}
+VMM 有一套针对数据和环境的基本类，有多种功能。
+
+\item 1.3 基本测试平台的功能
+\label{sec:orgfa545a9}
+\begin{enumerate}
+\item 产生激励(sequence item)
+\item 把激励加到DUT上(driver)
+\item 捕捉响应(monitor)
+\item 检验正确性(scoreboard)
+\item 对照整个验证目标测算进展情况(coverage)
+\end{enumerate}
+
+\item 1.4 定向测试
+\label{sec:orgbad059b}
+\begin{itemize}
+\item 渐进式的方法。
+\item 稳步前进，设计复杂会翻倍消耗时间。
+\end{itemize}
+
+\item 1.5 方法学基础
+\label{sec:org4ecd2a4}
+\begin{itemize}
+\item 原则
+\begin{enumerate}
+\item 受约束的随机激励
+\item 功能覆盖率
+\item 使用事务处理器的分层测试平台
+\item 对所有的测试通用的测试平台
+\item 独立于测试平台之外的个性化测试代码
+\end{enumerate}
+\item 分层的测试平台将复杂的问题分解为容易处理的小块，降低复杂度
+\item 通过”钩子“，调整激励或注入错误等操作
+\item 针对单一测试的个性化代码必须与测试平台分开
+\item 每个随机测试都包含一部分代码，同过不同的激励约束，得到正确或者错误的激励
+\item 最后的漏洞可能只能通过定向测试来发现
+\end{itemize}
+
+\item 1.6 受约束的随机激励
+\label{sec:org73fed27}
+\begin{itemize}
+\item 希望随机，又不希望完全随机
+\item 约束比定向范围大
+\item 约束可能重叠
+\item 约束可能不合法，此事需调整约束
+\item 约束不到的，可能需要定向测试
+\item 通过检测功能覆盖率，循环迭代以完成测试
+\end{itemize}
+
+\item 1.7 随机化的对象
+\label{sec:org5c7a129}
+\begin{enumerate}
+\item 设备的配置
+\item 环境配置
+\item 输入数据
+\item 协议异常
+\item 错误和违例
+\item 时延
+\end{enumerate}
+
+\begin{itemize}
+\item 1.7.1 设备和环境配置
+\label{sec:orgaf359e2}
+\begin{itemize}
+\item 设备的配置指设备自身的设置
+\item 环境的配置指设备的外围所被包围的其他部件
+\begin{itemize}
+\item 如周围部件的个数、种类等
+\item 还包含测试长度，错误注入比率，以及时延模式
+\end{itemize}
+\end{itemize}
+
+\item 1.7.2 输入数据
+\label{sec:org5755b7a}
+\begin{itemize}
+\item 第5章和第8章，认真准备事务类
+\item 估计所有的分层协议和错误注入，以及记分板的内容和功能覆盖率
+\end{itemize}
+
+\item 1.7.3 协议异常、错误和违例
+\label{sec:org43528e9}
+\begin{itemize}
+\item 非法操作，信号冲突。
+\item 通过断言定位错误的位置，可以提高查错效率
+\end{itemize}
+
+\item 1.7.4 时延和同步
+\label{sec:org68792ec}
+\begin{itemize}
+\item 单输入时，输入间的时延可能隐藏了漏洞
+\item 多输入时，不同输入口的速度差可能存在漏洞
+\end{itemize}
+
+\item 1.7.5 并行的随机测试
+\label{sec:orga846924}
+\begin{itemize}
+\item 通过不同的种子，进行并行测试
+\item 使用各种方法改变测试的种子
+\end{itemize}
+\end{itemize}
+
+\item 1.8 功能覆盖率
+\label{sec:org3b97189}
+通过功能覆盖率，确认验证的进展。
+\begin{itemize}
+\item 需要在测试平台中加入监控激励，以及设备对激励的反应，并据此确定功能验证的进展。
+\item 收集仿真结果，进行分析，确定下一步的测试激励。
+\end{itemize}
+
+\begin{itemize}
+\item 1.8.1 从功能覆盖率到激励的反馈
+\label{sec:org98db8cc}
+\begin{itemize}
+\item 通过功能覆盖率的统计结果，自动控制新激励的生成，减少人工干预。
+\item 难度大，需要丰富的经验，较少使用。
+\end{itemize}
+\end{itemize}
+
+\item 1.9 测试平台的构件
+\label{sec:org0261064}
+\begin{itemize}
+\item 产生激励并捕捉响应
+\item 工作在一个个抽象层次范围
+\item 创建事务和激励序列并最终转换成比特向量
+\item 平台模块：包含多种bfm（如果需要fpga仿真，则需要验证组件也是课综合的）
+\end{itemize}
+
+\item 1.10 分层的测试平台
+\label{sec:org98077c5}
+让平台变得易于维护，减轻工作量。
+
+\begin{itemize}
+\item 1.10.1 不分层的测试平台
+\label{sec:org85cd4be}
+\begin{itemize}
+\item 把通用的操作放到一个子程序中，可以提高效率，减少出错。
+\item 物理和命令层的建立，是分层的第一步。
+\end{itemize}
+
+\item 1.10.2 信号和命令层
+\label{sec:orgd59b38f}
+\begin{itemize}
+\item 信号层，包含待测设计和把待测设计连接到平台的信号（DUT,interface）
+\item 命令层，驱动器、监视器和断言（driver,monitor,assertion）
+\end{itemize}
+
+\item 1.10.3 功能层
+\label{sec:org22a7d58}
+\begin{itemize}
+\item 代理，记分板，检验器(agent,scoreboard,checker)
+\item 事务(transaction)
+\end{itemize}
+
+\item 1.10.4 场景层
+\label{sec:org87c0fa0}
+\begin{itemize}
+\item 组织随机的事务(sequence)
+\item 在测试平台中，当以上的行为发生变化时，通过工厂模式和回调函数来创建。
+\end{itemize}
+
+\item 1.10.5 测试的层次和功能覆盖率
+\label{sec:org9ce0b73}
+\begin{itemize}
+\item 测试包含了用于创建激励的约束。
+\item 功能覆盖率可以衡量所有测试在满足验证计划要求方面的进展。
+\item 在测试中创建“定向测试”，搭配随机测试作为“背景噪声”（信号间隔、事务信号间隔），将漏洞暴露出来。
+\item 除了“测试”，其他构建可以根据需要选择部分实现。
+\item 可能需要更多层构件，来实现。
+\end{itemize}
+\end{itemize}
+
+\item 1.11 建立一个分层的测试平台
+\label{sec:org41aeb8f}
+\begin{itemize}
+\item 1.11.1 创建简单的驱动器
+\label{sec:org25c68aa}
+\begin{itemize}
+\item 驱动器可能会注入错误或者增加实验，然后把命令分解层一些信号的变化。
+\item 核心为一个循环
+\end{itemize}
+简单例子：
+\begin{enumerate}
+\item 获取一个事务
+\item 进行变换
+\item 发送事务
+\end{enumerate}
+实际中：
+\begin{itemize}
+\item 另一个实例是agent，将复杂的事务分割成多个总线命令。(Chp5)
+\item 使用信箱实现对象在不同事务处理器之间传递。(Chp5)
+\item 不同层之间交换数据并使事务处理器实现同步。(Chp7)
+\end{itemize}
+\end{itemize}
+
+\item 1.12 仿真环境阶段
+\label{sec:org0ddc819}
+基本的阶段是建立(build)，运行(run)和收尾(wrap-up)。
+建立阶段
+\begin{enumerate}
+\item 生成配置：把待测设计的配置和周围环境随机化
+\item 建立环境：基于配置来分配和连接测试平台的构件（外围的仿真构件，并非待测设计本身）
+\item 对待测设计进行复位
+\item 配置待测设计：基于第一步中生成的配置，载入待测设计的命令寄存器
+\end{enumerate}
+运行阶段
+\begin{enumerate}
+\item 启动环境：裕兴测试平台的构件
+\item 运行测试：启动测试然后等待测试完成。由上而下的等待，每层空闲；同时设置超时检测。
+\end{enumerate}
+收尾节点
+\begin{enumerate}
+\item 清空：在最下层完成以后，等待待测设计清空最后的事务。
+\item 报告：从记分板中创建报告，测试失败的数据需要抛弃。
+\end{enumerate}
+
+\item 1.13 最大限度的代码重用
+\label{sec:orgf261640}
+可以重用的代码价值巨大，时刻思考重用。
+可以重用的代码价值巨大，时刻思考重用。
+可以重用的代码价值巨大，时刻思考重用。
+
+\item 1.14 测试平台的性能
+\label{sec:org4293d99}
+创建受约束的随机测试需要几个步骤
+\begin{itemize}
+\item 建立分层的测试平台，包括自检部分
+\item 按照验证计划中列举的目标创建激励
+\item 功能覆盖率
+\item 收集数据
+\item 分析数据
+\end{itemize}
+
+\item 1.15 结束语
+\label{sec:orga94c591}
+System Verilog 就是屌。
+
+\item 总结
+\label{sec:org11d3862}
+\end{itemize}
+
+
+
+\subsubsection*{Chp2 数据类型}
+\label{sec:org586be4b}
+优点：
+\begin{enumerate}
+\item 双状态数据类型
+\item 队列、动态和关联数组
+\item 类和结构
+\item 联合和合并结构
+\item 字符串
+\item 枚举类型
+\end{enumerate}
+
+\begin{itemize}
+\item 2.1 内建数据类型
+\label{sec:orgebbd007}
+Verilog 的变量都是静态的，存活在整个仿真过程。子程序不能通过堆栈来保存形参和局部变量。
+
+\begin{itemize}
+\item 2.1.1 逻辑(logic)类型
+\label{sec:org52d8b69}
+\begin{itemize}
+\item 具有reg的所有功能，以及wire的部分功能。
+\item 不能有多驱动，多驱动只能使用wire。
+\end{itemize}
+
+\item 2.1.2 双状态数据类型
+\label{sec:org9c2d354}
+\begin{center}
+\begin{tabular}{ll}
+name & detail\\
+\hline
+bit & 双状态，单比特\\
+bit [31:0] & 双状态，32比特无符号整型\\
+int unsigned & 双状态，32比特无符号整型\\
+int & 双状态，32比特有符号\\
+byte & 双状态，8比特有符号\\
+shortint & 双状态，16比特有符号\\
+longint & 双状态，64比特有符号\\
+integer & 四状态，32比特有符号\\
+time & 四状态，64比特无符号整数\\
+real & 双状态，双精度浮点数\\
+\end{tabular}
+\end{center}
+\begin{itemize}
+\item 随机化时带符号的变量可能造成意想不到的结果。
+\item 新类型都是有符号数。用无符号数时，建议用bit。
+\item 检查四状态数值: \$isunknown(), 如果出现X或Z时返回1。
+\end{itemize}
+\end{itemize}
+
+\item 2.2 定宽数组
+\label{sec:org75faa56}
+
+\begin{itemize}
+\item 2.2.1 定宽数组的声明和初始化
+\label{sec:org99fcb95}
+\begin{itemize}
+\item SystemVerilog 允许只给出数组宽度的便捷声明方式
+\item 多维数组允许紧凑型的声明
+\item 越界的地址，四状态返回X，双状态返回0。定宽数组、动态数组、关联数组和队列同样适应。
+\item 非合并数组将数组元素存放在32比特的字边界。
+\item logic和integer通常使用多一倍的空间。
+\end{itemize}
+示例
+\begin{verbatim}
+int array2[0:7][0:3];  //完整声明，应当注意下表的顺序。
+int array3[8][4];  //紧凑声明
+\end{verbatim}
+
+\item 2.2.2 常量数据
+\label{sec:orga16bed6}
+一个单引号加大括号来初始化数组。
+\begin{verbatim}
+int ascend[4] = '{0,1,2,3};
+int descend[5];
+descend = '{4,3,2,1,0};
+descend[0:2] = '{5,6,7};
+ascend = '{4{8}};
+descend = '{0:9,1:8,default:1};
+\end{verbatim}
+
+\item 2.2.3 基本的数据操作-for和foreach
+\label{sec:orgb05100c}
+for (Internet i = 0; i<\$size(src);i++)  //\$size返回数组的宽度。
+foreach(dst[j])
+\begin{itemize}
+\item 只需指定数组名并在其后面的方括号中给出索引变量，
+\item 索引变量将自动声明，并只在循环中有效。
+\end{itemize}
+foreach(md[i,j])
+\begin{itemize}
+\item 多维数据的索引变量用法比较特别。
+\end{itemize}
+\begin{verbatim}
+int md[2][3]='{'{0,1,2},'{3,4,5}}
+\end{verbatim}
+
+\begin{itemize}
+\item 多维数组赋值。
+\end{itemize}
+foreach(md[,j]) \$write("\%d",md[i][j]);
+\begin{itemize}
+\item 只遍历其中某一个维度。
+\end{itemize}
+
+\item 2.2.4 基本的数组操作--复制和比较
+\label{sec:org9992c6a}
+\begin{itemize}
+\item 必须为类型完全一样的数组才可以进行复制和比较。
+\item 可以用于数组片段比较，必须保证片段类型完全一样。
+\end{itemize}
+
+\item 2.2.5 同时使用位下标和数组下标
+\label{sec:org098481c}
+
+\item 2.2.6 合并数组
+\label{sec:org5964e45}
+存储时为连续的比特集合，中间没有任何限制的空间。
+
+\item 2.2.7 合并数组的例子
+\label{sec:org301014a}
+\begin{itemize}
+\item 合并的位和数组的大小作为数据类型的一部分必须在变量名前面；
+\item 数组大小定义的格式必须是[msb:lsb]，不可以使[size];
+\item 可以扩展为更多维的合并数组；
+\item 引用时，下标顺序从左到右对应声明时的顺序；
+\item 合并数组的本质是，连续的比特
+\end{itemize}
+例子
+\begin{verbatim}
+bit [3:0][7:0] bytes;
+\end{verbatim}
+
+
+合并数组和非合并数组可以混合使用。
+\begin{verbatim}
+bit [3:0][7:0] barray[3];
+bit [31:0] one_word = 32'h0123_4567;
+barray[0] = one_word;
+\end{verbatim}
+
+合并数组的本质只是将简单变量的位宽用数组的形式表达。
+混合了非合并数组的合并数组，使用时必须至少带有一个下标。
+合并数组实现复制时，因为其本质为比特，所以只需要保证长度相等即可，维度可以不同。
+
+\item 2.2.8 合并数组和和非合并数组的选择
+\label{sec:org9ab515b}
+\begin{itemize}
+\item 当需要和标量进行相互转换时，使用合并数组会非常方便。
+\item 任何数组类型都可以合并。
+\item 如果需要等待数组中的变化，则必须使用合并数组
+\begin{itemize}
+\item @：只能用于标量或者合并数组；
+\item 不能使用barray，只能使用:
+\begin{verbatim}
+@(barray[0] or barray[1] or barray[2]);
+\end{verbatim}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\item 2.3 动态数组
+\label{sec:orgec0dfd7}
+
+\begin{itemize}
+\item 编译时不指定宽度，运行时分配空间。
+\end{itemize}
+\begin{verbatim}
+int dyn[],dyn2[];
+initial dyn = new[5];
+dyn2 = new[4]; // dyn2 = new[10];
+dyn = new[5](dyn2);
+dyn.delete();
+\end{verbatim}
+\begin{itemize}
+\item 动态数组位宽函数 dyn.size，\$size(dyn)
+\item 动态数组可以不用new函数，直接初始化。此时位宽将会定下来。
+\item 只要基本数据类型相同，定宽数组和动态数组间的元素可以相互赋值
+\item 在元素数目相同的情况下，可以把动态数组的值复制给定宽数组。
+\end{itemize}
+
+\item 2.4 队列
+\label{sec:orgcb6426e}
+\begin{itemize}
+\item 结合链表和数组的优点。
+\item 可以在队列的任何地方增删元素。性能比动态数组高（动态数组需要新建数组再复制）。
+\item 可以通过索引实现对任一元素的访问，不需要像链表那样去遍历目标元素前的所有元素。
+\end{itemize}
+例子
+元素增删
+\begin{verbatim}
+int q[$] ={0,2,4};  // 元素编号从左向右升序排列，0开始。队列赋值不需要 '{} 。
+q.insert(1,j); // 在2前插入j。
+q.insert(1,q2); // 在j前插入队列q2。
+q.delete(1);  // 删除第1个元素
+q.push_front(6); // 在队列前面插入6
+q.push_back(6);  // 在队列后面插入6
+j = q.pop_front; // 弹出队列前面的元素并赋值给j
+j = q.pop_back; // 弹出队列后面的元素并赋值给j
+q.delete();  // 删除队列
+\end{verbatim}
+范围表达
+ [\(:2]  [5:\)] \$在左表示最小边界，在右代表最大边界。
+\begin{verbatim}
+q = {q[0],j,q[1:$]}
+q = {q[0:2], q2, q[3:$]}
+q = {q[0],q[2:$]}
+\end{verbatim}
+
+元素增删的等效方法
+\begin{verbatim}
+q = {6，q}
+j = q[$] // 最右边的值
+q = q[0:$-1]
+q = {q,8}
+j = q[0]
+q = q[1:$]
+\end{verbatim}
+对队列前后元素的操作是速度非常快的，操作队列中间的元素则与队列长度有关。
+可以把定宽或者动态数组的值赋给队列。
+
+\item 2.5 关联数组
+\label{sec:orge87f43e}
+
+\begin{itemize}
+\item 使用关联数组类型，保存稀疏矩阵的元素。SV 只为实际写入值的元素分配空间。
+\item 仿真器可以使用树或者哈希表的形式来存放关联数组。
+\item 声明：在方括号中放置数据类型的形式作为索引的数据包，（可以使用‘*’，不推荐）
+\item 例：
+\end{itemize}
+\begin{verbatim}
+bit [63:0]  assoc[bit[63:0]],idx=1;
+assoc[idx] = idx;
+foreach(assoc[i]) $display("assoc[%h]=%h",assoc[i]);  //只打印有索引的内容。
+assoc.first(idx); // 找到第一个元素，并将其索引值赋给idx，如果失败返回0，成功返回1
+assoc.next(idx); // 找到下一个元素，并将其索引值赋给idx，如果失败返回0，成功返回1
+assoc.delete(idx); // 删除元素
+assoc.prev(idx);
+assoc.last(idx);
+assoc.exists(idx);
+\end{verbatim}
+
+\begin{itemize}
+\item 使用字符串作为索引，实现字符串到数字的映射。
+\end{itemize}
+\begin{verbatim}
+int switch[string];
+int max_addr;
+max_addr = switch.exists("max_addr") ? switch["max_addr"] : 1000;
+switch.exists; //判断元素是否存在
+
+\end{verbatim}
+
+\item 2.6 链表
+\label{sec:org5200f3c}
+类似c++的列表容器，sv 队列更高效，不推荐使用链表。
+
+\item 2.7 数组的方法
+\label{sec:org35f2e2c}
+
+\begin{itemize}
+\item 2.7.1 数组缩减方法
+\label{sec:orgf104022}
+\begin{itemize}
+\item 需要注意 sv 处理操作尾款的规则。
+\item 常用的缩减方法，
+\begin{itemize}
+\item sum
+\item product
+\item and
+\item or
+\item xor
+\end{itemize}
+\item 例子
+\begin{itemize}
+\item bit on[10];
+\item \$display("\%d",on.sum); //single bit 1
+\item \$display("\%d",on.sum+32'd0); //32 bits 5
+\item int total = on.sum; // total = 5;
+\item if (on.sum > 32'd5) // return 1;
+\end{itemize}
+\item 在数组中随机选取一个元素的方法
+\begin{itemize}
+\item 可以通过\$urandom\(_{\text{range}}\)(\$size(array)-1)
+\item 队列和动态数组还可以使用\$urandom\(_{\text{range}}\)(array.size()-1)
+\item 关联数组需要逐个访问它之前的元素
+\begin{itemize}
+\item int element = \$urandom\(_{\text{range}}\)(aa.size()-1);
+\item foreach(aa[i])
+\begin{itemize}
+\item if(count++ == element)
+\begin{itemize}
+\item begin rand\(_{\text{idx}}\) = i; break; end
+\end{itemize}
+\end{itemize}
+\item aa[rand\(_{\text{idx}}\)];
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\item 2.7.2 数组定位方法
+\label{sec:org00d2068}
+数组定位函数返回值，通常是一个“队列”。
+支持的类型：定宽数组，动态数组，队列
+\begin{verbatim}
+q_tmp = queue.max(); // maximum value
+q_tmp = queue.min(); // minimum value
+q_tmp = queue.unique(); // delete duplicate values are not include.
+\end{verbatim}
+搜索方法 find：
+\begin{verbatim}
+q_tmp = queue.find with (item>3); // return queue of items
+  q_tmp = queue.find_index with ();  //  return items' index
+  q_tmp = queue.find_first  with (); // return first item
+  q_tmp = queue.find_first_index  with (); //
+  q_tmp = queue.find_last  with (); //
+  q_tmp = queue.find_last_index  with (); //
+
+\end{verbatim}
+条件语句 with；重复参数的声明，重复参数 item （默认item，可以修改）；
+\begin{verbatim}
+tq=d.find with (item > 3); // 大于3的元素
+tq=d.find ()with (item >3);
+tq=d.find (x) with (x >3);
+\end{verbatim}
+
+\item 2.7.3 数组的排序
+\label{sec:org5181f8b}
+排序的方法
+\begin{verbatim}
+d.reverse(); // 倒序
+d.sort();  // 升序排序
+d.rsort(); // 降序排序
+d.shuffle(); // 乱序
+\end{verbatim}
+倒序（reverse）和乱序（shuffle）不可以带with
+
+\item 2.7.4 使用数组定位方法建立记分板
+\label{sec:orgb026ad2}
+使用结构体定义包，使用队列实现数据存储。
+\end{itemize}
+
+\item 2.8 选择存储类型
+\label{sec:org1af61ac}
+参考准则
+
+\begin{itemize}
+\item 2.8.1 灵活性
+\label{sec:orgd50a8c6}
+\begin{itemize}
+\item 索引为非负整数，定宽或者动态数组
+\begin{itemize}
+\item 确定深度，定宽
+\item 运行时确定深度，动态
+\end{itemize}
+\item 处理数组的子程序，动态
+\begin{itemize}
+\item 可以处理不同宽度的数组
+\end{itemize}
+\item 处理数组的子程序，队列或者关联数组
+\item 数组索引不规则时，关联数组
+\item 运行中数目变化大的数组，队列
+\end{itemize}
+
+\item 2.8.2 存储器用量
+\label{sec:org159de98}
+\begin{itemize}
+\item 双状态类型可以减少仿真时的存储器用量
+\item 尽量使用32bit的整数倍作为数据位宽
+\begin{itemize}
+\item 如使用合并数组，可以节省空间
+\end{itemize}
+\item 数组类型的性能，深度相关
+\begin{itemize}
+\item 1000，无差别
+\item 1,000 \textasciitilde{} 1,000,000 定宽和动态具有最高的存储器使用效率
+\item >1,000,000 应当检查设计
+\end{itemize}
+\item 长度经常发生变化的数组，存放在动态数组中时，大量的new[]和复制，会降低性能
+\item M字节以上的应当使用关联数组。关联数组元素占用空间大，访问效率低。
+\end{itemize}
+
+\item 2.8.3 速度
+\label{sec:org27e18ab}
+少量读写，差别小。
+\begin{itemize}
+\item 定宽和动态数组，每个元素的访问耗时都相同
+\item 队列首尾操作几乎无差别，中间的操作效率非常低。
+\item 关联数组最慢
+\end{itemize}
+
+\item 2.8.4 排序
+\label{sec:org953cbc6}
+\begin{itemize}
+\item 一次性赋值使用定宽、动态
+\item 逐个加入，队列
+\item 不连续，且彼此互异，可以使用关联
+\begin{itemize}
+\item 存储32bit的数值，数值生成后直接写入索引位置
+\begin{itemize}
+\item exist检查是否存在
+\item delete删除
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\item 2.8.5 选择最优的数据结构
+\label{sec:orgd3bd5ef}
+推荐例子
+\begin{enumerate}
+\item 网络数据包。定长，顺序存取。定宽或者动态
+\item 保存计分板。一般使用队列。如果元素多，并可能随意增删，使用关联数组
+\item 有序结构。顺序输出，队列；乱序输出，关联。如果不需要输出，mailbox。
+\item 多有百万级数据，关联。不可用关联，考虑使用合并。
+\item 有命令名，或者操作码：索引为字符串的关联数组。
+\end{enumerate}
+\end{itemize}
+
+\item 2.9 使用 typedef 创建新的类型
+\label{sec:org09245cd}
+实例
+\begin{verbatim}
+typedef reg [OPSIZE-1:0] opreg_t;
+typedef bit [31:0] uint;  // 常用无符号int
+typedef int unsigned uint;  // 等效
+typedef int fixed_array5[5] // 定宽数组数据类型，声明后即可以得到int数组
+\end{verbatim}
+
+\item 2.10 创建用户自定义结构
+\label{sec:orge4f8252}
+结构只包含数据，可以综合。
+
+\begin{itemize}
+\item 2.10.1 使用 struct 创建新类型
+\label{sec:orgfc7e22a}
+将若干变量组合到一个结构
+\begin{verbatim}
+struct {bit [7:0] r,g,b;} pixel;  // 创建结构变量
+typedef struct {bit [7:0] r,g,b} pixel_s; // 创建结构类型
+\end{verbatim}
+
+\item 2.10.2 对结构进行初始化
+\label{sec:org0545777}
+初始化方法，像数组一样。
+\begin{verbatim}
+pixel_s my_pixel = '{8'haa,8'hbb,8'hff};
+\end{verbatim}
+
+\item 2.10.3 创建可容纳不同类型的联合
+\label{sec:org1e54d5f}
+N选1，多个数据类型能同时存在一个。
+\begin{verbatim}
+typedef union {int i; real f} num_u;
+num_u un;
+un.f=0.0;
+\end{verbatim}
+要点
+\begin{itemize}
+\item 若以不同类型对一个寄存器频繁读写时，相当有效
+\item 不应为省空间使用，复杂的数据消耗更大
+\item 使用类，可以达到同样效果，功能更强大
+\item 如果需要提高存储效率，合并数组效果更好
+\end{itemize}
+
+\item 2.10.4 合并结构
+\label{sec:orgff013a1}
+可以将结构合并在一起
+
+typedef struct packed \{bit [7:0] r,g,b;\} pixel\(_{\text{p}}\)\(_{\text{s}}\)
+
+\item 2.10.5 在合并结构和非合并结构之间进行选择
+\label{sec:org7a11b69}
+\begin{itemize}
+\item 若果只进行复制操作，合并结构效率高
+\item 如果需要对每个数据都进行运算操作，合并结构的操作开销非常大。不应使用。
+\end{itemize}
+\end{itemize}
+
+\item 2.11 类型转换
+\label{sec:org1d0e4a2}
+
+\begin{itemize}
+\item 2.11.1 静态转换
+\label{sec:org342039a}
+指定要转换的类型，在表达式外面加单引号。
+\begin{verbatim}
+int i = int '(10.0-0.1);
+\end{verbatim}
+
+Verilog 对整数和实数，或者不同位宽的向量之间进行隐式转换。
+
+\item 2.11.2 动态转换
+\label{sec:orga228db8}
+函数 \$cast 允许对越界的数值进行检查。
+
+\item 2.11.3 流操作符
+\label{sec:orgbf1bffa}
+\begin{itemize}
+\item '>>' 和 '<<' 用在赋值表达式右边，后面带表达式、结构或者数组。
+\item 将后面的数据打包成比特流。>>数据从左至右打包，<<数据从右至左打包。
+\item 流操作符后，可以接数据类型，或数字。表示按数据类型长度，或者指定长度(从左向右，或者从右向左)对数据进行打包。
+\end{itemize}
+例子
+\#+BEGIN\(_{\text{SRC}}\) verilog
+ h = \{>> \{j\}\};
+ h = \{>> 4 \{j\}\};
+ \{>> \{q,r,s,t\}\} = j
+\#+END\(_{\text{SRC}}\);
+\item 2.12 枚举类型
+\label{sec:org37af857}
+\begin{itemize}
+\item 2.12.1 定义枚举类型
+\label{sec:org842c3c6}
+\item 2.12.2 枚举类型的子程序
+\label{sec:org51be794}
+\item 2.12.3 枚举类型的转换
+\label{sec:org82f4238}
+\end{itemize}
+\end{itemize}
+
+\item 2.13 常量
+\label{sec:orgdbfd93b}
+\begin{itemize}
+\item const byte colon = ":";
+\item const 初始化之后不能修改值
+\end{itemize}
+
+\item 2.14 字符串
+\label{sec:orge6730e8}
+\begin{itemize}
+\item 不含 $\backslash$0 ，动态存储，编号为0到N-1
+\item 操作符
+\begin{itemize}
+\item ==
+\item !=
+\item >= > <= <  //以字典顺序比较值 ASIIC 表值
+\item \{multiplexer\{str\}\}
+\item \{str,str,str\}
+\item str.FUNCTION();
+\begin{itemize}
+\item function int len();
+\item function void putc(int i, byte c);
+\item function byte getc(int i);
+\item function void toupper();
+\item function void tolower();
+\item function int compare(string s);
+\item function int icompare(string s);
+\item function string substr(int i,int j);
+\item atoi, atohex, atootc, atobin, atoreal
+\item itoa, hextoa, otctoa, bintoa, realtoa
+\end{itemize}
+\end{itemize}
+\item \$psprintf("\%s \%5d",s,42);
+\end{itemize}
+
+\item 2.15 表达式的位宽
+\label{sec:org63e2e04}
+\begin{verbatim}
+bit one = 1'b1
+ $displayb(one+one) //0
+ bit [7:0] b8 = one + one; // 2
+ $displayb(one+one + 2'b0) // 2
+ $displayb( 2 ' (one)  +one) // 2 ,强制类型转换
+\end{verbatim}
+
+\item 2.16 结束语
+\label{sec:org04ff60b}
+fuck 花了好长时间，才看完。
+\end{itemize}
+
+\subsubsection*{Chp3 过程语句和子程序}
+\label{sec:org8718161}
+c语言风格的代码
+
+\begin{itemize}
+\item 3.1 过程语句
+\label{sec:org8851b76}
+\begin{itemize}
+\item begin\ldots{}end fork\ldots{}join 可以添加标号
+\item ++ -- 可以作为前缀和后缀
+\item SV添加了continue 和 break，verilog只支持disable
+\end{itemize}
+
+\item 3.2 任务、函数以及void函数
+\label{sec:org4df895a}
+\begin{itemize}
+\item Verilog 中function必须有返回值，返回值必须被使用
+\item SV 中允许函数调用任务，只允许在fork..join\(_{\text{none中}}\)
+\item 不消耗事件的任务，应使用void函数，以便被调用
+\item 如果想忽略函数的返回值，可以使用void进行结果转换
+\begin{itemize}
+\item void ' (\$fscanf(file,"\%d",i));
+\end{itemize}
+\end{itemize}
+
+\item 3.3 任务和函数概述
+\label{sec:org1d117fe}
+不带参数的子程序不需要带空括号。但是可以带。
+
+\begin{itemize}
+\item 3.3.1 在子程序中去掉 begin\ldots{}end
+\label{sec:org9a850c4}
+begin\ldots{}end不在是必须的关键词
+\end{itemize}
+
+\item 3.4 子程序参数
+\label{sec:orgad10acd}
+\begin{itemize}
+\item 3.4.1 c语言风格的子程序参数
+\label{sec:org3fefbe3}
+c语言风格时，必须使用logic类型。（合理，但实测可以使用reg，int等其他类型）。
+\begin{verbatim}
+task mytask1 (output logic [31:0] x,input logicy);
+...
+endtask
+\end{verbatim}
+
+\item 3.4.2 参数的方向
+\label{sec:org28cb633}
+输入方向的关键字(input)可以省略，不建议省略。
+
+\item 3.4.3 高级的参数类型
+\label{sec:org27cbb63}
+\begin{itemize}
+\item verilog 中子程序对于参数都是做复制操作，in、out、inout。
+\item SV 中新增 ref 指定参数为引用。这样将数组传递给子程序，效率高
+\item SV 中可以不带ref传递参数，此时使用的是复制方式，资源消耗大
+\item SV 中 ref 只能用于带自动存储的子程序 （automatic属性）
+\item 当不需要改变数组值得时候加上 const 修饰，则子程序修改参数时，编译器会报错。
+\item SV 中 ref 类型的参数在子程序值发生改变时，外部可以立即得到。而不带ref的参数则会在子程序结束后，才更新。
+\end{itemize}
+\begin{verbatim}
+task automatic task1(ref bit [31:0] a []);
+...
+endtask
+\end{verbatim}
+
+\item 3.4.4 参数的缺省值
+\label{sec:orgd3ad288}
+\begin{itemize}
+\item 可以允许子程序带有缺省值
+\begin{verbatim}
+function void func1(int low=0,high=-1);
+...
+endfunction
+\end{verbatim}
+\item 使用-1（或者其他越界值）作为缺省值，对于获知调用时是否有指定值，是一个有效的方法。
+\end{itemize}
+
+\item 3.4.5 采用名字进行参数传递
+\label{sec:orgf100c13}
+\begin{itemize}
+\item SV 中允许子程序，使用类似模块借口的方式进行参数设置
+\begin{verbatim}
+initial begin
+ many(,6, .d(8));
+end
+\end{verbatim}
+\end{itemize}
+
+\item 3.4.6 常见的代码错误
+\label{sec:orgbb77983}
+\begin{itemize}
+\item 缺省的参数类型与前一个参数类型相同
+\item 应当为每个参数明确指定参数类型（in、out、inout、ref）
+\end{itemize}
+\end{itemize}
+
+\item 3.5 子程序的返回
+\label{sec:org2f5a2a8}
+Verilog 中，当function运行结束后，返回一个与函数同名的变量。
+\begin{itemize}
+\item 3.5.1 返回语句
+\label{sec:org1ed28fd}
+\begin{itemize}
+\item return 可以让代码更规整。
+\end{itemize}
+
+\item 3.5.2 从函数中返回一个数组
+\label{sec:org45e85e9}
+三种方法
+\begin{itemize}
+\item 先定义数组类型，然后将函数的返回类型定义为为数组，性能低
+\item 将返回值设为void，向函数传入ref类型的数组参数，性能高
+\item 将数组封装到类（class）中，返回对象（object）的句柄。
+\end{itemize}
+\end{itemize}
+
+\item 3.6 局部数据存储
+\label{sec:org3bd4749}
+Verilog 是HDL，所有对象都是静态存储，非基于堆栈。导致无法使用递归子程序一类的动态代码。
+
+\begin{itemize}
+\item 3.6.1 自动存储
+\label{sec:orgc095e04}
+\begin{itemize}
+\item 多个地方调用同一个任务时，由于任务里的局部变量使用共享的静态存储区，所以会串用局部变量。
+\item automatic可以指定任务(task)、函数(function)、模块(module)强制使用堆栈区存储局部变量。
+\item SV 中module 和program 默认是用静态存储，（经测试task也是静态）
+\end{itemize}
+
+\item 3.6.2 变量的初始化
+\label{sec:org16563ad}
+\begin{itemize}
+\item SV 允许在代码任意位置声明变量
+\item SV 中默认情况下，任意位置声明的变量都是静态存储的。（initial 块中，需要在其他代码之前声明变量）
+\begin{itemize}
+\item 这意味着，仿真前就已经做了声明。
+\begin{itemize}
+\item 如果声明中带有初始化的值，而初始值又是另外一个变量，则代码可能出错。
+解决方法
+\begin{enumerate}
+\item 强制为动态存储，添加automatic
+\item 声明中去除初始化
+\end{enumerate}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\item 3.7 时间值
+\label{sec:orgc7c2691}
+
+\begin{itemize}
+\item 3.7.1 时间单位和精度
+\label{sec:org94d4574}
+\begin{itemize}
+\item 可以使用timeunit timeprecision 取代 `timescale
+\item 如果使用 timeunit timeprecision， 则必须每个有时延的模块都必须添加 timeunit timeprecision；
+\end{itemize}
+
+\item 3.7.2 时间参数
+\label{sec:org68dae91}
+\begin{itemize}
+\item \$timeforamt \$time \$realtime
+\end{itemize}
+
+\item 3.7.3 时间和变量
+\label{sec:org34c7d8a}
+\begin{itemize}
+\item time , real 类型赋值可以加时间单位 800fs
+\end{itemize}
+
+\item 3.7.4 \$time 与 \$realtime 的对比
+\label{sec:org1850034}
+\begin{itemize}
+\item \$time 整数
+\item \$realtime 有小数位的实数
+\end{itemize}
+\end{itemize}
+
+\item 3.8 结束语
+\label{sec:org039d822}
+\end{itemize}
+
+\subsection*{Part 2}
+\label{sec:org46ac096}
+\subsubsection*{Chp4 连接设计和测试平台}
+\label{sec:orgb452572}
+核心概念是：除了待测设计的行为之外，测试平台仿真了其他的所有行为。
+
+\begin{itemize}
+\item 4.1 将测试平台和设计分开
+\label{sec:org2b55bea}
+\begin{description}
+\item[{interface}] 使用接口（interface）可以解决测试模块，与测试平台之间的连接问题。
+\item[{program}] 程序块（program block）可以从逻辑和时间上分开测试平台。
+\end{description}
+
+\begin{itemize}
+\item 4.1.1 测试平台和 dut 之间的通信
+\label{sec:orgd589adf}
+仲裁器的例子
+
+\item 4.1.2 与端口的通信
+\label{sec:org71ae6cb}
+老式的实现方法，不灵活、易错。
+
+\begin{description}
+\item[{待测模块}] arb，仲裁器实现。
+\item[{测试平台}] test，测试平台，不带时钟产生器，但是有复位（reset）产生器。
+\item[{顶层}] top，例化仲裁器，测试平台和时钟产生器。
+\end{description}
+\end{itemize}
+
+\item 4.2 接口
+\label{sec:org14830e9}
+接口包含，连接，同步，两个或多个模块间的通信功能，它们连接了设计快和测试平台。
+
+\begin{itemize}
+\item 4.2.1 使用接口来简化连接
+\label{sec:org79aa69a}
+SV 中进行模块设计的时候，可以将端口（port）封装到接口（interface）中。
+\begin{verbatim}
+interface arb_if(input bit clk);
+endinterface
+
+module arb(arb_if arb_if)
+endmodule : arb
+
+module top;
+bit clk;
+always #5 clk = ~clk;
+arb_if arb_if(clk);
+arb a1 (arb_if);
+test t1 (arb_if);
+endmodule :top
+\end{verbatim}
+接口声明必须在模块和程序块之外。如 include if.sv 要在top module外面。
+
+\item 4.2.2 连接接口和端口
+\label{sec:orgd1434ed}
+需要对verilog-2001兼容时，可以将接口（interface）连接到设计块的端口（port）上。
+
+\item 4.2.3 使用 modport 将接口中的信号分类
+\label{sec:org8b3cfa2}
+在interface中，使用modport，定义不用的接口方向分组。通常在模块设计块的接口声明中，确定接口的modport类型。必要时可以在top中连接设计的时候，再确定类型。
+\begin{verbatim}
+interface arb (input bit clk);
+modport TEST(output request, rst
+            input grant, clk);
+modport DUT (...);
+modport ...
+endinterface
+
+module arb(arb_if.DUT arb_if)
+endmodule : arb
+\end{verbatim}
+
+\item 4.2.4 在总线设计中使用 modport
+\label{sec:orgf08bb3f}
+并不是接口中每个信号都必须连接。
+
+\item 4.2.5 创建接口监视模块
+\label{sec:org10402eb}
+连接接口中信号，并输出接口行为的相应信息。
+
+\item 4.2.6 接口的优缺点
+\label{sec:orgba6ae21}
+接口可以例化接口，不可以例化模块。
+\begin{itemize}
+\item 优势
+\label{sec:org375fbf1}
+\begin{itemize}
+\item 利于设计重用
+\item 减少模块间的连接错误
+\item 信号增加减少只需要在接口中声明，不需要改变上层设计
+\item modport 可以捆绑信号，可以指定信号方向，方便模块自检。
+\end{itemize}
+
+\item 劣势
+\label{sec:org43967c9}
+\begin{itemize}
+\item 对于点对点的连接，modport 一样冗长。只是将接口放在一起了，方便工具检测。
+\item 必须同时使用信号名和接口名，模块可能更加冗长。
+
+\item 如果不重用，接口做的事情比端口更多。
+\item 连接两个不同的接口很困难。需要拆分，并正确的驱动。
+\end{itemize}
+\end{itemize}
+
+\item 4.2.7 更多的例子和信息
+\label{sec:orgcfe06b5}
+\end{itemize}
+
+\item 4.3 激励时序
+\label{sec:org3626414}
+需要注意驱动和接受信号的同步。避免时序竞争问题。
+
+\begin{itemize}
+\item 4.3.1 使用时钟块控制同步信号的时序
+\label{sec:orgdea61e6}
+时钟块定义了信号的时序关系，时钟块同时指明了接口信号的输入输出关系。在 modport 中可以直接使用时钟块。
+
+\item 4.3.2 接口中的logic和wire对比
+\label{sec:org1a34ce6}
+\begin{itemize}
+\item wire 更加方便复用，在initial块中不可以直接赋值，但是可以多驱动
+\item logic 更加易用，可以在initial块中直接赋值，不可以多驱动
+\end{itemize}
+
+\item 4.3.3 verilog 中的时序问题
+\label{sec:org94f1436}
+无法做到完全跟事实一致。
+
+\item 4.3.4 测试平台--设计见的竞争状态
+\label{sec:orgc094958}
+使用非阻塞赋值，使得信号无冲突。
+
+\item 4.3.5 程序块（program block） 和时序区域（timing region）
+\label{sec:orgd997107}
+\begin{itemize}
+\item 时序冲突的根源是，测试波形和设计混合在一起了。
+\item sv 将时间节点处理过程分成了 active observe reactive postponed 四个过程
+\begin{description}
+\item[{active}] simulation of design code in module
+\item[{observe}] evaluation of system verilog assertion
+\item[{reactive}] execution of testbench code in programs
+\item[{postponed}] sampling design signals for testbench input
+\end{description}
+\item 测试代码应当包含在一个单个program中。
+\item 应使用对象 oop，而非模块实现动态，分层的测试平台。一次仿真可能有多个程序块。
+\item 应当使用automatic修饰程序块。
+\end{itemize}
+
+\item 4.3.6 仿真的结束
+\label{sec:org16bc17d}
+\begin{itemize}
+\item 所有程序块中所有initial的最后一句时，仿真结束。
+\item 可以使用 \$exit 结束程序块
+\item 可以使用 \$finish 结束仿真
+\end{itemize}
+
+\item 4.3.7 指定设计和测试平台之间的延时
+\label{sec:org8d848cf}
+\begin{itemize}
+\item 在postpone region，所有的值都会被锁定。
+\item 可以认为时钟块做了时间节点上 design 和 testbench 的同步。
+\end{itemize}
+\end{itemize}
+
+\item 4.4 接口的驱动和采样
+\label{sec:orgcdb69d3}
+\begin{itemize}
+\item 4.4.1 接口同步
+\label{sec:org2eb0818}
+使用 @ 或者 wait 作为接口信号的同步
+
+\item 4.4.2 接口信号采样
+\label{sec:org96a43e3}
+在时钟块中(clock block)采样值，为变化边沿前的值。
+
+\item 4.4.3 接口信号驱动
+\label{sec:orgefb9305}
+使用带时钟块(clocking block)的 modport 时，时钟同步的接口信号，应当加上接口名(interface)和时钟块名(clocking block)。
+
+\item 4.4.4 通过时钟块驱动接口信号
+\label{sec:org467dfd6}
+\begin{itemize}
+\item testbench中，在时钟有效边沿使用阻塞赋值，数值可以立即传输到design中；如果不在时钟边沿使用阻塞赋值，数值会在下一个有效边沿传输到design中。
+\item 带时钟块(clocking block)的接口中，使用阻塞赋值可能出现数据丢失.
+\item 时钟块中的延时控制 必须有明确指明时钟
+\begin{description}
+\item[{\#\#0}] 如果当前为时间点(time slot)，则即时改变值，否则下一个有效边沿.
+\item[{\#\#1}] 即时当前为时间点(time slot)，也在下一个有效边沿改变值.
+\item[{\#\#2}] 2个有效时钟边沿。 类似 repeat (2) @arb\(_{\text{if.cb}}\)
+\item[{注意}] \#\#3 后面必须要带赋值语句。
+\begin{itemize}
+\item 合法
+\begin{verbatim}
+##2 arbif.cb.request <=0;
+\end{verbatim}
+\item 非法
+\begin{verbatim}
+##2 ;
+\end{verbatim}
+\end{itemize}
+\end{description}
+\end{itemize}
+
+\item 4.4.5 接口中双向信号
+\label{sec:org740f40c}
+程序中可以直接对双向信号进行读取、赋值操作。
+\item 4.4.6 为什么不在程序（program）中不允许使用always块
+\label{sec:org3e6dac7}
+\begin{itemize}
+\item testbench 中的 always 可能不正常工作
+\item testbenc 中有 always ，则 testbench 将不能正常结束。
+\item 可以使用 initial forever 实现
+\end{itemize}
+\item 4.4.7 时钟发生器
+\label{sec:org67e1260}
+时钟块应在design中实现。
+\end{itemize}
+\item 4.5 将这些模块连接起来
+\label{sec:org90b68e3}
+在top连接design和testbench。
+\begin{verbatim}
+module top;
+ bit clk;
+always #4 clk=~clk;
+
+arb_if arbif(.*);
+arb a1(.*);
+test t1(.*);
+endmodule
+\end{verbatim}
+.* 为端口的省略写法。
+
+\begin{itemize}
+\item 4.5.1 端口列表（port list）中的接口（interface）必须连接
+\label{sec:orgb3411e4}
+端口（port）有接口（interface）的模块，必须声明了接口，才可以编译通过。
+\begin{verbatim}
+module top;
+ bit clk;
+always #4 clk=~clk;
+
+arb_if arbif(clk);
+arb a1(arbif);
+endmodule
+\end{verbatim}
+\end{itemize}
+
+\item 4.6 顶层作用域
+\label{sec:orgc30977a}
+\begin{description}
+\item[{\$unit}] 编译时的顶层引用路径
+\item[{\$root}] elaborate之后的顶层路径
+\item[{顶层模块的显式例化}] \begin{verbatim}
+`timescale 1ns/1ns
+top t1();
+module top;
+    ....
+endmodule
+`define TOP $root.top
+program automatic test;
+...
+endprogram
+\end{verbatim}
+\end{description}
+
+\item 4.7 程序--模块交互
+\label{sec:orgc6d4ea1}
+可以在design中添加function接口，方便 testbench 访问design中的数据。
+第10章中，有示例如何在接口(interface)中使用function和断言。
+
+\item 4.8 system verilog 断言
+\label{sec:org5533742}
+可以使用时序断言，并跟踪断言。通过断言，可以收集功能覆盖率。
+
+\begin{itemize}
+\item 4.8.1 立即断言（Immediate Assertion）
+\label{sec:org61a2336}
+\begin{description}
+\item[{断言逻辑}] 不符合断言条件，则会触发断言。
+\end{description}
+
+\item 4.8.2 定制断言行为
+\label{sec:orge13add6}
+\begin{description}
+\item[{then, else}] 
+\end{description}
+断言支持then分句和else分句。
+\begin{verbatim}
+a1: assert (bus.cb.grant == 2'b01)
+   grants_received++;
+else
+  $error("grant not assert");
+\end{verbatim}
+\begin{description}
+\item[{4个输出消息的函数}] \$info, \$warning, \$error, \$fatal.
+\end{description}
+
+\item 4.8.3 并发断言(concurrent assertions)
+\label{sec:org44f364f}
+\begin{itemize}
+\item 等效连续运行的模块。
+\end{itemize}
+\begin{verbatim}
+interface arb_if(input bit clk);
+ ...
+
+ property request_2state;
+   @(posedge clk) disable iff (rst);
+   $isunknown(request) == 0;
+ endproperty
+endinterface
+\end{verbatim}
+
+\item 4.8.4 断言的进一步探讨
+\label{sec:org5e4a253}
+\end{itemize}
+
+\item 4.9 四端口的 atm 路由器
+\label{sec:org9c1379e}
+\begin{itemize}
+\item 4.9.1 使用端口的 ATM 路由器
+\label{sec:org71e250b}
+\item 4.9.2 使用端口的 ATM 顶层网单
+\label{sec:orgd2c765d}
+\item 4.9.3 使用接口简化连接
+\label{sec:org2c54e47}
+\item 4.9.4 ATM 接口
+\label{sec:org46616c6}
+\item 4.9.5 使用接口的 ATM 路由器模型
+\label{sec:orgd5b2966}
+\item 4.9.6 使用接口的 ATM 顶层网单
+\label{sec:org55bab20}
+\item 4.9.7 使用接口的 ATM 测试平台
+\label{sec:org8a84433}
+\end{itemize}
+\item 4.10 ref 端口的方向
+\label{sec:org0dbdbc4}
+\item 4.11 仿真结束
+\label{sec:orgd767c8e}
+\item 4.12 LC3取值模块的定向测试
+\label{sec:org3a7a2e0}
+\end{itemize}
+
+
+
+\subsubsection*{Chp5 面对对象编程基础}
+\label{sec:orgd1d0ee9}
+\begin{itemize}
+\item 5.1 概述
+\label{sec:org5ba2d58}
+\item 5.2 考虑名词，而非动词
+\label{sec:org99d8766}
+\begin{description}
+\item[{传统}] 创建事务，发送，接收，检查结果。
+\item[{oop}] generator，driver，monitor，scoreboard，blocks
+\item[{对比}] 传统倾向于数据流动，oop倾向于将每个独立的事情分裂出来。
+\end{description}
+\item 5.3 第一个类
+\label{sec:orgf1cc52d}
+\begin{itemize}
+\item endtask endfunction 等中添加label
+\item 代码风格
+\end{itemize}
+\item 5.4 在哪里定义类
+\label{sec:org769fda1}
+program，module，package或者这些位置之外的任意位置。
+可以使用包把类定义和类型定义捆绑在一起。
+
+\item 5.5 oop术语
+\label{sec:orgec27d64}
+class 类，object 对象，handle 句柄，property 属性，method 方法，prototype 原型（程序头，程序名，返回类型，参数列表）
+
+\item 5.6 创建新对象
+\label{sec:orgf27020a}
+对象在运行时才被创建。
+
+\begin{itemize}
+\item 5.6.1 句柄和构造函数
+\label{sec:org8017cdf}
+声明一个类的变量时，此变量名称即为句柄。
+
+\item 5.6.2 定制构造函数
+\label{sec:org0caacf7}
+new()可以有输入参数，可以部分参数赋值，方法与module的例化赋值方法类似。
+new()的调用取决月赋值操作符左边的句柄类型
+
+\item 5.6.3 将声明和创建分开\hfill{}\textsc{特别注意}
+\label{sec:org1b98f6f}
+声明类的变量和构造函数应当分开；
+普通变量的声明和初值应当分开，在task中，没有分开的变量声明和赋初值，初值可能会不生效。
+
+\item 5.6.4 new[] 和 new()
+\label{sec:org8c0b042}
+new[] 是动态数组分配空间，new()是构造函数。
+
+\item 5.6.5 为对象创建一个句柄
+\label{sec:orgd767aae}
+可以改变句柄handle指向的对象object
+一个object可以有多个handle。没有handle指向object的时候，object将会被回收。
+\end{itemize}
+
+\item 5.7 对象的解除分配
+\label{sec:org586316f}
+当没有指向句柄指向对象，则对象将会被回收。将句柄指向null，可以将空间释放。
+如果是链表的话，则需要手动将每个对象进行释放。
+如果对象中有从线程中派生出来的程序，只要线程仍在运行，曾对象空间不会别释放。
+
+\item 5.8 使用对象
+\label{sec:orge37886a}
+严格的OOP规定，只能通过对象的公有方法访问对象的变量。
+测试平台需要最大限度的控制所有的变量，以产生最广泛的激励。
+
+\item 5.9 静态变量和全局变量
+\label{sec:org01dd556}
+\begin{itemize}
+\item task一定要注意添加automatic修饰，避免同时调用时产生的冲突。
+\item class中的task默认为automatic，其他位置默认为static。
+\end{itemize}
+
+\begin{itemize}
+\item 5.9.1 简单的静态变量
+\label{sec:org011aba2}
+\begin{itemize}
+\item 类中的静态变量将被这个类的所有实例共享。
+\item 应用实例
+使用静态变量count记录实例个数。
+每个类中建立非静态变量ID， new函数中， id=count++
+\end{itemize}
+
+\item 5.9.2 通过类名访问静态变量
+\label{sec:org5da2508}
+使用类名作用域操作符 :: 访问静态变量。
+
+\item 5.9.3 静态变量的初始化
+\label{sec:org8a44d03}
+静态变量的初始化不应当在构造函数中实现。
+静态变量的初始化可以有专门的初始化函数，但需要保证初始化函数在第一个类的实例构造之前，已使用了静态变量的初始化函数。
+
+\item 5.9.4 静态方法
+\label{sec:org184004d}
+类中的方法默认为automatic，使用使用static的方法，优化实现。
+不允许静态方法读写非静态方法。
+\end{itemize}
+
+\item 5.10 类的方法
+\label{sec:orga4d021b}
+默认为自动存储的
+
+\item 5.11 将类的方法定义在类的外面。
+\label{sec:org2911bd8}
+\begin{itemize}
+\item 提高可读性
+\item extern
+在类中声明方法，加extern 修饰。
+\item 类作用域符:: 。
+在外面定义方法时，必须要指定累作用域。
+\end{itemize}
+
+\item 5.12 作用域规则
+\label{sec:org633555d}
+\begin{itemize}
+\item 使用 点(.)索引变量
+\item 使用时，建议使用完整路径避免错误索引
+\item 如果在代码上一级中已有变量，隐式声明变量可能会失败，而变成对上一级的引用。因此class应当写在独立的代码文件中，规避错误。
+\item 使用package 包装class
+
+\item this专指类一级的变量。
+\end{itemize}
+
+\item 5.13 在一个类中使用另一个类
+\label{sec:org22b234b}
+将类分解成多个类有利于代码管理
+
+\begin{itemize}
+\item 5.13.1 类的大小应该有上限和下限
+\label{sec:orgdf6a5da}
+分解类会带来层次上的复杂度的增加。
+
+\item 5.13.2  编译顺序的问题
+\label{sec:org3356756}
+如果类包含了一个未定义的类，可以使用typedef class 来声明类名。
+\end{itemize}
+
+\item 5.14 理解动态对象
+\label{sec:org41c975f}
+对象和句柄是一一对应的。句柄可以存储在数组、队列或者另一个对象中。
+
+\begin{itemize}
+\item 5.14.1 将对象传递给方法
+\label{sec:orgdfcab25}
+传递对象是传递的是对象的句柄。因此，方法中对对象的修改会在方法外生效。
+
+\item 5.14.2 在任务中修改句柄
+\label{sec:org058b94c}
+对象的默认信号方向是input，即内部复制句柄的值。
+如果需要改变句柄的值，需要将信号方向改为ref。
+方向为ref的信号在task外面发生变化时，也会影响task内部信号。
+
+\item 5.14.3 在任务中修改对象
+\label{sec:org2c6568c}
+如果对一个对象的进行多次修改再传输句柄，则存在接受的对象可能只有一个数值。
+较为稳妥的方法是，每次修改都新建一个对象，或者每次都将传输的对象进行拷贝。
+
+\item 5.14.4 句柄数组
+\label{sec:org518c7e8}
+对象没数组，句柄可以有数组。不同的句柄数组中的句柄可以指向相同或者不同的对象。
+\end{itemize}
+
+\item 5.15 对象的复制
+\label{sec:org944d71b}
+使用new函数对对象进行复制，可以使对象专门的复制代码。
+
+\begin{itemize}
+\item 5.15.1 使用new操作符复制一个对象
+\label{sec:org8ea33eb}
+内建的复制函数，复制所有现有对象的变量。
+下层对象不会被复制，而是复制了对象的句柄。
+
+\item 5.15.2 简单的复制函数
+\label{sec:org6409626}
+不包含对其他类的引用，可以写简单的copy函数，正确情况下等效于new。
+
+\item 5.15.3 深层复制函数
+\label{sec:orgf23d94e}
+对于非简单类，应该创建自己的copy函数。
+copy的函数中，应当调用当前类中的子对象的copy函数，保证数据的完整性。
+
+\item 5.15.4 使用数组对对象进行打包和解包。
+\label{sec:org28dc22a}
+把对象的需要打包的数据使用流操作符，打包到bytes，（UVM中自带pack函数）
+\begin{verbatim}
+class transaction;
+function void pack(ref byte bytes[40]);  //Care about the key word 'ref'
+bytes={>>{addr,crc,data}};
+endfunction
+function void pack(ref byte bytes[40]);
+bytes={>>{addr,crc,data}};
+endfunction
+endclass
+\end{verbatim}
+\end{itemize}
+
+\item 5.16 public \& local
+\label{sec:org8cc1300}
+oop大部分默认local，sv默认公有。
+
+\item 5.17 题外话
+\label{sec:org4af7fa8}
+多考虑使用类
+
+\item 5.18 建立平台
+\label{sec:org505d6a3}
+\end{itemize}
+
+\subsubsection*{Chp6 随机化}
+\label{sec:org4d73fed}
+
+\begin{itemize}
+\item 6.1 介绍
+\label{sec:org81d21aa}
+
+测试向量太多，向量交互的点是bug的来源。
+必须采用产生子集的方式来解决这个问题。
+
+\item 6.2 什么需要随机化
+\label{sec:org40b8dc0}
+
+有挑战性的bug大都在控制路径中。所有的关键点都采用随机的技术
+
+\begin{itemize}
+\item 6.2.1 器件配置
+\label{sec:org247f13f}
+
+例子：多个配置的dut的环境中，使用随机的方法产生配置，然后传输给dut。
+
+\item 6.2.2 环境配置
+\label{sec:orgb19c115}
+
+例子：硬件dut为固定，接口可以连接若干个总线模型（bfm）。控制bfm的行为，模仿不同环境。
+
+\item 6.2.3 原始输入数据
+\label{sec:orgb954764}
+
+数据值的随机，和涉及协议的各个层次以及故障注入。
+
+\item 6.2.4 封装后的输入数据
+\label{sec:org69479bc}
+
+例子：tcp数据，ip协议各个层都含有不同的控制域，通过随机各种控制域的配置，需要考虑如何注入错误。
+
+\item 6.2.5 协议异常、错误（error)和违规（violation)
+\label{sec:org92ecccc}
+
+需要考虑各种测试边界，协议中明确的问题和可能隐含的问题。
+
+\item 6.2.6 延时
+\label{sec:org517794b}
+
+需要测试所有符合协议要求的随机的测试。
+\end{itemize}
+
+\item 6.3 sv中的随机化
+\label{sec:org1c4758c}
+
+\begin{itemize}
+\item 6.3.1 带有随机数的简单类
+\label{sec:orgf45bd6b}
+
+\begin{verbatim}
+class packet;
+
+   rand bit [31:0] src,dst,data[8];
+   rand bit [7:0] kind;
+
+   constraint c
+     {src > 10;
+      src > 15;}
+
+endclass
+
+packet p;
+
+initial begin
+   p=new();
+   assert (p.randomize());
+   else $fatal(0,"packet::randomize failed");
+   transmit(p);
+
+end
+
+\end{verbatim}
+
+\begin{itemize}
+\item 不应在类的构造函数中调用randomize()
+\item 类中所有的变量应当是random和public，方便全面的测试dut
+\end{itemize}
+
+\item 6.3.2 检查随机化的结果
+\label{sec:org05cfedd}
+应当使用断言检查randomize()，是否随机成功。否则可能出现异常。
+
+\item 6.3.3 约束求解
+\label{sec:org99d0656}
+随机数发生器，因不同工具，版本而得到不同的解。
+
+\item 6.3.4 什么可以被随机化
+\label{sec:org23f5bc2}
+不能随机化字符串。
+\end{itemize}
+
+\item 6.4 约束
+\label{sec:orgc2028f1}
+约束的表达式中，应当含有rand 或 ranc 。
+
+\begin{itemize}
+\item 6.4.1 什么是约束
+\label{sec:orga80b25c}
+
+\item 6.4.2 简单表达式
+\label{sec:orga8b34d8}
+一个表达式中只能使用一个关系表达式。
+
+\item 6.4.3 等效表达式
+\label{sec:org2e36139}
+可以使用复杂的表达式
+
+\item 6.4.4 权重分布
+\label{sec:org6cefd51}
+\begin{itemize}
+\item dist操作符允许产生权重分布
+\item :=  表示值范围内的每一个值的权重都是相同的
+\item :/  表示权重均匀分到范围内的每一个值
+\item 权重可以是常数或者变量
+\end{itemize}
+
+\item 6.4.5 集合(set)成员和inside运算符
+\label{sec:org09c2be0}
+\begin{verbatim}
+c inside {[lo:hi]};
+c inside {[$:lo],[hi:$]};
+!(c inside {[lo:hi]})
+\end{verbatim}
+
+\item 6.4.6 在集合里使用数组
+\label{sec:org4324afd}
+\begin{verbatim}
+rand int f;
+int fib[5] = '{1,2,3,5,8};
+constraint c_fibonacci{
+f inside fib;
+}
+\end{verbatim}
+\begin{itemize}
+\item 数组中重复出现值，概率不会被影响。
+\end{itemize}
+
+\begin{verbatim}
+class Days;
+typedef enum {SUN,MON,TUE,WED,THU,FRI,SAT} days_e;
+days_e choices[$];
+endclass
+Days days;
+days=new();
+days.choices={Days::SUM,Days::SAT};
+\end{verbatim}
+
+\begin{itemize}
+\item ranc: random-cyclic 循环穷尽随机
+\end{itemize}
+\item 6.4.7 条件约束
+\label{sec:orgc7a3900}
+\begin{itemize}
+\item "->"
+\item "if-else"
+\item 约束中 \{\} 可以嵌套？？？
+\end{itemize}
+\item 6.4.8 双向约束
+\label{sec:org01386f5}
+\begin{itemize}
+\item 随机结果需要使所有条件满足
+\end{itemize}
+\item 6.4.9 使用合适的数学运算来提高效率
+\label{sec:org5caad1c}
+求解约束时，移位比除法高效。
+\end{itemize}
+\item 6.5 解的概率
+\label{sec:orgb860ea0}
+
+\begin{itemize}
+\item 6.5.1 没有约束的类
+\label{sec:orgafed2e5}
+没有约束条件下，各概率相同。
+
+\item 6.5.2 关系操作
+\label{sec:orgb54bd4b}
+\begin{verbatim}
+class impl;
+   rand bit x;
+   rand bit [1:0] y;
+   constraint c_xy {
+      (x==0) -> y==0;
+   }
+    // x=0,y=0 概率为1/2， x=1, y=0/1/2/3概率各为1/8
+endclass
+\end{verbatim}
+
+\item 6.5.3 关系操作和双向约束作
+\label{sec:org8be5601}
+\begin{verbatim}
+class impl;
+   rand bit x;
+   rand bit [1:0] y;
+   constraint c_xy {
+      y>0;
+      (x==0) -> y==0;
+   }
+    // 约束双向，x=1, y=1/2/3概率各为1/3. 其他的解概率为0
+endclass
+\end{verbatim}
+
+\item 6.5.4 使用 solve\ldots{}before 约束引导概率分布作
+\label{sec:org0964767}
+\begin{verbatim}
+class impl;
+   rand bit x;
+   rand bit [1:0] y;
+   constraint c_xy {
+      (x==0) -> y==0;
+      solve x before y;
+   }
+    // x=0,y=0 概率为1/2， x=1, y=0/1/2/3概率各为1/8
+endclass
+\end{verbatim}
+若solve y before x，则 x=0/1,y=0 概率为1/8， x=1, y=1/2/3概率各为1/4
+除非必要，应当避免使用solve before。
+\end{itemize}
+
+\item 6.6 控制多个约束快
+\label{sec:org41021f2}
+handle.constraint\(_{\text{mode}}\)();  // 控制所有的约束。
+handle.constraint.constraint\(_{\text{mode}}\)(); //控制某一个约束。
+
+\item 6.7 有效性约束
+\label{sec:org9c6f445}
+使用约束来制定规则，然后用规则产生测试激励。
+\begin{verbatim}
+class tran;
+   rand enum {BYTE,WORD,LWRD,QWRD} length;
+   rand enum {READ,WRITE,RMW,INTR} opc;
+   constraint valid_RMW_LWRD
+     {
+      (opc==RMW) -> length==LWRD;
+      }
+endclass
+\end{verbatim}
+
+\item 6.8 内嵌约束
+\label{sec:orgdd4b40b}
+临时的约束，可以不修改类定义，直接使用randomize () with\{\}控制变量的生成。
+\item 6.9 pre\(_{\text{randomize和post}}\)\(_{\text{randomize函数}}\)
+\label{sec:org0ceb60f}
+
+\begin{itemize}
+\item 6.9.1 构造浴缸型分布
+\label{sec:org340422a}
+使用 pre\(_{\text{randomize}}\) 做预生成任务。
+\begin{verbatim}
+function  void pre_randomize();
+value = $dist_exponential(seed,DEPTH);
+endfunction
+\end{verbatim}
+
+\item 6.9.2 关于void函数
+\label{sec:orga67755c}
+pre\(_{\text{randomize和post}}\)\(_{\text{randomize函数}}\)，不能消耗时间。
+\end{itemize}
+
+\item 6.10 随机函数
+\label{sec:org562f84f}
+\begin{center}
+\begin{tabular}{ll}
+函数 & 功能\\
+\hline
+\$random & 平均分布，32位有符号数\\
+\$urandom & 平均分布，32位无符号数\\
+\$urandom\(_{\text{range}}\) & 指定范围的平均分布\\
+\$dist\(_{\text{exponential}}\) & 指数衰落\\
+\$dist\(_{\text{normal}}\) & 钟型分布\\
+\$dist\(_{\text{poisson}}\) & 钟型分布\\
+\$dist\(_{\text{uniform}}\) & 平均分布\\
+\end{tabular}
+\end{center}
+
+\item 6.11 约束的技巧和技术
+\label{sec:org6954480}
+
+\begin{itemize}
+\item 6.11.1 使用变量的约束
+\label{sec:orga0283f7}
+\begin{itemize}
+\item inside 操作符 [lo:hi]，改变lo，hi值动态改变上下限。
+\item dist 操作符\{ a := a\(_{\text{wt}}\), b := b\(_{\text{wt}}\) , c := c\(_{\text{wt}}\)\} ，改变a\(_{\text{wt}}\)，b\(_{\text{wt}}\)，c\(_{\text{wt来改变各取值的权重}}\)。
+\end{itemize}
+
+\item 6.11.2 使用非随机值
+\label{sec:org6ba98ab}
+\begin{itemize}
+\item rand\(_{\text{mode}}\)(0)
+设置固定值
+\begin{verbatim}
+
+p.lenth.rand_mode(0);
+p.lenth = 42;
+assert(p.randomize());
+\end{verbatim}
+\end{itemize}
+
+\item 6.11.3 用约束检查值的有效性
+\label{sec:org63e3b33}
+随机化后，检查值的有效性
+handle.randomize(null)
+
+\item 6.11.4 随机化个别变量
+\label{sec:orgc438ab7}
+\begin{verbatim}
+handle.randomize(a);
+handle.randomize(b);
+\end{verbatim}
+
+\item 6.11.5 打开或关闭约束
+\label{sec:org0d366c2}
+可以使用多个约束块，减少if-else的使用，简化大约束块。
+
+\item 6.11.6 在测试过程中使用内嵌约束
+\label{sec:orgd5dfda3}
+randomize with ()
+
+\item 6.11.7 在测试过程中使用外部约束
+\label{sec:org8f99690}
+外部的约束块，可能有问题。
+\begin{verbatim}
+class packet;
+ ......
+ constraint c_external;
+endclass
+
+\end{verbatim}
+\begin{verbatim}
+program automatic test;
+include "packet.sv"
+constraint Packet::c_external{lenth == 1；}
+endprogram
+\end{verbatim}
+
+\item 6.11.8 扩展类
+\label{sec:orgf74ce0a}
+继承
+\end{itemize}
+
+\item 6.12 随机化的常见错误
+\label{sec:org87b8a57}
+
+\begin{itemize}
+\item 6.12.1 小心使用有符号变量
+\label{sec:org116a999}
+
+\item 6.12.2 提高求解器性能的技巧
+\label{sec:org68837be}
+\end{itemize}
+
+\item 6.13 迭代和数组约束
+\label{sec:org42de06a}
+
+\begin{itemize}
+\item 6.13.1 数组的大小
+\label{sec:org126c960}
+
+\item 6.13.2 元素的和
+\label{sec:org4c6d0da}
+
+\item 6.13.3 数组约束的问题
+\label{sec:org9ab166e}
+
+\item 6.13.4 约束数组和队列的每一个元素
+\label{sec:orgfa48e7f}
+
+\item 6.13.5 产生具有唯一元素值的数组
+\label{sec:org3edf1d2}
+
+\item 6.13.6 随机化句柄数组
+\label{sec:orgf293b0d}
+\end{itemize}
+
+\item 6.14 产生原子激励和场景
+\label{sec:org6990c83}
+
+\begin{itemize}
+\item 6.14.1 和历史相关的原子发生器
+\label{sec:orge2f256a}
+
+\item 6.14.2 随机序列
+\label{sec:orgc92eb94}
+
+\item 6.14.3 随机对象数组
+\label{sec:org17f2e52}
+
+\item 6.14.4 组合序列
+\label{sec:org4042084}
+\end{itemize}
+
+\item 6.15 随机控制
+\label{sec:org8f92940}
+
+\begin{itemize}
+\item 6.15.1 用 randcase 建立决策树
+\label{sec:org8375332}
+\end{itemize}
+
+\item 6.16 随机数发生器
+\label{sec:org00c0b75}
+
+\begin{itemize}
+\item 6.16.1 伪随机数发生器
+\label{sec:orgbb52720}
+
+\item 6.16.2 随机稳定性--多个随机发生器
+\label{sec:orge92f11d}
+
+\item 6.16.3 随机稳定性和层次化种子
+\label{sec:org82825dc}
+\end{itemize}
+
+\item 6.17 随机器件配置
+\label{sec:org9988c50}
+
+\item 6.18 结论
+\label{sec:org073b472}
+\end{itemize}
+
+
+
+\subsubsection*{Chp7 线程以及线程间的通信}
+\label{sec:org92be522}
+
+所有仿真行为都是独立的线程。sv 调度器选择下一个要运行的线程。通过控制线程，控制仿真行为。
+线程中的通信，有标准的Verilog的事件 event，事件控制 event control, wait 语句，和system Verilog的mailbox，旗语semaphores。
+
+\begin{itemize}
+\item 7.1 线程的使用
+\label{sec:orgab8d0d5}
+
+program中不可以有always，可以使用initial forever实现。
+fork\ldots{}join
+fork\ldots{}join\(_{\text{none}}\)
+fork\ldots{}join\(_{\text{any}}\)
+event,  @ event, wait, disable
+
+\begin{itemize}
+\item 7.1.1 使用fork\ldots{}join和begin\ldots{}end
+\label{sec:org8320938}
+
+所有代码并发执行。
+所有分支完成后才执行join后面的任务。
+
+\item 7.1.2 使用fork\ldots{}join\(_{\text{none来产生线程}}\)
+\label{sec:org0ad4d9c}
+
+fork\ldots{}join\(_{\text{none块在调度其块内语句是}}\)，父线程继续执行。
+
+\item 7.1.3 使用fork\ldots{}join\(_{\text{any实现线程同步}}\)
+\label{sec:orga0a0c5f}
+
+任一个语句完成后，父线程才能继续执行。
+
+\item 7.1.4 在类中创建线程
+\label{sec:orgd857c16}
+
+在类中，以任务的方式启动新的线程。
+\begin{verbatim}
+class Gen_drive;
+task run(int n);
+   pack p;
+   fork
+       repeat (n) begin
+          p=new();
+          assert(p.randomize());
+          transmit(p);
+       end
+   join_none
+endtask
+endclass
+\end{verbatim}
+
+\item 7.1.5 动态线程
+\label{sec:org8d5454e}
+
+使用fork\ldots{}join\(_{\text{none}}\)，可动态产生新的线程。不需要等待其他的线程先完成。
+例子：仿真开始时，产生多个随机事务，传输事务，为每个事务产生一个后处理线程。
+
+\item 7.1.6 线程中的自动变量
+\label{sec:org2a7c393}
+
+如果不是automatic 的 program 或 module，各线程会共享相同的变量，导致后面的值覆盖前面的值。
+解决方式有2中
+\begin{itemize}
+\item 在静态的的 program 中定义 automatic的变量
+\begin{verbatim}
+program bug_free;
+  initial begin
+   for (j=0; j<3; j++)
+     fork
+       automatic int k =j;
+       $write(k);
+     join_none
+  end
+endprogram
+\end{verbatim}
+\item 在automatic的 program中，在fork\ldots{}join\(_{\text{none外定义变量}}\)
+\begin{verbatim}
+program automatic bug_free;
+  initial begin
+   for (j=0; j<3; j++)
+      int k =j;
+      fork
+        $write(k);
+      join_none
+  end
+endprogram
+\end{verbatim}
+\end{itemize}
+PS: vcs 中不正确，ncsim中正确。应当避免在for中，使用fork\ldots{}join。
+
+\item 7.1.7 等待所有衍生线程
+\label{sec:org3b02a3b}
+
+使用 wait fork 等待线程(fork\ldots{}join\(_{\text{none}}\))结束。
+
+\item 7.1.8 在线程间共享变量
+\label{sec:org6279399}
+
+\begin{itemize}
+\item bug
+在类内部的子程序中，可以是用局部变量，类变量或者在程序中定义的变量。
+sv会往更高层的作用范围中寻找，直到找到匹配的声明。
+\item solution
+在包含所有变量使用的最小范围内声明所有的变量。
+尽可能使用foreach
+\end{itemize}
+\end{itemize}
+
+\item 7.2 停止线程
+\label{sec:orgf535552}
+
+disable可以用于停止system Verilog 中的线程
+
+\begin{itemize}
+\item 7.2.1 停止单个线程
+\label{sec:orgc9188c6}
+
+在fork\ldots{}join\(_{\text{any块中创建超时警告线程}}\)。
+为fork\ldots{}join\(_{\text{any添加label}}\)
+线程任务完成，结束fork\ldots{}join\(_{\text{any}}\)
+\begin{verbatim}
+task check;
+
+   fork
+      begin
+         fork :  time_out_blk
+            begin
+               task_real_job();
+            end
+            # TIME_OUT $display("timeout");
+         join_any
+         disable time_out_blk;
+      end
+   join_none // spawn threadm don't block
+
+endtask
+
+\end{verbatim}
+
+\item 7.2.2 停止多个线程
+\label{sec:org6dd455e}
+
+disable fork 停止当前fork\ldots{}join产生的线程与各级子线程。
+如果只需停止单个线程，disable <lable> 更保守。
+
+\item 7.2.3 禁止被多次调用的任务
+\label{sec:org37c1253}
+
+同一个任务如果在多个进程中被调用，则任意一个任务被 disable 终止的话，其他的进程中的任务也是结束。
+\end{itemize}
+
+\item 7.3 线程间的通信
+\label{sec:org296d32f}
+
+通信包括三成员，producer、consumer、communication channel。
+
+\item 7.4 事件
+\label{sec:orga77d9f0}
+
+-> 触发事件
+@　边沿事件阻塞
+事件发生竞争时，使用triggered()函数，查询事件是否触发。
+
+\begin{itemize}
+\item 7.4.1 在事件的边沿阻塞
+\label{sec:org49b09b8}
+
+关键字： event
+使用方法： -> event; @ event;
+
+\item 7.4.2 等待事件的触发
+\label{sec:orgb119ac4}
+
+wait(e1.triggered()) 只要事件曾被触发，则为有效电频
+
+\item 7.4.3 在循环中使用事件
+\label{sec:org6e609f6}
+
+循环中应当避免使用trigger，因为可能产生零延时循环，死锁。
+
+\item 7.4.4 传递事件
+\label{sec:orgd9a9839}
+
+传递事件时，传递的是其指针。因此可以直接传递。
+
+\item 7.4.5 等待多个事件
+\label{sec:org96c3ac4}
+
+\begin{itemize}
+\item wait fork
+\item 记录下已触发时间的数目
+\begin{enumerate}
+\item 在program中声明次数变量
+\item 在生成类中使用静态变量。
+\end{enumerate}
+\end{itemize}
+\end{itemize}
+
+
+\item 7.5 旗语
+\label{sec:orgf154e2e}
+
+使用旗语可以实现对同一资源的访问控制。令牌，钥匙。
+
+\begin{itemize}
+\item 7.5.1 旗语的操作
+\label{sec:org002c710}
+new 创建一个或多个钥匙的旗语
+get 获取一个或多个钥匙
+put 返回一个或多个钥匙
+try\(_{\text{get}}\) 试图获得钥匙而希望不被阻塞
+
+\item 7.5.2 带多个钥匙的旗语
+\label{sec:org5d3922f}
+
+\begin{enumerate}
+\item 返货的要是可以比取出来的多
+\item 获取和返回多个钥匙需要谨慎。
+在多个钥匙的环境中，如果只剩一把钥匙，而去请求2把钥匙，将的阻塞，此时若果有1把钥匙的请求，则成功。
+此例忽略的 fifo 的原则。
+\end{enumerate}
+\end{itemize}
+
+\item 7.6 信箱
+\label{sec:orgba5ccac}
+
+\begin{enumerate}
+\item 假设发生器 generator 和驱动器 driver 都是自动的对象。其上下游的数据需要进行交互时，使用共享的数组或者队列的话，读写和阻塞会变得困难。
+
+\item 信箱是有源端和收端的fifo。
+
+\item 信箱是一个对象。需要使用new来例化。可选参数size，默认为0.
+\begin{itemize}
+\item put 把数据放入信箱中
+\item get 把数据从信箱中取出。
+\item peek 可以获取信箱中的拷贝，而不移除数据。
+\item 信箱满，则put会阻塞，信箱空，则get会阻塞。
+\item try\(_{\text{get}}\)()和try\(_{\text{peek}}\)() 不会发生阻塞。
+\end{itemize}
+
+\item 信箱中的数据可以是单个值，特别的，可以是句柄，但不能是对象。
+\begin{itemize}
+\item 传输对象时需要，新建对象，才能将对象的指针传输到信箱中，否则传输的是同一个对象。
+\end{itemize}
+\end{enumerate}
+
+\begin{itemize}
+\item 7.6.1 测试平台里的信箱
+\label{sec:orgf1126f7}
+
+\begin{itemize}
+\item 使用 new 新建传输对象
+\item 使用 put 传输对象
+\item 使用 get 获得对象
+\end{itemize}
+\begin{verbatim}
+// instance
+ mailbox mbx;
+ mbx = new();
+
+// get class
+ this.mbx = mbx;
+
+\end{verbatim}
+
+\item 7.6.2 定容信箱
+\label{sec:orgf936a87}
+
+\begin{itemize}
+\item 缺省信箱容量为0，无限大
+\item 大于0为信箱容量
+\end{itemize}
+\begin{verbatim}
+mbx = new(1);
+\end{verbatim}
+\begin{itemize}
+\item 当信箱存满时，put会阻塞。
+\end{itemize}
+
+\item 7.6.3 在异步线程间使用信箱通信
+\label{sec:org0bbd370}
+
+\begin{itemize}
+\item 实际异步线程中，生产不应当在消费房的前头。
+\item 没有握手信号，非定容信箱生产与消费将会不同步。
+\end{itemize}
+
+\item 7.6.4 使用定容信箱和探视(peek)来实现线程的同步
+\label{sec:org97c83a0}
+
+\begin{itemize}
+\item 先使用peek拷贝数据，处理完成后，再使用get消除信箱中的数据。
+\end{itemize}
+
+\item 7.6.5 使用信箱和事件来实现线程的同步
+\label{sec:orgcbaaa25}
+
+\begin{itemize}
+\item 同一个时间(time slot)内，只要促发过时间，则event.triggered为高，时间点(time slot)推进后，event.triggered变为0.
+\item @ event，则只有在触发边沿才会被捕捉到，当同一个时间点(time slot)多次触发时，可以被多次捕捉。如果阻塞和促发同时发生，可能会出现次序的问题。
+\end{itemize}
+
+\item 7.6.6 使用信箱来实现线程的同步
+\label{sec:org637ea38}
+
+\begin{itemize}
+\item 可以用一个mailbox来实现握手。无任何毒副作用。
+\item 使用 mailbox 需要注意数据类型匹配！
+\item 特例：
+\begin{verbatim}
+mailbox rtn;
+rtn = new();
+int i;
+int j;
+rtn.put(-i);  // attention
+rtn.get(j);   // in ncsim, there is an error, for mismatch data type.
+\end{verbatim}
+\begin{verbatim}
+integer j; // solution 1
+\end{verbatim}
+\begin{verbatim}
+rtn.put(int ' (-i)); // solution 2
+\end{verbatim}
+\end{itemize}
+
+\item 7.6.7 其他同步技术
+\label{sec:org132df2c}
+使用旗语也可以实现阻塞线程，旗语相当于第二个信箱，但是没有信息交互。
+\end{itemize}
+
+\item 7.7 构筑带线程并可实现线程间通信的测试程序
+\label{sec:org4335434}
+
+\begin{itemize}
+\item 7.7.1 基本的事务处理器
+\label{sec:org80fbac4}
+
+\item 7.7.2 配置类
+\label{sec:org5d91dfc}
+
+\item 7.7.3 环境类
+\label{sec:org4ce21ee}
+
+\item 7.7.4 测试程序
+\label{sec:orgdc9b408}
+\end{itemize}
+\end{itemize}
+
+\subsection*{Part 3}
+\label{sec:org3d05359}
+\subsubsection*{Chp8 面向对象编程的高级技巧}
+\label{sec:org64a1f02}
+\begin{itemize}
+\item 8.1 继承的简介
+\label{sec:org2de5ed9}
+\begin{itemize}
+\item 8.1.1 事务基类
+\label{sec:org17a3b9b}
+\item 8.1.2 Transaction类的扩展
+\label{sec:orgf7ced23}
+\item 8.1.3 更多的oop术语
+\label{sec:org84f6689}
+\item 8.1.4 扩展类的构造函数
+\label{sec:orgc8f82b7}
+\item 8.1.5 驱动类
+\label{sec:org1e74b6f}
+\item 8.1.6 简单的发生器类
+\label{sec:org374587e}
+\end{itemize}
+\item 8.2 蓝图(blueprint)模式
+\label{sec:orgb56c6ff}
+\begin{itemize}
+\item 8.2.1 environment类
+\label{sec:orgff5fc21}
+\item 8.2.2 一个简单的测试平台
+\label{sec:org39eb624}
+\item 8.2.3 使用扩展的Transaction类
+\label{sec:org7aa60bf}
+\item 8.2.4 使用扩展类改变随机约束
+\label{sec:orgc89f258}
+\end{itemize}
+\item 8.3 类型向下转换(downcasting)和虚方法
+\label{sec:org4bf6ab2}
+\begin{itemize}
+\item 8.3.1 使用 \$cast 作类型向下的转换
+\label{sec:orgedc32a8}
+\item 8.3.2 虚方法
+\label{sec:org27739a6}
+\item 8.3.3 签名
+\label{sec:org335ea97}
+\end{itemize}
+\item 8.4 合成、继承和其他替代的方法
+\label{sec:org9d41ed8}
+\begin{itemize}
+\item 8.4.1 在合成和继承之间取舍
+\label{sec:org7e30a07}
+\item 8.4.2 合成的问题
+\label{sec:org9833335}
+\item 8.4.3 继承的问题
+\label{sec:org29aaad5}
+\item 8.4.4 现实世界的其他问题
+\label{sec:orgf435da1}
+\end{itemize}
+\item 8.5 对象的复制
+\label{sec:org9545f99}
+\begin{itemize}
+\item 8.5.1 copy\(_{\text{data方法}}\)
+\label{sec:orgdd2370c}
+\item 8.5.2 指定复制的目标
+\label{sec:org76c5ce6}
+\end{itemize}
+\item 8.6 抽象类和纯虚方法
+\label{sec:org0b70a89}
+\item 8.7 回调
+\label{sec:orge7c4e88}
+\begin{itemize}
+\item 8.7.1 创建一个回调任务
+\label{sec:org7e03523}
+\item 8.7.2 使用回调来注入干扰
+\label{sec:orge433f38}
+\item 8.7.3 记分板简介
+\label{sec:org8fed096}
+\item 8.7.4 与使用回调的记分板进行连接
+\label{sec:org76c6a1e}
+\item 8.7.5 使用回调来调试事务处理器
+\label{sec:org73a297a}
+\end{itemize}
+\item 8.8 参数化的类
+\label{sec:org8640725}
+\begin{itemize}
+\item 8.8.1 一个简单的堆栈
+\label{sec:org1ea7359}
+\item 8.8.2 关于参数化类的建议
+\label{sec:orge122d7a}
+\end{itemize}
+\item 8.9 结论
+\label{sec:org0b98958}
+\end{itemize}
+
+\subsubsection*{Chp9 功能覆盖率}
+\label{sec:org08017f5}
+
+\subsubsection*{{\bfseries\sffamily TODO} Chp10 高级接口}
+\label{sec:org6a5c0f6}
+\begin{itemize}
+\item State "TODO"       from ""           \textit{[2016-08-07 周日 16:28]}
+\end{itemize}
+
+\subsubsection*{{\bfseries\sffamily TODO} Chp11 完整的SystemVerilog测试平台}
+\label{sec:orgc6dcada}
+\begin{itemize}
+\item State "TODO"       from ""           \textit{[2016-08-07 周日 16:28]}
+\end{itemize}
+
+\subsubsection*{Chp12 SystemVerilog与C语言的接口}
+\label{sec:orgcf3fad5}
+\begin{itemize}
+\item 12.1 传递简单的数值
+\label{sec:org88ec49d}
+\begin{itemize}
+\item 12.1.1 传递整数和实数类型
+\label{sec:orgfd09109}
+最基本的数据类型 int ；双状态
+\begin{verbatim}
+import "DPI-C" function int factorial(input int i);
+program automatic test;
+   initial begin
+      for (int i = 1; i<=10; i++)
+        $display("%0d! = %0d", i, factorial(i));
+   end
+endprogram : test
+\end{verbatim}
+\begin{verbatim}
+int factorial (int i)
+{
+  if (i <= 1) return 1;
+  else return i * factorial(i-1);
+}
+\end{verbatim}
+\item 12.1.2 导入（import）声明
+\label{sec:orged1e757}
+\begin{itemize}
+\item 冲突命名，别名
+\begin{verbatim}
+import "DPI-C" function \expect  = function fexpect();
+\end{verbatim}
+\end{itemize}
+加反斜杠
+\item 12.1.3 参数方向
+\label{sec:orgae5d9f7}
+\begin{itemize}
+\item input, output, inout,
+\item ref 不支持
+\item 支持返回值
+\item 建议当不需要修改输入值时，将输入修饰为 const
+\end{itemize}
+
+attention ： 直接输入时钟是不可行的，因为input不可以为ref。思路：导入封装了时钟的task。
+\item 12.1.4 参数类型
+\label{sec:orge00eb13}
+\item 12.1.5 导入数学库函数
+\label{sec:org749df26}
+c语言自带数学函数可以直接使用不需要进行封装
+\end{itemize}
+\item 12.2 连接简单的C子程序
+\label{sec:org941abbb}
+\begin{itemize}
+\item 12.2.1 使用静态变量的计数器
+\label{sec:org663192b}
+在c语言中使用静态变量，多次调用时可以保持其值。
+\begin{verbatim}
+static unsigned char count = 0;
+\end{verbatim}
+\item 12.2.2 chandle 数据类型
+\label{sec:org911de20}
+\begin{verbatim}
+#include <svdpi.v>
+#include <malloc.h> //分配内存空间
+#include <veriuser.h> // pli接口io_printf
+void* counter7_new(){
+c7* c=(c7*)malloc(sizeof(c7));
+c->cnt=0;
+return c;
+}
+
+\end{verbatim}
+\item 12.2.3 值的压缩（packed）
+\label{sec:org8d7c38c}
+"DPI-C" 说明使用packed的表示方式。
+sv可能不会屏蔽dpi函数后未使用的位。
+可以使用 SV\(_{\text{PACKED}}\)\(_{\text{DATA}}\)\(_{\text{NELEMS}}\) 实现bit和word之间的转换
+指针 (x->aval)
+\item 12.2.4 四状态数值
+\label{sec:org4f304df}
+svLogic ： a \& 0x2
+svLogicVecVal* i : i->bval
+\item 12.2.5 从双状态数值转换到四状态数值
+\label{sec:org9ee67cd}
+sv侧， 使用logic和integer
+c侧， 使用svLogicVecVal
+\end{itemize}
+\item 12.3 调用C++程序
+\label{sec:orga236713}
+\begin{itemize}
+\item 12.3.1 C++中的计数器
+\label{sec:org142d2bd}
+\item 12.3.2 静态方法
+\label{sec:orgb8060f4}
+\item 12.3.3 和事务级（transaction level）C++模型通信
+\label{sec:org52f506b}
+\end{itemize}
+\item 12.4 共享简单数组
+\label{sec:org2313f33}
+\begin{itemize}
+\item 12.4.1 一维数组--双状态
+\label{sec:org79e308c}
+\item 12.4.2 一维数组--四状态
+\label{sec:org0034d57}
+\end{itemize}
+\item 12.5 开放数组（open array）
+\label{sec:org5b9d60b}
+\begin{itemize}
+\item 12.5.1 基本的开放数组
+\label{sec:orgce5f87d}
+\item 12.5.2 开放数组的方法
+\label{sec:org416a020}
+\item 12.5.3 传递大小未定的开放数组
+\label{sec:orgbdd4945}
+\item 12.5.4 DPI中压缩（packed）的开放数组
+\label{sec:org9f15a65}
+\end{itemize}
+\item 12.6 共享复合类型
+\label{sec:org8d836e9}
+\begin{itemize}
+\item 12.6.1 在sv和c间传递结构
+\label{sec:orgb8de6e5}
+\item 12.6.2 在sv和c间传递字符串
+\label{sec:orgce09247}
+\end{itemize}
+\item 12.7 纯导入方法和关联导入方法
+\label{sec:org3a7d3d5}
+\item 12.8 在C中与sv通信
+\label{sec:org85e034c}
+\begin{itemize}
+\item 12.8.1 一个简单的导出方法
+\label{sec:org376bc48}
+\item 12.8.2 调用SV函数的c函数
+\label{sec:org313845b}
+\item 12.8.3 调用sv任务的c任务
+\label{sec:orgef1828a}
+\item 12.8.4 调用对象中的方法
+\label{sec:orge0b5c4a}
+\item 12.8.5 上下文（context）的含义
+\label{sec:org2d2b71c}
+\item 12.8.6 设置导入函数的作用域
+\label{sec:org4602d75}
+\end{itemize}
+\item 12.9 与其他语言交互
+\label{sec:org8a57ff2}
+\end{itemize}
+Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

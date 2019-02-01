@@ -1,0 +1,112 @@
+* Basic Types and Operations
+** Chisel Assignments and Re-assignments
+- /=/ :: fist define, Allocate the value for the first time.
+- /:=/ :: Subsequent reassignment to the value.
+- Error will be reported with wrong usage of assignment operator.
+** The Chisel UInt Class
+- Operations on different type operands is not allowed.
+- Commonly used UInt operations.
+  | Operand | Operation        | Output Type |
+  |---------+------------------+-------------|
+  | +       | Add              | UInt        |
+  | -       | Substract        | UInt        |
+  | *       | Multiply         | UInt        |
+  | "/"     | UInt Divide      | UInt        |
+  | %       | Modulo           | UInt        |
+  | ~       | Bitwise Negation | UInt        |
+  | "^"     | Bitwise XOR      | UInt        |
+  | &       | Bitwise AND      | UInt        |
+  | \vert       | Bitwise OR       | UInt        |
+  | "==="   | Equal            | Bool        |
+  | "=/="   | Not Equal        | Bool        |
+  | >       | Greater          | Bool        |
+  | <       | Less             | Bool        |
+  | >=      | Greater or Equal | Bool        |
+  | <=      | Less or Equal    | Bool        |
+  
+** Bit Extraction
+#+BEGIN_SRC scala
+val x_to_y = value(x,y)
+val x_of_val = value(x)
+#+END_SRC
+#+BEGIN_SRC scala
+  class ByteSelector extends Module{
+    val io = IO(new Bundle{
+                  val in = Input(UInt(32.W))
+                  val offset = Input(UInt(2.W))
+                  val out = Output(UInt(8.W))
+                })
+    io.out := 0.U(8.W)
+    when (io.offset === 0.U(2.w)) {
+      io.out := io.in(7,0)
+    } .elsewhen (io.offset === 1.U) {
+      io.out := io.in(15,8)
+    } .elsewhen (io.offset === 2.U) {
+      io.out := io.in(23,16)
+    } .otherwise (
+      io.out :=io.in(31,24)
+    )
+  }
+#+END_SRC
+
+** Bit Concatenation
+#+BEGIN_SRC scala
+  val A = UInt(32.W)
+  val B = UInt(32.W)
+  val bus = Cat(A,B) // bus [63:0] = {A[31:0], B[31:0]}
+#+END_SRC
+Cat is implement in the utility package, external to Chisel core.
+#+BEGIN_SRC scala
+import chisel3.util.cat
+#+END_SRC
+or
+#+BEGIN_SRC scala
+import chisel3.util._
+#+END_SRC
+** LFSR16
+#+BEGIN_SRC scala
+  class LFSR16 extends Module {
+    val io = IO(new Bundle{
+                  val inc = Input(Bool())
+                  val out = Output(UInt(16.W))
+                })
+    val reg_16 = Reg(UInt(16.W))
+    val bit_20 = reg_16(2) ^ reg_16(0)
+    val bit_3_20 = reg_16(3) ^ bit_20
+    val bit_5_320 = reg_16(5) ^ bit_3_20
+    when (io.inc) {
+      reg_16 := cat(bit_5_320, reg_16(15,1))
+    }
+    io.out := reg_16
+  }
+#+END_SRC
+** UInt Operation Bit Inference
+| operation        | Result Bit Width        |
+|------------------+-------------------------|
+| Z = X + Y        | max(Width(X), Width(Y)) |
+| Z = X - Y        | max(Width(X), Width(Y)) |
+| Z = X & Y        | max(Width(X), Width(Y)) |
+| Z = X \vert Y        | max(Width(X), Width(Y)) |
+| Z = X ^ Y        | max(Width(X), Width(Y)) |
+| Z = ~X           | Width(X)                |
+| Z = Mux(C, X, Y) | max(Width(X), Width(Y)) |
+| Z = X * Y        | Width(X) + Width(Y)     |
+| Z = X << n       | Width(X) + n            |
+| Z = X >> n       | Width(X) - n            |
+| Z = Cat(X,Y)     | max(Width(X), Width(Y)) |
+| Z = Fill(n,X)    | Width(X) * n           |
+** The Chisel Bool Class
+#+BEGIN_SRC scala
+val change = io.a === io.b
+when(change){
+...
+}
+.otherwise{
+...
+}
+#+END_SRC
+** Casting Between Types
+#+BEGIN_SRC scala
+val io.out := (io.in === 0.U).asUInt
+#+END_SRC
+asUInt(), asSInt(), asBool()

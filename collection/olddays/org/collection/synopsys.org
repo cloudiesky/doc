@@ -1,0 +1,9 @@
+* lisence
+** 制作lisence
+** 修改hostname
+hostnamectl set-hostname
+需要修改 /etc/hosts 
+** 修改网卡设置
+eth0 rules
+** 删除 resolv.cfg
+/etc/resolv.cfg

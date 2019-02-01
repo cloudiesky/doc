@@ -1,0 +1,7 @@
+* Abort Tasks
+** CANCELED Travel to Hangzhou <2016-08-02 周二>
+CLOSED: [2016-08-03 周三 21:31] SCHEDULED: <2016-08-02 周二>
+- State "CANCELED"   from "TODO"       [2016-08-03 周三 21:31] \\
+  Make up plans to Jiuzhaigou. Jiuzhaigou is too expensive, save money for that.
+- State "TODO"       from ""           [2016-08-02 周二 13:39]
+  Visit Huang Chong, find out she will come back or not.

@@ -1,0 +1,22 @@
+* PLAN install NCsim_13
+SCHEDULED: <2017-02-15 Wed>
+- State "PLAN"       from "TODO"       [2017-02-16 Thu 10:03]
+- State "TODO"       from ""           [2017-02-14 Tue 16:46]
+
+* DONE Hair cut
+CLOSED: [2016-08-12 周五 09:16] SCHEDULED: <2016-08-05 周五>
+- State "DONE"       from ""           [2016-08-12 周五 09:16] \\
+  Hair cut done last week.
+
+* PLAN Program a vcs load/restore code
+- State "PLAN"       from ""           [2016-08-12 周五 09:15] \\
+  In two weeks.
+
+
+* DONE Support LME3460B env
+CLOSED: [2016-08-25 周四 16:46]  
+- State "DONE"       from ""           [2016-08-25 周四 16:46]
+
+* DONE LME3410 向量讨论
+CLOSED: [2016-08-24 周三 8:00]
+- State "DONE"       from ""           [2016-08-25 周四 16:47]

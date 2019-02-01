@@ -1,0 +1,72 @@
+* Instantiating Modules
+** Module Instantiation
+#+BEGIN_SRC scala
+val Adder0 = Module(new Fulladder())
+Adder0.io.a := io.A(0) //Use := as reassignment
+#+END_SRC
+** The Vec Class
+#+BEGIN_SRC scala
+  val myVec = Vec(Seq.fill(number_of_elements){data_type})
+  val ufix5_vec10 := Vec(Seq.fill(10){UInt(5.W)})
+  val reg_vec32 := Reg(Vec(Seq.fill(10){UInt(5.W)}))
+  val reg5 = reg_vec32(5)
+#+END_SRC
+Notice that it's /io/
+#+BEGIN_SRC scala
+  val FullAdders = Vec(Seq.full(16)) {Moudle(new FullAdders()).io}
+#+END_SRC
+#+BEGIN_SRC scala
+  class VecShiftRegisterSimple extends Module {
+    val io = IO(new Bundle {
+                  val in  = Input(UInt(8.W))
+                  val out = Output(UInt(8.W))
+                })
+    val initValues = Seq.fill(4) { 0.U(8.W) } //initValues is not a Vec ??!!
+    val delays = RegInit(Vec(initValues))
+    delays := Cat(delays(2,0),io.in)
+    //...
+    io.out := delays(3)
+      //io.out := 0.U
+  }
+#+END_SRC
+** Parametrization
+#+BEGIN_SRC scala
+  class Adder(n: Int) extends Module {
+
+    val carry = Wire(Vec(n+1, UInt(1.W)))  // n+1, where is Seq??
+    val sum = Wire(Vec(n, Bool()))         // Using bool type
+
+    for(i <- 0 until n) {
+      sum(i) := FAs(i).sum.toBool()   // toBool, new function
+    }
+
+    io.sum := sum.asUInt // transform
+  }
+#+END_SRC
+Chisel does not support bit assignment directly.
+#+BEGIN_SRC scala
+val adder4 = Module(new Adder(4))
+val adder4 = Module(new Adder(n = 4))
+#+END_SRC
+#+BEGIN_SRC scala
+class FIFO (width : Int, depth: Int)extends Module {...}
+#+END_SRC
+** Built In Primitives
+*** the Mux class
+#+BEGIN_SRC scala
+val out = Mux(select, A, B)
+#+END_SRC
+*** Parameterized Width Adder
+#+BEGIN_SRC scala
+  class Adder(val w: Int) extends Module {
+    val io = IO(new Bundle {
+      val in0 = Input(UInt(w.W))
+      val in1 = Input(UInt(w.W))
+      val out = Output(UInt(w.W))
+                })
+
+    io.out := io.in0 + io.in1
+    //...
+    //io.out := 0.U
+  }
+#+END_SRC

@@ -1,0 +1,54 @@
+* simulator
+
+** TODO vcs
+SCHEDULED: <2016-09-30 周五>
+- State "TODO"       from ""           [2016-08-31 周三 16:24]
+*** DONE 简单测试环境，基于shell
+CLOSED: [2016-08-31 周三 16:26] SCHEDULED: <2016-08-31 周三> DEADLINE: <2016-08-31 周三>
+- State "DONE"       from "TODO"       [2016-08-31 周三 16:26] \\
+  Simple ENV done 
+  Multiple options single test, batch test, range test
+- State "TODO"       from ""           [2016-08-31 周三 16:25]
+*** TODO 学习 makefile
+- State "TODO"       from ""           [2016-08-31 周三 16:29]
+*** TODO 在现有 vcs 中脚本中添加功能
+- State "TODO"       from ""           [2016-08-31 周三 16:31]
+内容
+1. [ ] 增加语法检查控制(leda)
+2. [ ] 增加快速的模块级 ASIC 综合评估(dc)
+3. [ ] 模块覆盖率的脚本控制
+...
+
+** nc
+
+** questa
+
+* C 语言嵌入仿真环境
+
+** 仿真器相关
+
+*** DONE 仿真器相关的配置与选项
+CLOSED: [2016-08-31 周三 16:43]
+- State "DONE"       from "TODO"       [2016-08-31 周三 16:43] \\
+  已经做了DPI接口程序实现
+- State "TODO"       from ""           [2016-08-31 周三 16:43]
+
+*** NEXT 简单代码环境测试
+CLOSED: [2016-08-31 周三 16:45]
+- State "NEXT"       from "TODO"       [2016-08-31 周三 16:45] \\
+  动态定标 c代码环境测试
+- State "TODO"       from ""           [2016-08-31 周三 16:45]
+
+** 应用到项目中
+
+*** TODO 整理C语言嵌入的流程
+- State "TODO"       from ""           [2016-08-31 周三 16:49]
+
+*** TODO 与算法部门交流，如何编写C语言的参考模型与激励模型。
+- State "TODO"       from ""           [2016-08-31 周三 16:50]
+
+*** TODO 仿真环境更新
+- State "TODO"       from ""           [2016-08-31 周三 16:52]
+
+* RTL代码管理
+** 基于Git的分布式代码管理

@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Apr  5 15:11:26 2017
+;; Desktop file format version 206
+;; Emacs version 25.2.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22756 39070 631654 100000) (desktop . "208") "LME_zhangz@WIN-EQF9PG1MUIR" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-16-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 10) (alpha) (menu-bar-lines . 0) (tool-bar-lines . 0) (height . 48) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (scroll-bar-height . 0) (fullscreen) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (powerline-cache) (tabbar-cache . "Unprintable entity") (frameset--id . "A415-EAAC-F659-16D1") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top) (visibility . t) (width . 175) (left . 58) (top + -4)) ((min-height . 4) (min-width . 10) (min-height-ignore . 4) (min-width-ignore . 7) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 80) (min-pixel-width . 100) (min-pixel-height-ignore . 80) (min-pixel-width-ignore . 70) (min-pixel-height-safe . 20) (min-pixel-width-safe . 20)) leaf (pixel-width . 1770) (pixel-height . 940) (total-width . 177) (total-height . 47) (normal-height . 1.0) (normal-width . 1.0) (buffer "git.org" (selected . t) (hscroll . 0) (fringes 10 10 nil) (margins 3) (scroll-bars nil 0 t nil 0 t) (vscroll . 0) (dedicated) (point . 680) (start . 1))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring '("variable"))
+(setq register-alist '((48 . "\n;;(defun ecb-activate-or-deactivate()\n;;  (interactive)\n;;  (if (ecb-minor-mode)\n;;      (ecb-deactivate)\n;;    (ecb-activate)))\n;;(global-set-key [f4] 'ecb-activate-or-deactivate)")))
+(setq file-name-history '("/home/LME_zhangz/doc/org/git/git.org" "d:/program/emacs/.emacs.d/init.el" "d:/Personal/Documents/org/git/git.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/LME_zhangz/doc/org/git/git.org"
+  "git.org"
+  'org-mode
+  '(linum-mode yas-minor-mode undo-tree-mode org-indent-mode writegood-mode)
+  680
+  '(2297 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . chinese-iso-8bit-dos) (truncate-lines)))
+

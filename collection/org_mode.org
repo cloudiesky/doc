@@ -1,0 +1,43 @@
+#+BABEL: :session *orgmode* :exports results
+
+:PROPERTIES:
+:header-args: :eval never-export
+:header-args:bash: :exports code
+:header-args:elisp: :exports code
+:header-args:ipython: :exports both
+:END:
+
+
+* THE Date
+#+source: generate_data
+#+BEGIN_SRC emacs-lisp :exports code
+  (directory-files "../")
+#+END_SRC
+
+#+RESULTS: generate_data
+| . | .. | Thumbs.db | agenda | collection | normal | picture | project | research | training |
+
+#+BEGIN_SRC python :results output
+  a = 3 + 2
+  b = 5 /5
+  print(a+b)
+#+END_SRC
+
+#+RESULTS:
+: 6
+
+#+BEGIN_SRC python :results output
+  import random
+  random.seed(1)
+  print("Hello World! Here's a random number: %f" % random.random())
+#+END_SRC
+
+#+RESULTS:
+: Hello World! Here's a random number: 0.134364
+
+#+BEGIN_SRC shell
+echo "Hellow world"
+#+END_SRC
+
+#+RESULTS:
+: Hellow world

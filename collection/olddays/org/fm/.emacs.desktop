@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Tue Feb 28 12:17:34 2017
+;; Desktop file format version 206
+;; Emacs version 24.5.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22708 63966 662000 0) (desktop . "206") "LME_zhangz@LME_ZHANGZ-PC" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Source Code Pro-normal-normal-normal-mono-17-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 10) (alpha) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (fullscreen) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (powerline-cache) (tabbar-cache . "Unprintable entity") (frameset--id . "439A-1D52-BC7C-6258") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "w32") (explicit-name) (tool-bar-position . top) (visibility . t) (height . 25) (width . 74) (left . 1143) (top . 48)) ((min-height . 4) (min-width . 10) (min-height-ignore . 4) (min-width-ignore . 4) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 88) (min-pixel-width . 100) (min-pixel-height-ignore . 88) (min-pixel-width-ignore . 40) (min-pixel-height-safe . 22) (min-pixel-width-safe . 20)) leaf (pixel-width . 763) (pixel-height . 535) (total-width . 76) (total-height . 24) (normal-height . 1.0) (normal-width . 1.0) (buffer "fm.org" (selected . t) (hscroll . 0) (fringes 10 10 nil) (margins 2) (scroll-bars 0 0 nil nil) (vscroll . 0) (dedicated) (point . 2427) (start . 2283))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("d:/Personal/Documents/org/fm/fm.org"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "d:/Personal/Documents/org/fm/fm.org"
+  "fm.org"
+  'org-mode
+  '(linum-mode undo-tree-mode org-indent-mode writegood-mode flyspell-mode)
+  2427
+  '(2096 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . utf-8-dos) (overwrite-mode) (truncate-lines)))
+

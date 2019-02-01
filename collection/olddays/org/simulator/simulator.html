@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>simulator</title>
+<!-- 2016-08-31 周三 16:55 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">simulator</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. simulator</a>
+<ul>
+<li><a href="#sec-1-1">1.1. <span class="todo TODO">TODO</span> vcs</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1. <span class="done DONE">DONE</span> 简单测试环境，基于shell</a></li>
+<li><a href="#sec-1-1-2">1.1.2. <span class="todo TODO">TODO</span> 学习 makefile</a></li>
+<li><a href="#sec-1-1-3">1.1.3. <span class="todo TODO">TODO</span> 在现有 vcs 中脚本中添加功能</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2. nc</a></li>
+<li><a href="#sec-1-3">1.3. questa</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. C 语言嵌入仿真环境</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 仿真器相关</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. <span class="done DONE">DONE</span> 仿真器相关的配置与选项</a></li>
+<li><a href="#sec-2-1-2">2.1.2. <span class="todo NEXT">NEXT</span> 简单代码环境测试</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. 应用到项目中</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1. <span class="todo TODO">TODO</span> 整理C语言嵌入的流程</a></li>
+<li><a href="#sec-2-2-2">2.2.2. <span class="todo TODO">TODO</span> 与算法部门交流，如何编写C语言的参考模型与激励模型。</a></li>
+<li><a href="#sec-2-2-3">2.2.3. <span class="todo TODO">TODO</span> 仿真环境更新</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. RTL代码管理</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 基于Git的分布式代码管理</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> simulator</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <span class="todo TODO">TODO</span> vcs</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:24]</span></span>
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> <span class="done DONE">DONE</span> 简单测试环境，基于shell</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>State "DONE"       from "TODO"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:26]</span></span> <br  />
+  Simple ENV done 
+Multiple options single test, batch test, range test
+</li>
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:25]</span></span>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> <span class="todo TODO">TODO</span> 学习 makefile</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<ul class="org-ul">
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:29]</span></span>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> <span class="todo TODO">TODO</span> 在现有 vcs 中脚本中添加功能</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<ul class="org-ul">
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:31]</span></span>
+</li>
+</ul>
+<p>
+内容
+</p>
+<ol class="org-ol">
+<li><code>[&#xa0;]</code> 增加语法检查控制(leda)
+</li>
+<li><code>[&#xa0;]</code> 增加快速的模块级 ASIC 综合评估(dc)
+</li>
+<li><code>[&#xa0;]</code> 模块覆盖率的脚本控制
+</li>
+</ol>
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> nc</h3>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> questa</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> C 语言嵌入仿真环境</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 仿真器相关</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> <span class="done DONE">DONE</span> 仿真器相关的配置与选项</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<ul class="org-ul">
+<li>State "DONE"       from "TODO"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:43]</span></span> <br  />
+  已经做了DPI接口程序实现
+</li>
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:43]</span></span>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> <span class="todo NEXT">NEXT</span> 简单代码环境测试</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<ul class="org-ul">
+<li>State "NEXT"       from "TODO"       <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:45]</span></span> <br  />
+  动态定标 c代码环境测试
+</li>
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:45]</span></span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 应用到项目中</h3>
+<div class="outline-text-3" id="text-2-2">
+</div><div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> <span class="todo TODO">TODO</span> 整理C语言嵌入的流程</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<ul class="org-ul">
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:49]</span></span>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> <span class="todo TODO">TODO</span> 与算法部门交流，如何编写C语言的参考模型与激励模型。</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<ul class="org-ul">
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:50]</span></span>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2-3" class="outline-4">
+<h4 id="sec-2-2-3"><span class="section-number-4">2.2.3</span> <span class="todo TODO">TODO</span> 仿真环境更新</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<ul class="org-ul">
+<li>State "TODO"       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2016-08-31 周三 16:52]</span></span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> RTL代码管理</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 基于Git的分布式代码管理</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-08-31 周三 16:55</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

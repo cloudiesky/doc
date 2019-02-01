@@ -1,0 +1,479 @@
+* TODO Proj 3410 [0/1]                                                 :3410:
+- State "TODO"       from ""           [2016-08-16 周二 11:49]
+
+** TODO acq
+- State "TODO"       from ""           [2017-02-15 Wed 09:35]
+***  verification
+**** DONE discuss vector
+DEADLINE: <2016-08-25 周四>
+- State "DONE"       from "DONE"       [2016-08-25 周四 16:58]
+- State "TODO"       from ""           [2016-08-25 周四 16:51] \\
+  vector struct
+*** Document spec [3/3]
+**** DONE doc check
+CLOSED: [2016-12-01 周四 09:50] DEADLINE: <2016-12-01 周四> SCHEDULED: <2016-09-07 周三>
+- State "DONE"       from "NEXT"       [2016-12-01 周四 09:50] \\
+  Possably done
+- State "NEXT"       from ""           [2016-09-06 周二 17:45] \\
+  check register document.
+**** DONE Remove old documents
+CLOSED: [2016-09-13 Tue 09:32] SCHEDULED: <2016-09-06 周二>
+- State "DONE"       from "NEXT"       [2016-09-13 Tue 09:32] \\
+  No any old documents
+- State "NEXT"       from ""           [2016-09-06 周二 11:07] \\
+  delete cvs old documents.
+**** DONE read change log
+CLOSED: [2016-09-13 Tue 09:32] SCHEDULED: <2016-09-06 周二>
+- State "DONE"       from "NEXT"       [2016-09-13 Tue 09:32]
+- State "NEXT"       from "NEXT"       [2016-09-05 周一 10:02] \\
+  Postpone a little
+- State "NEXT"       from "NEXT"       [2016-08-25 周四 17:21] \\
+  postpone 1 day
+- State "NEXT"       from ""           [2016-08-25 周四 09:17] \\
+  Understand the latest version.
+
+*** NEXT acq ctrl [1/4]
+- State "NEXT"       from ""           [2016-09-05 周一 11:38] \\
+  Now it is important.
+
+**** TODO VERIFY
+SCHEDULED: <2016-12-19 周一>
+- State "TODO"       from ""           [2016-09-05 周一 11:40]
+
+**** TODO Doc update
+SCHEDULED: <2017-04-14 周五>
+add registers
+
+**** TODO RTL [2/3]
+SCHEDULED: <2016-09-06 Tue>
+- State "TODO"       from ""           [2016-09-05 周一 11:40]
+
+***** TODO Design detail control flow [5/6]
+- State "TODO"       from ""           [2016-09-13 Tue 09:32]
+****** NEXT add nbi control
+SCHEDULED: <2017-04-13 周四>
+- State "NEXT"       from "TODO"       [2017-04-14 周五 11:48] \\
+  should be do today <2017-04-14 周五>
+- State "TODO"       from ""           [2017-04-10 周一 10:06]
+****** DONE Clean up mrodules
+CLOSED: [2017-04-14 周五 11:46] SCHEDULED: <2017-04-12 周三>
+- State "DONE"       from "TODO"       [2017-04-14 周五 11:46] \\
+  finished
+- State "TODO"       from ""           [2017-04-11 周二 10:40]
+
+****** DONE check [3/3]
+CLOSED: [2017-04-12 周三 16:14] SCHEDULED: <2017-02-17 Fri>
+- State "DONE"       from "TODO"       [2017-04-12 周三 16:14] \\
+  finished
+- State "TODO"       from ""           [2017-02-15 Wed 09:34]
+******* DONE check top
+CLOSED: [2017-04-12 周三 16:13] SCHEDULED: <2017-04-11 周二>
+- State "DONE"       from "TODO"       [2017-04-12 周三 16:13] \\
+  finished
+- State "TODO"       from ""           [2017-04-10 周一 16:20]
+******* DONE code phase to sample_cnt
+CLOSED: [2017-04-10 周一 18:18] SCHEDULED: <2017-04-10 周一>
+- State "DONE"       from "TODO"       [2017-04-10 周一 18:18] \\
+  finished
+- State "TODO"       from ""           [2017-04-10 周一 10:06]
+******* DONE freq fft cnt to freq point
+CLOSED: [2017-04-10 周一 16:19] SCHEDULED: <2017-04-10 周一>
+- State "DONE"       from "TODO"       [2017-04-10 周一 16:19] \\
+  finished
+- State "TODO"       from ""           [2017-04-10 周一 10:06]
+
+****** DONE configure interface(acq param)
+CLOSED: [2017-04-10 周一 10:00] SCHEDULED: <2017-02-21 Tue>
+- State "DONE"       from "TODO"       [2017-04-10 周一 10:00] \\
+  finished
+- State "TODO"       from ""           [2017-02-15 Wed 09:34]
+****** DONE flow buffer(acq_ctrl_flow_buf)
+CLOSED: [2017-04-10 周一 10:00] SCHEDULED: <2017-02-20 Mon>
+- State "DONE"       from "TODO"       [2017-04-10 周一 10:00] \\
+  finished. make it a buffer (ram) with multiports.
+- State "TODO"       from ""           [2017-02-15 Wed 09:34]
+****** DONE driver
+SCHEDULED: <2017-02-16 Thu>
+- State "DONE"       from "TODO"       [2017-04-10 周一 10:01] \\
+  finish
+- State "TODO"       from ""           [2017-02-15 Wed 09:35]
+
+
+***** DONE Control flow
+SCHEDULED: <2016-09-13 Tue> CLOSED: [2016-09-13 Tue 09:24]
+- State "DONE"       from ""           [2016-09-13 Tue 09:26] \\
+  Conform control action for every sub-module.
+
+***** DONE Algorithm
+CLOSED: [2016-09-13 Tue 09:24]
+- State "DONE"       from ""           [2016-09-13 Tue 09:24] \\
+  Make up RTL structure and verification plan
+
+**** DONE SPEC
+CLOSED: [2016-09-11 MON 09:20] SCHEDULED: <2016-09-05 周一>
+- State "DONE"       from "TODO"       [2016-09-13 周二 09:20] \\
+  Read the updated Document.
+- State "TODO"       from ""           [2016-09-05 周一 11:40]
+
+*** acq coh
+**** verification env
+***** DONE Make a general code to get vectors.
+CLOSED: [2016-08-31 10:15] SCHEDULED: <2016-08-16 周二>
+- State "DONE"       from "NEXT"       [2016-09-05 周一 10:15] \\
+  Done on 8/31
+- State "NEXT"       from "NEXT"       [2016-08-25 周四 09:19] \\
+  Need to support single vector and multiple vectors.
+- State "NEXT"       from ""           [2016-08-15 周一 11:31] \\
+  2 kind of getting vectors.
+  - one is to get one vector.
+  - the other is to get all vectors.
+
+***** DONE Other cases test
+CLOSED: [2017-04-10 周一 18:30] SCHEDULED: <2016-09-05 周一>
+- State "DONE"       from "NEXT"       [2017-04-10 周一 18:30] \\
+  finish
+- State "NEXT"       from "NEXT"       [2016-09-05 周一 09:59] \\
+  ACQ500 ~ ACQ505
+- State "NEXT"       from "NEXT"       [2016-08-25 周四 09:21] \\
+  case 503
+- State "NEXT"       from "NEXT"       [2016-08-24 周三 09:05] \\
+  case,500 501 502
+- State "NEXT"       from "NEXT"       [2016-08-22 周一 16:24] \\
+  Get vector start testing.
+- State "NEXT"       from "NEXT"       [2016-08-16 周二 09:13] \\
+  Wait for new cases.
+- State "NEXT"       from ""           [2016-08-12 周五 09:49] \\
+  Wait for new cases. Check out.
+***** DONE Test 3 frequeence point test vector.
+CLOSED: [2016-08-12 周五 09:49] SCHEDULED: <2016-08-10 周三>
+- State "DONE"       from "NEXT"       [2016-08-12 周五 09:49]
+- State "NEXT"       from "NEXT"       [2016-08-11 周四 17:12] \\
+  BDD1 3 frequence point done.
+  FFT need to update.
+  Wait for new vectors.
+- State "NEXT"       from "NEXT"       [2016-08-09 周二 09:05] \\
+  Fix bugs  when continuously data and separate data.
+- State "NEXT"       from "NEXT"       [2016-08-08 周一 09:18] \\
+  Get new vectors, verify them.
+  Should fixed the bug, when input valid is not conjunct.
+- State "NEXT"       from ""           [2016-08-05 周五 08:43] \\
+  try the vector.
+***** CANCELED Add agent
+CLOSED: [2017-04-12 周三 16:16] SCHEDULED: <2016-12-02 周五>
+- State "CANCELED"   from "NEXT"       [2017-04-12 周三 16:16] \\
+  No need
+- State "NEXT"       from "NEXT"       [2016-08-12 周五 09:51] \\
+  Postpone 1 week. No more postpone!
+- State "NEXT"       from "NEXT"       [2016-08-08 周一 09:24] \\
+  Postpone 2 days
+- State "NEXT"       from ""           [2016-08-05 周五 08:40] \\
+  Add agent to determine, driver working or not.
+***** DONE read file version
+CLOSED: [2016-08-05 周五 08:39] DEADLINE: <2016-08-05 周五> SCHEDULED: <2016-08-04 周四>
+- State "DONE"       from "NEXT"       [2016-08-05 周五 08:39] \\
+  finished
+- State "NEXT"       from ""           [2016-08-04 周四 09:55] \\
+  the less modify the better
+***** DONE drv
+CLOSED: [2016-08-05 周五 08:38] SCHEDULED: <2016-08-04 周四>
+- State "DONE"       from "PLAN"       [2016-08-05 周五 08:38] \\
+  finished
+- State "TODO"       from ""           [2016-08-04 周四 09:54]
+**** TODO rtl [/]
+- State "TODO"       from ""           [2016-08-16 周二 11:30]
+*****  FFT RTL update
+***** Input Data width Update.
+
+**** DONE function point definetion
+CLOSED: [2016-08-15 周二 10:04] DEADLINE: <2016-08-15 周一>
+- State "DONE"       from ""           [2016-08-16 周二 10:04]
+
+* TODO CP chip test
+- State "TODO"       from ""           [2017-03-07 Tue 19:04]
+
+** 3460 [2/2]
+*** DONE 分析测试版报告
+CLOSED: [2017-04-10 周一 16:21] SCHEDULED: <2017-03-08 Wed>
+- State "DONE"       from "TODO"       [2017-04-10 周一 16:21] \\
+  Job done. Still something to be dong.
+- State "TODO"       from ""           [2017-03-07 Tue 19:06]
+- 误测分析，易错分析
+
+*** DONE 统计 CP 时间
+CLOSED: [2017-04-10 周一 16:22]
+- State "DONE"       from "TODO"       [2017-04-10 周一 16:22] \\
+  finished
+- State "TODO"       from ""           [2017-03-07 Tue 19:06]
+| 项目      | 时间                                                    |
+|-----------+---------------------------------------------------------|
+| test_mode | 4000*100ns = 400us                                      |
+| OS        | ??                                                      |
+| scan      | 1000*1348*100ns = 134.8ms                               |
+| mbist     | 1600ms                                                  |
+| iot       | 182*100ns = 18.2 us                                     |
+| leakage   | ??                                                      |
+| osc       | ??                                                      |
+| pll       | 0.5 ms                                                  |
+| adda      | 250ms + 135ms = 385ms                                   |
+| summary   | 0.4ms+134.8ms+1600ms+0.0182ms+0.5ms+385ms= 2120.7182 ms |
+
+
+* TODO 3460b verification [0/2]                                     :3460B:
+- State "TODO"       from ""           [2017-01-04 周三 14:35]
+
+** TODO PHY display
+- State "TODO"       from ""           [2017-01-04 周三 14:37]
+
+** TODO flash boot
+- State "TODO"       from ""           [2017-01-04 周三 14:37]
+
+
+* TODO 3460b rtl [9/9]                                           :Work:3460B:
+- State "TODO"       from "TODO"       [2016-09-05 周一 10:06]
+- State "TODO"       from "DONE"       [2016-08-25 周四 09:34]
+- State "DONE"       from "TODO"       [2016-08-18 周四 17:16]
+- State "TODO"       from ""           [2016-08-04 周四 10:02]
+
+** DONE Scramble verify data
+CLOSED: [2017-02-06 Mon 10:48] SCHEDULED: <2016-12-06 周二>
+- State "DONE"       from "TODO"       [2017-02-06 Mon 10:48]
+- State "TODO"       from "TODO"       [2016-12-06 周二 10:13]
+  Update new verification vectors
+- State "TODO"       from ""           [2016-12-05 周一 15:51]
+  Verify In INT env.
+
+** DONE Robo Version 3
+CLOSED: [2017-02-06 Mon 10:48] SCHEDULED: <2016-12-06 周二>
+- State "DONE"       from "TODO"       [2017-02-06 Mon 10:48]
+- State "TODO"       from "DONE"       [2016-12-06 周二 10:14]
+  Update new verification vectors
+- State "DONE"       from ""           [2016-12-02 周五 12:15] \\
+  finish Haisi mode.
+
+** DONE TNS 1 second clock
+CLOSED: [2016-09-13 Tue 09:33]
+- State "DONE"       from "TODO"       [2016-09-13 Tue 09:33] \\
+  Done
+- State "TODO"       from ""           [2016-09-05 周一 10:07]
+*** DONE tns 1 second rtl
+CLOSED: [2016-09-05 周一 10:10] DEADLINE: <2016-09-02 周五>
+- State "DONE"       from "TODO"       [2016-09-05 周一 10:09] \\
+  check
+- State "TODO"       from ""           [2016-09-05 周一 10:09]
+
+*** DONE tns 1 second veriy
+CLOSED: [2016-09-05 周一 10:10] DEADLINE: <2016-09-01 周四>
+- State "DONE"       from ""           [2016-09-05 周一 10:10] \\
+  check
+- State "TODO"       from ""           [2016-09-05 周一 10:09]
+
+** DONE channel inter-leaver Version 2 [2/2]
+CLOSED: [2016-09-19 周一 09:10] SCHEDULED: <2016-09-13 Tue>
+- State "DONE"       from "TODO"       [2016-09-19 周一 09:10] \\
+  All vectors are pass.
+- State "TODO"       from ""           [2016-09-13 Tue 09:34]
+*** DONE Verify, today
+CLOSED: [2016-09-19 周一 09:11] SCHEDULED: <2016-09-18 周日>
+- State "DONE"       from "TODO"       [2016-09-19 周一 09:11]
+- State "TODO"       from "DONE"       [2016-09-18 周日 09:29]
+  Wait for new vectors.
+*** DONE support rightward/leftward switch
+CLOSED: [2016-09-18 周日 09:28]
+- State "DONE"       from ""           [2016-09-18 周日 09:28] \\
+  Done on last Wednesday .
+
+** DONE Epis patch[2/2]
+CLOSED: [2016-10-10 周一 16:47]
+- State "DONE"       from ""           [2016-10-10 周一 16:47]
+*** DONE epis patch verify
+CLOSED: [2016-10-10 周一 16:43] SCHEDULED: <2016-09-28 周三>
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:43] \\
+  Finished on [2016-09-29]
+- State "TODO"       from ""           [2016-09-18 周日 09:41]
+wait for vectors
+*** DONE epis patch RTL[2/2]
+CLOSED: [2016-10-10 周一 16:46]
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:46] \\
+  Done
+- State "TODO"       from "DONE"       [2016-09-20 周二 10:33]
+- State "DONE"       from ""           [2016-09-18 周日 09:39] \\
+**** DONE Add more register
+CLOSED: [2016-10-10 周一 16:44] SCHEDULED: <2016-09-28 周三>
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:44] \\
+  Done. Implement registers with memory.
+- State "TODO"       from ""           [2016-09-20 周二 10:34]
+**** DONE Summary method change
+CLOSED: [2016-09-20 周二 10:34]
+When more then 15 times add-on stop counting or add-on.
+  Done on Sunday.
+
+
+** DONE Robo Version 2 [3/3]
+CLOSED: [2016-10-10 周一 16:49]
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:49]
+- State "TODO"       from ""           [2016-08-22 周一 16:22]
+
+*** DONE robo v2 verify                                            :Verify:
+CLOSED: [2016-10-10 周一 16:48]
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:48] \\
+  Finish
+- State "TODO"       from ""           [2016-08-22 周一 16:23]
+
+**** DONE robo v2: patch
+CLOSED: [2016-09-26 周一 16:00]
+- State "DONE"       from "TODO"       [2016-09-26 周一 16:00] \\
+  Cut npad.
+- State "TODO"       from ""           [2016-09-19 周一 09:12]
+- State "NEXT"       from ""           [2016-09-18 周日 09:42] \\
+  Deal with the NPAD.
+
+**** DONE robo v2: extend the cycle shift support.
+CLOSED: [2016-09-26 周一 16:00]
+- State "DONE"       from "TODO"       [2016-09-26 周一 16:00] \\
+  Support 15 copies.
+- State "TODO"       from ""           [2016-09-19 周一 09:12]
+
+**** DONE robo v2: new implement algorithm.
+CLOSED: [2016-10-10 周一 16:47]
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:47] \\
+  Done. Not support BitInSegment =< 2.
+- State "TODO"       from ""           [2016-09-19 周一 09:12]
+
+
+*** DONE robo v2 RTL
+CLOSED: [2016-10-10 周一 16:49]
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:49]
+- State "TODO"       from ""           [2016-08-22 周一 16:23]
+
+**** DONE robo v2 patch
+CLOSED: [2016-09-26 周一 16:01]
+- State "DONE"       from "NEXT"       [2016-09-26 周一 16:01]
+- State "NEXT"       from ""           [2016-09-18 周日 09:42] \\
+  Deal with the NPAD.
+
+**** DONE robo v2: extend the cycle shift support.
+CLOSED: [2016-09-26 周一 16:01]
+- State "DONE"       from ""           [2016-09-26 周一 16:01]
+
+**** DONE robo v2: new implement algorithm.
+CLOSED: [2016-10-10 周一 16:48]
+- State "DONE"       from "TODO"       [2016-10-10 周一 16:48] \\
+  Finished
+- State "TODO"       from ""           [2016-09-26 周一 16:02]
+
+
+*** DONE robo v2 doc
+CLOSED: [2016-09-19 周一 09:14]
+- State "DONE"       from "TODO"       [2016-09-19 周一 09:14] \\
+  Get the idea of new implement.
+- State "TODO"       from ""           [2016-08-22 周一 16:23]
+
+
+** DONE Total network synchronization
+CLOSED: [2016-08-18 周四 10:27] SCHEDULED: <2016-08-18 周四>
+- State "DONE"       from "NEXT"       [2016-08-18 周四 10:27] \\
+  Bug fixed
+- State "NEXT"       from "TODO"       [2016-08-18 周四 10:24] \\
+  Fix bugs
+- State "TODO"       from ""           [2016-08-18 周四 10:23]
+
+
+** DONE 3460B interleaver [3/3]
+CLOSED: [2016-08-18 周四 17:15]
+- State "DONE"       from "TODO"       [2016-08-18 周四 17:15] \\
+  job done
+- State "TODO"       from ""           [2016-08-04 周四 10:03]
+*** DONE 3460B interleaver doc
+CLOSED: [2016-08-10 周三 09:30] SCHEDULED: <2016-08-08 周一>
+- State "DONE"       from "NEXT"       [2016-08-10 周三 09:30] \\
+  Add PB(8*N+16 ), only support 1:2
+- State "NEXT"       from "NEXT"       [2016-08-05 周五 17:05] \\
+  Wait for desicion.
+- State "NEXT"       from "TODO"       [2016-08-04 周四 10:05] \\
+  Should estimate how much work to do.
+- State "TODO"       from ""           [2016-08-04 周四 10:04]
+*** DONE 3460B interleaver RTL
+CLOSED: [2016-08-11 周四 16:57]
+- State "DONE"       from "TODO"       [2016-08-11 周四 16:57] \\
+  RTL finished
+- State "TODO"       from ""           [2016-08-04 周四 10:04]
+*** DONE 3460B interleaver Verify [3/3]
+CLOSED: [2016-08-18 周四 17:15]
+- State "DONE"       from "TODO"       [2016-08-18 周四 17:15] \\
+  job done
+- State "TODO"       from ""           [2016-08-04 周四 10:04]
+**** DONE tcl
+CLOSED: [2016-08-18 周四 17:11]
+- State "DONE"       from "NEXT"       [2016-08-18 周四 17:11] \\
+  done
+- State "NEXT"       from "TODO"       [2016-08-11 周四 16:59] \\
+  Wait for new vectors.
+- State "TODO"       from ""           [2016-08-05 周五 12:13]
+  get vectors' name to a file
+**** DONE tb
+CLOSED: [2016-08-18 周四 17:12]
+- State "DONE"       from ""           [2016-08-18 周四 17:12] \\
+  job done
++ read vectors' name file
++ run the test by number.
+**** CANCELED rebuild the test plaform
+CLOSED: [2016-08-18 周四 17:11]
+- State "CANCELED"   from ""           [2016-08-18 周四 17:11] \\
+  old project uses old platform
+
+
+
+** DONE robo[3/3]
+CLOSED: [2016-08-18 周四 17:15]
+- State "DONE"       from "TODO"       [2016-08-18 周四 17:15] \\
+  job done
+- State "TODO"       from ""           [2016-08-04 周四 10:03]
+
+*** DONE 3460B ROBO verify
+CLOSED: [2016-08-18 周四 17:14] SCHEDULED: <2016-08-18 周四>
+- State "DONE"       from "NEXT"       [2016-08-18 周四 17:14] \\
+  job done.
+- State "NEXT"       from "TODO"       [2016-08-18 周四 09:53] \\
+  Wait for new vectors
+- State "TODO"       from ""           [2016-08-12 周五 09:48]
+
+*** DONE 3460B ROBO RTL[5/5]
+CLOSED: [2016-08-18 周四 17:15]
+- State "DONE"       from "TODO"       [2016-08-18 周四 17:15] \\
+  job done
+- State "TODO"       from ""           [2016-08-12 周五 09:43]
+**** CANCELED generate  ofdm parameters about the fake random sequence
+CLOSED: [2016-08-18 周四 09:52]
+- State "CANCELED"   from "TODO"       [2016-08-18 周四 09:52] \\
+  There is no need to generate ofdm parameters
+- State "TODO"       from ""           [2016-08-12 周五 09:46]
+**** DONE Insert data at the end of OFDM
+CLOSED: [2016-08-18 周四 09:50] SCHEDULED: <2016-08-17 周三>
+- State "DONE"       from "NEXT"       [2016-08-18 周四 09:50] \\
+  job done!
+- State "NEXT"       from "TODO"       [2016-08-16 周二 09:15] \\
+  Get random interval
+- State "TODO"       from ""           [2016-08-12 周五 09:48]
+**** DONE Suport new PB lenth.
+CLOSED: [2016-08-18 周四 09:50] SCHEDULED: <2016-08-16 周二>
+- State "DONE"       from "NEXT"       [2016-08-18 周四 09:50] \\
+  Done
+- State "NEXT"       from "TODO"       [2016-08-12 周五 11:20]
+- State "TODO"       from ""           [2016-08-12 周五 11:11]
+**** DONE Get vector name in new way
+CLOSED: [2016-08-16 周二 09:14] SCHEDULED: <2016-08-15 周一>
+- State "DONE"       from "NEXT"       [2016-08-16 周二 09:14]
+- State "NEXT"       from "TODO"       [2016-08-12 周五 11:20]
+- State "TODO"       from ""           [2016-08-12 周五 11:19]
+**** DONE Review doccuments.
+CLOSED: [2016-08-15 周一 11:06] SCHEDULED: <2016-08-12 周五>
+- State "DONE"       from "NEXT"       [2016-08-15 周一 11:06] \\
+  Review done. And old vector can run.
+- State "NEXT"       from ""           [2016-08-12 周五 09:44] \\
+  Get to understand the instructure of Robo RTL.
+
+*** DONE 3460B ROBO doc
+CLOSED: [2016-08-16 周二 09:17] SCHEDULED: <2016-08-12 周五>
+- State "DONE"       from "NEXT"       [2016-08-16 周二 09:17]
+- State "NEXT"       from ""           [2016-08-12 周五 09:42] \\
+  Get fake random sequence.

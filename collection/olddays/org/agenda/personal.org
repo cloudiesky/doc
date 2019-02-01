@@ -1,0 +1,27 @@
+* INPROGRESS [#C] Learn guitar [0/4]
+  - State "INPROGRESS" from "TODO"       [2016-08-02 周二 10:00] \\
+    Can play little star.
+  - State "TODO"       from "INPROGRESS" [2016-08-02 周二 09:51] \\
+    start the project
+** TODO Learn music theory. [/]
+   - State "TODO"       from ""           [2016-08-02 周二 10:05] \\
+** TODO Finger technique. [1/2]
+*** Left hand
+   - State "TODO"       from ""           [2016-08-02 周二 10:07] \\
+*** TODO right hand [5/5]
+   - State "TODO"       from "TODO"       [2016-08-02 周二 10:10] \\
+   - [X] Thumb
+   - [X] Index finger
+   - [X] Middle finger
+   - [X] Ring finger
+   - [X] Little finger
+** TODO Chord
+- State "TODO"       from ""   [2016-08-02 周二 10:23]
+** TODO Record a song
+DEADLINE: <2016-09-02 周五> SCHEDULED: <2016-08-02 周二>
+- State "TODO"       from ""           [2016-08-02 周二 10:25]
+  
+
+
+
+
